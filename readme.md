@@ -1,4 +1,4 @@
 #Authors
 
-#Radoslaw Bucki 236508
-#
+#Radoslaw Bucki 236507
+#Kamil Bednarek 236500
