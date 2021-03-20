@@ -11,3 +11,9 @@ Client::~Client() {
     cout << "Usunieto klienta" << endl;
 }
 
+string Client::getClientInfo() {
+    return "Client: "+firstName+" "+lastName+" "+personalID;
+}
+
+
+

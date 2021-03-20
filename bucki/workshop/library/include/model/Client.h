@@ -3,10 +3,15 @@
 
 
 class Client {
+private:
+    std::string firstName;
+    std::string lastName;
+    std::string personalID;
 public:
     Client();
+    ~Client();
 
-    virtual ~Client();
+    std::string getClientInfo();
 };
 
 
