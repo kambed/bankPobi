@@ -1,5 +1,5 @@
 #include <iostream>
-#include "math_helpers.h"
+#include "../../library/include/math_helpers.h"
 
 int main () {
 	std::cout << "Hello World" << std::endl;
