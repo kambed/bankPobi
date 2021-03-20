@@ -12,9 +12,9 @@ int main() {
     cout << client2->getClientInfo() << endl << endl;
     //etap 3
     client.setFirstName("");
-    client.getClientInfo();
+    cout << client.getClientInfo() << endl;
     client.setFirstName("Janusz");
-    client.getClientInfo();
+    cout << client.getClientInfo() << endl;
     //etap 0
     delete client2;
     return 0;

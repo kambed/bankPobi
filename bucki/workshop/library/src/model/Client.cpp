@@ -4,12 +4,12 @@
 using namespace std;
 
 Client::Client() {
-    cout << "Utworzono klienta." << endl << endl;
+    //cout << "Utworzono klienta." << endl << endl;
 }
 
 Client::~Client() {
-    cout << "Usunieto klienta" << endl;
-    cout << getClientInfo() << endl << endl;
+    //cout << "Usunieto klienta" << endl;
+    //cout << getClientInfo() << endl << endl;
 }
 
 string Client::getClientInfo() {
@@ -17,8 +17,8 @@ string Client::getClientInfo() {
 }
 
 Client::Client(std::string firstName, std::string nastName, std::string personalID) : firstName(firstName),lastName(lastName),personalID(personalID){
-    cout << "Utworzono klienta." << endl;
-    cout << getClientInfo() << endl << endl;
+    //cout << "Utworzono klienta." << endl;
+    //cout << getClientInfo() << endl << endl;
 }
 
 const string &Client::getFirstName() const {
