@@ -14,6 +14,14 @@ public:
     ~Client();
 
     std::string getClientInfo();
+
+    const std::string &getFirstName() const;
+    void setFirstName(const std::string &firstName);
+
+    const std::string &getLastName() const;
+    void setLastName(const std::string &lastName);
+
+    const std::string &getPersonalId() const;
 };
 
 
