@@ -7,8 +7,10 @@ private:
     std::string firstName;
     std::string lastName;
     std::string personalID;
-public:
     Client();
+public:
+    Client(std::string firstName,std::string nastName,std::string personalID);
+
     ~Client();
 
     std::string getClientInfo();
