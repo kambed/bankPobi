@@ -30,3 +30,4 @@ add_subdirectory(library)
 #Włączenie testów powoduje pojawienie się celu test w makefiles
 enable_testing()
 
+
