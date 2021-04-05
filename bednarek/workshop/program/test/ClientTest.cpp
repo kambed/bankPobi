@@ -1,38 +1,48 @@
 #include <boost/test/unit_test.hpp>
 #include "model/Client.h"
+#include "model/Address.h"
+struct TestSuiteClientFixture {
+    const std::string testFirstName = "Jan";
+    const std::string testLastName = "Kowalski";
+    const std::string testPersonalID = "12345678901";
+    Address *adres;
 
-BOOST_AUTO_TEST_SUITE(TestSuiteClient)
+    TestSuiteClientFixture() {
+        adres= new Address("Lodz", "Zielona", "22");
+    }
 
-    BOOST_AUTO_TEST_CASE(ConstructorTests) {
-        Client client("Jan","Kowalski","12345678901");
+    ~TestSuiteClientFixture() {
+        delete adres;
+    }
+};
+BOOST_FIXTURE_TEST_SUITE(TestSuiteClient, TestSuiteClientFixture)
+
+    BOOST_AUTO_TEST_CASE(ClientConstructorTests) {
+        Client client(testFirstName,testLastName,testPersonalID, adres);
         BOOST_TEST(client.getFirstName() == "Jan");
         BOOST_TEST(client.getLastName() == "Kowalski");
         BOOST_TEST(client.getPersonalId() == "12345678901");
     }
 
     BOOST_AUTO_TEST_CASE(FirstNameSetterTests) {
-        Client client("Jan","Kowalski","12345678901");
+        Client client(testFirstName,testLastName,testPersonalID, adres);
         client.setFirstName("Mariusz");
         BOOST_TEST(client.getFirstName() == "Mariusz");
     }
     BOOST_AUTO_TEST_CASE(FirstNameSetterEmptyTests) {
-        Client client("Jan","Kowalski","12345678901");
+        Client client(testFirstName,testLastName,testPersonalID, adres);
         client.setFirstName("");
         BOOST_TEST(client.getFirstName() != "");
     }
     BOOST_AUTO_TEST_CASE(LastNameSetterTests) {
-        Client client("Jan","Kowalski","12345678901");
+        Client client(testFirstName,testLastName,testPersonalID, adres);
         client.setLastName("Nowak");
         BOOST_TEST(client.getLastName() == "Nowak");
     }
     BOOST_AUTO_TEST_CASE(LastNameSetterEmptyTests) {
-        Client client("Jan","Kowalski","12345678901");
+        Client client(testFirstName,testLastName,testPersonalID, adres);
         client.setLastName("");
         BOOST_TEST(client.getLastName() != "");
-    }
-    BOOST_AUTO_TEST_CASE(AssertionsTests) {
-        BOOST_TEST(1.0/3.0 == 0.333, boost::test_tools::tolerance(0.01));
-        BOOST_TEST(true);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

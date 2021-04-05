@@ -3,7 +3,8 @@ project(Library)
 
 set(SOURCE_FILES
         src/model/Client.cpp
-        include/model/Client.h)
+        include/model/Client.h
+        src/model/Address.cpp include/model/Address.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -18,7 +19,7 @@ include_directories(
         ${Boost_INCLUDE_DIRS}
 )
 
-set(SOURCE_TEST_FILES ../program/test/master.cpp ../program/test/ClientTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+set(SOURCE_TEST_FILES ../program/test/master.cpp ../program/test/ClientTest.cpp ../program/test/AddressTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

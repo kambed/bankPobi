@@ -5,14 +5,18 @@
 #ifndef CARRENTAL_CLIENT_H
 #define CARRENTAL_CLIENT_H
 
+#include "model/Address.h"
 
 class Client {
 private:
     std::string firstName;
     std::string lastName;
     std::string personalID;
+    Address *address;
 public:
-    Client(std::string firstName,std::string lastName,std::string personalID);
+
+    Client(const std::string &firstName, const std::string &lastName, const std::string &personalId, Address *address);
+
     virtual ~Client();
 
     std::string getClientInfo();
@@ -26,6 +30,10 @@ public:
     void setFirstName(const std::string &firstName);
 
     void setLastName(const std::string &lastName);
+
+    const Address *getAddress() const;
+
+    void setAddress(Address *address);
 
 };
 

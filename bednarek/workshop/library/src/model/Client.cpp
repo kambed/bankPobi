@@ -5,17 +5,15 @@
 #include <iostream>
 #include <string>
 #include "model/Client.h"
+#include "model/Address.h"
 using namespace std;
 
-Client::Client(std::string firstName,std::string lastName,std::string personalID) : firstName(firstName), lastName(lastName), personalID(personalID) {
+Client::Client(const string &firstName, const string &lastName, const string &personalId, Address *address) : firstName(firstName), lastName(lastName), personalID(personalId), address(address) {}
 
-};
-Client::~Client() {
+Client::~Client() {}
 
-}
-
-std::string Client::getClientInfo() {
-    return "Client:" + firstName + " " + lastName + " " + personalID;
+string Client::getClientInfo() {
+    return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo();
 }
 
 const string &Client::getFirstName() const {
@@ -43,3 +41,15 @@ void Client::setLastName(const string &lastName) {
         Client::lastName = lastName;
     }
 }
+
+const Address *Client::getAddress() const {
+    return address;
+}
+
+void Client::setAddress(Address *address) {
+    if(address!=nullptr)
+    {
+        Client::address = address;
+    }
+}
+
