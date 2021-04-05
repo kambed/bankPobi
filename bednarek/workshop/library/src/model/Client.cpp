@@ -7,9 +7,6 @@
 #include "model/Client.h"
 using namespace std;
 
-Client::Client() {
-
-}
 Client::Client(std::string firstName,std::string lastName,std::string personalID) : firstName(firstName), lastName(lastName), personalID(personalID) {
 
 };

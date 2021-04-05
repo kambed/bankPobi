@@ -11,7 +11,6 @@ private:
     std::string firstName;
     std::string lastName;
     std::string personalID;
-    Client();
 public:
     Client(std::string firstName,std::string lastName,std::string personalID);
     virtual ~Client();
