@@ -1,6 +1,8 @@
 #include <iostream>
 #include "model/Client.h"
 #include "model/Address.h"
+#include "model/Vehicle.h"
+#include "model/Rent.h"
 using namespace std;
 int main() {
 //    Client *client3 = new Client("Anna","Nowak","98765432109",nullptr);
@@ -18,6 +20,18 @@ int main() {
     client1->setAddress(address2);
     cout<<client1->getClientInfo()<<endl;
     cout<<client2->getClientInfo()<<endl;
+    Vehicle *vehicle1 = new Vehicle("EL95353",100);
+    Rent *rent1 = new Rent(1,client1,vehicle1);
+    Rent *rent2 = new Rent(2,client1,vehicle1);
+    cout<<rent1->getRentInfo()<<endl;
+    cout<<client1->getClientInfo()<<endl;
+    cout<<client1->getFullClientInfo()<<endl;
+    cout<<client1->getCurrentRents();
+    delete address;
+    delete client1;
+    delete client2;
+    delete vehicle1;
+    delete rent1;
 
     return 0;
 }

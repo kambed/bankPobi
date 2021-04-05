@@ -4,38 +4,41 @@
 
 #include <iostream>
 #include <string>
-#include "model/Client.h"
 #include "model/Address.h"
-using namespace std;
+#include "model/Client.h"
 
-Client::Client(const string &firstName, const string &lastName, const string &personalId, Address *address) : firstName(firstName), lastName(lastName), personalID(personalId), address(address) {}
+Client::Client(const std::string &firstName, const std::string &lastName, const std::string &personalId, Address *address) : firstName(firstName), lastName(lastName), personalID(personalId), address(address) {}
 
 Client::~Client() {}
 
-string Client::getClientInfo() {
+std::string Client::getClientInfo() {
     return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo();
 }
 
-const string &Client::getFirstName() const {
+std::string Client::getFullClientInfo() {
+    return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo() + " " + getCurrentRents();
+}
+
+const std::string &Client::getFirstName() const {
     return firstName;
 }
 
-const string &Client::getLastName() const {
+const std::string &Client::getLastName() const {
     return lastName;
 }
 
-const string &Client::getPersonalId() const {
+const std::string &Client::getPersonalId() const {
     return personalID;
 }
 
-void Client::setFirstName(const string &firstName) {
+void Client::setFirstName(const std::string &firstName) {
     if(firstName!="")
     {
         Client::firstName = firstName;
     }
 }
 
-void Client::setLastName(const string &lastName) {
+void Client::setLastName(const std::string &lastName) {
     if(lastName!="")
     {
         Client::lastName = lastName;
@@ -51,5 +54,25 @@ void Client::setAddress(Address *address) {
     {
         Client::address = address;
     }
+}
+
+std::string Client::getCurrentRents() {
+    std::string rentlist=" ";
+    if(currentRents.size()==0)
+    {
+        return rentlist;
+    }
+    else
+    {
+        for(int i=0;i<currentRents.size();i++)
+        {
+            rentlist=rentlist + "\n" + currentRents[i]->getRentInfo();
+        }
+    }
+    return rentlist;
+}
+
+void Client::setCurrentRents(Rent *rent) {
+    currentRents.push_back(rent);
 }
 
