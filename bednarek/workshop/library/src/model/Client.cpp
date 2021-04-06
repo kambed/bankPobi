@@ -76,3 +76,7 @@ void Client::setCurrentRents(Rent *rent) {
     currentRents.push_back(rent);
 }
 
+void Client::removeCurrentRent(Rent *rent) {
+    currentRents.erase(std::remove(currentRents.begin(),currentRents.end(),rent));
+}
+

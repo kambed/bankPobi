@@ -44,6 +44,8 @@ public:
     std::string getCurrentRents();
 
     void setCurrentRents(Rent *rent);
+
+    void removeCurrentRent(Rent *rent);
 };
 
 
