@@ -15,10 +15,10 @@ private:
     Client *client;
     Vehicle *vehicle;
     boost::posix_time::ptime beginTime;
-    boost::posix_time::ptime endTime;
+    boost::posix_time::ptime endTime = boost::posix_time::not_a_date_time;
     int rentCost=0;
 public:
-    Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix_time::ptime &beginTime);
+    Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix_time::ptime &beginTime,int rentCost);
 
     unsigned int getId() const;
 
@@ -36,7 +36,7 @@ public:
 
     int getRentdays();
 
-    int getRentcost() const;
+    int getRentcost();
 
 };
 

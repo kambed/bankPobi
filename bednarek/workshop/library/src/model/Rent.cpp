@@ -10,10 +10,9 @@
 #include "model/Vehicle.h"
 #include "model/Rent.h"
 
-Rent::Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix_time::ptime &beginTime) : id(id), client(client), vehicle(vehicle), beginTime(beginTime) {
+Rent::Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix_time::ptime &beginTime,int rentCost) : id(id), client(client), vehicle(vehicle), beginTime(beginTime), rentCost(rentCost){
     client->setCurrentRents(this);
     vehicle->setRented(true);
-    this->endTime = boost::posix_time::not_a_date_time;
     if(beginTime == boost::posix_time::not_a_date_time)
     {
         this->beginTime = boost::posix_time::second_clock::local_time();
@@ -65,7 +64,7 @@ void Rent::endRent(const boost::posix_time::ptime &endTime) {
         }
         vehicle->setRented(false);
         client->removeCurrentRent(this);
-        rentCost=getRentdays()*vehicle->getBasePrice();
+        //rentCost=getRentdays()*vehicle->getBasePrice();
     }
 }
 
@@ -89,6 +88,6 @@ int Rent::getRentdays() {
     }
 }
 
-int Rent::getRentcost() const {
-    return rentCost;
+int Rent::getRentcost() {
+    return getRentdays()*rentCost;
 }

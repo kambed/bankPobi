@@ -28,7 +28,7 @@ void Vehicle::setBasePrice(unsigned int basePrice) {
 }
 
 const std::string Vehicle::getVehicleInfo() const{
-    return "Pojazd:" + plateNumber + " " + std::to_string(basePrice) + "zl/h";
+    return "Pojazd:" + plateNumber + " " + std::to_string(basePrice) + "zl/day";
 }
 
 bool Vehicle::isRented() const {
