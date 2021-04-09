@@ -24,14 +24,14 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRent, TestSuiteRentFixture)
 
     BOOST_AUTO_TEST_CASE(RentConstructorTests) {
         BOOST_TEST(vehicle->isRented() == false);
-        Rent rent(1,client,vehicle,boost::posix_time::not_a_date_time);
-        BOOST_TEST(rent.getId() == 1);
-        BOOST_TEST(rent.getClient() == client);
-        BOOST_TEST(rent.getVehicle() == vehicle);
-        std::string currrents = " ";
-        currrents = currrents + "\n" + rent.getRentInfo();
+        Rent *rent = new Rent(1,client,vehicle,boost::posix_time::not_a_date_time);
+        BOOST_TEST(rent->getId() == 1);
+        BOOST_TEST(rent->getClient() == client);
+        BOOST_TEST(rent->getVehicle() == vehicle);
+        std::vector<Rent *> testRents;
+        testRents.push_back(rent);
         BOOST_TEST(vehicle->isRented() == true);
-        BOOST_TEST(currrents == client->getCurrentRents());
+        BOOST_TEST(testRents == client->getCurrentRents());
     }
 
     BOOST_AUTO_TEST_CASE(RentTimesDefaultConstructorTests) {
@@ -62,13 +62,13 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRent, TestSuiteRentFixture)
         BOOST_TEST(rent.getVehicle()->isRented() == false);
     }
     BOOST_AUTO_TEST_CASE(EndRentRemoveClientRentedTests) {
-        Rent rent(1,client,vehicle,boost::posix_time::not_a_date_time);
-        std::string currrents = " ";
-        currrents = currrents + "\n" + rent.getRentInfo();
-        BOOST_TEST(currrents == client->getCurrentRents());
-        rent.endRent(boost::posix_time::ptime(boost::gregorian::date(2021,5,13),boost::posix_time::hours(9)));
-        currrents = " ";
-        BOOST_TEST(currrents == client->getCurrentRents());
+        Rent *rent = new Rent(1,client,vehicle,boost::posix_time::not_a_date_time);
+        std::vector<Rent *> testRents;
+        testRents.push_back(rent);
+        BOOST_TEST(testRents == client->getCurrentRents());
+        rent->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,5,13),boost::posix_time::hours(9)));
+        std::vector<Rent *> emptyRents;
+        BOOST_TEST(emptyRents == client->getCurrentRents());
     }
     BOOST_AUTO_TEST_CASE(EndRentGivenTimeTests) {
         Rent rent(1,client,vehicle,boost::posix_time::not_a_date_time);

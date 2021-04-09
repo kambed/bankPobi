@@ -27,7 +27,7 @@ void Vehicle::setBasePrice(unsigned int basePrice) {
     Vehicle::basePrice = basePrice;
 }
 
-std::string Vehicle::getVehicleInfo() {
+const std::string Vehicle::getVehicleInfo() const{
     return "Pojazd:" + plateNumber + " " + std::to_string(basePrice) + "zl/h";
 }
 

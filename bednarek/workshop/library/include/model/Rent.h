@@ -26,7 +26,7 @@ public:
 
     Vehicle *getVehicle() const;
 
-    std::string getRentInfo();
+    const std::string getRentInfo() const;
 
     const boost::posix_time::ptime &getBeginTime() const;
 

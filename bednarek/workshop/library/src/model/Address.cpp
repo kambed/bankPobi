@@ -12,7 +12,7 @@ Address::Address(const std::string &city, const std::string &street, const std::
 
 };
 
-std::string Address::getAddressInfo() {
+const std::string Address::getAddressInfo() const {
     return "Adres:" + city + ", " + street + " " + number;
 }
 

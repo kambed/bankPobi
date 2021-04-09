@@ -25,7 +25,8 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteClient, TestSuiteClientFixture)
         BOOST_TEST(client.getLastName() == testLastName);
         BOOST_TEST(client.getPersonalId() == testPersonalID);
         BOOST_TEST(client.getAddress() == adres);
-        BOOST_TEST(client.getCurrentRents() == " ");
+        std::vector<Rent *> testRents;
+        BOOST_TEST(client.getCurrentRents() == testRents);
     }
 
     BOOST_AUTO_TEST_CASE(FirstNameSetterTests) {

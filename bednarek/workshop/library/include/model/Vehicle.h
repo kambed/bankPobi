@@ -22,7 +22,7 @@ public:
 
     void setBasePrice(unsigned int basePrice);
 
-    std::string getVehicleInfo();
+    const std::string getVehicleInfo() const;
 
     bool isRented() const;
 

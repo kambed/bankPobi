@@ -32,7 +32,7 @@ Vehicle *Rent::getVehicle() const {
     return vehicle;
 }
 
-std::string Rent::getRentInfo() {
+const std::string Rent::getRentInfo() const{
     std::stringstream ss;
     ss << beginTime;
     std::string begin = ss.str();
