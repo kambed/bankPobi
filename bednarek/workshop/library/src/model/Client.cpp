@@ -11,12 +11,24 @@ Client::Client(const std::string &firstName, const std::string &lastName, const 
 
 Client::~Client() {}
 
-std::string Client::getClientInfo() {
+const std::string Client::getClientInfo() const{
     return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo();
 }
 
-std::string Client::getFullClientInfo() {
-    return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo() + " " + getCurrentRents();
+const std::string Client::getFullClientInfo() const{
+    std::string rentlist=" ";
+    if(currentRents.size()==0)
+    {
+        return rentlist;
+    }
+    else
+    {
+        for(int i=0;i<currentRents.size();i++)
+        {
+            rentlist=rentlist + "\n" + currentRents[i]->getRentInfo();
+        }
+    }
+    return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo() + " " + rentlist;
 }
 
 const std::string &Client::getFirstName() const {
@@ -56,23 +68,32 @@ void Client::setAddress(Address *address) {
     }
 }
 
-std::string Client::getCurrentRents() {
-    std::string rentlist=" ";
-    if(currentRents.size()==0)
-    {
-        return rentlist;
-    }
-    else
-    {
-        for(int i=0;i<currentRents.size();i++)
-        {
-            rentlist=rentlist + "\n" + currentRents[i]->getRentInfo();
-        }
-    }
-    return rentlist;
+//const std::string Client::getCurrentRentsInfo() const{
+//    std::string rentlist=" ";
+//    if(currentRents.size()==0)
+//    {
+//        return rentlist;
+//    }
+//    else
+//    {
+//        for(int i=0;i<currentRents.size();i++)
+//        {
+//            rentlist=rentlist + "\n" + currentRents[i]->getRentInfo();
+//        }
+//    }
+//    return rentlist;
+//}
+
+const std::vector<Rent *> &Client::getCurrentRents() const {
+    return currentRents;
 }
 
 void Client::setCurrentRents(Rent *rent) {
     currentRents.push_back(rent);
 }
+
+void Client::removeCurrentRent(Rent *rent) {
+    currentRents.erase(std::remove(currentRents.begin(),currentRents.end(),rent));
+}
+
 

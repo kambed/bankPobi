@@ -23,9 +23,9 @@ public:
 
     virtual ~Client();
 
-    std::string getClientInfo();
+    const std::string getClientInfo() const;
 
-    std::string getFullClientInfo();
+    const std::string getFullClientInfo() const;
 
     const std::string &getFirstName() const;
 
@@ -41,9 +41,12 @@ public:
 
     void setAddress(Address *address);
 
-    std::string getCurrentRents();
+    const std::vector<Rent *> &getCurrentRents() const;
+    //const std::string getCurrentRentsInfo() const;
 
     void setCurrentRents(Rent *rent);
+
+    void removeCurrentRent(Rent *rent);
 };
 
 

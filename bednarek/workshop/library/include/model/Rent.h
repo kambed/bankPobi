@@ -7,14 +7,18 @@
 
 #include "Client.h"
 #include "Vehicle.h"
+#include <boost/date_time/posix_time/ptime.hpp>
 class Client;
 class Rent {
 private:
     unsigned int id;
     Client *client;
     Vehicle *vehicle;
+    boost::posix_time::ptime beginTime;
+    boost::posix_time::ptime endTime = boost::posix_time::not_a_date_time;
+    int rentCost=0;
 public:
-    Rent(unsigned int id, Client *client, Vehicle *vehicle);
+    Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix_time::ptime &beginTime,int rentCost);
 
     unsigned int getId() const;
 
@@ -22,7 +26,18 @@ public:
 
     Vehicle *getVehicle() const;
 
-    std::string getRentInfo();
+    const std::string getRentInfo() const;
+
+    const boost::posix_time::ptime &getBeginTime() const;
+
+    const boost::posix_time::ptime &getEndTime() const;
+
+    void endRent(const boost::posix_time::ptime &endTime);
+
+    int getRentdays();
+
+    int getRentcost();
+
 };
 
 
