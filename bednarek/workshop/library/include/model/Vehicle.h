@@ -4,7 +4,7 @@
 
 #ifndef CARRENTAL_VEHICLE_H
 #define CARRENTAL_VEHICLE_H
-
+#include <string>
 
 class Vehicle {
 private:
@@ -12,20 +12,20 @@ private:
     unsigned int basePrice;
     bool rented=false;
 public:
+    //CONSTRUCTOR
     Vehicle(const std::string &plateNumber, unsigned int basePrice);
+    //DESTRUCTOR
+    virtual ~Vehicle();
 
+    //GETTERS
     const std::string &getPlateNumber() const;
-
-    void setPlateNumber(const std::string &plateNumber);
-
     unsigned int getBasePrice() const;
-
-    void setBasePrice(unsigned int basePrice);
-
     const std::string getVehicleInfo() const;
-
     bool isRented() const;
 
+    //SETTERS
+    void setPlateNumber(const std::string &plateNumber);
+    void setBasePrice(unsigned int basePrice);
     void setRented(bool rented);
 };
 

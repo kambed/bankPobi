@@ -9,8 +9,8 @@
 #include "model/Client.h"
 #include "model/Vehicle.h"
 #include "model/Rent.h"
-
-Rent::Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix_time::ptime &beginTime,int rentCost) : id(id), client(client), vehicle(vehicle), beginTime(beginTime), rentCost(rentCost){
+//CONSTRUCTOR
+Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost) : id(id), client(client), vehicle(vehicle), beginTime(beginTime), rentCost(rentCost){
     client->setCurrentRents(this);
     vehicle->setRented(true);
     if(beginTime == boost::posix_time::not_a_date_time)
@@ -19,18 +19,22 @@ Rent::Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix
     }
 }
 
+//GETTERS
 unsigned int Rent::getId() const {
     return id;
 }
-
 Client *Rent::getClient() const {
     return client;
 }
-
 Vehicle *Rent::getVehicle() const {
     return vehicle;
 }
-
+const boost::posix_time::ptime &Rent::getBeginTime() const {
+    return beginTime;
+}
+const boost::posix_time::ptime &Rent::getEndTime() const {
+    return endTime;
+}
 const std::string Rent::getRentInfo() const{
     std::stringstream ss;
     ss << beginTime;
@@ -40,34 +44,6 @@ const std::string Rent::getRentInfo() const{
     std::string end = ss2.str();
     return "Rent ID:" + std::to_string(id) + "Time: from:" + begin + " to: " + end + " " + client->getClientInfo() + " " + vehicle->getVehicleInfo();
 }
-
-const boost::posix_time::ptime &Rent::getBeginTime() const {
-    return beginTime;
-}
-
-const boost::posix_time::ptime &Rent::getEndTime() const {
-    return endTime;
-}
-
-void Rent::endRent(const boost::posix_time::ptime &endTime) {
-    if(this->endTime == boost::posix_time::not_a_date_time)
-    {
-        if(endTime == boost::posix_time::not_a_date_time) {
-            this->endTime = boost::posix_time::second_clock::local_time();
-        }
-        else
-        {
-            if(endTime<beginTime)
-                this->endTime = beginTime;
-            else
-                this->endTime = endTime;
-        }
-        vehicle->setRented(false);
-        client->removeCurrentRent(this);
-        //rentCost=getRentdays()*vehicle->getBasePrice();
-    }
-}
-
 int Rent::getRentdays() {
     boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
     if(endTime == boost::posix_time::not_a_date_time)
@@ -87,7 +63,25 @@ int Rent::getRentdays() {
         }
     }
 }
-
 int Rent::getRentcost() {
     return getRentdays()*rentCost;
+}
+
+//METHODS
+void Rent::endRent(const boost::posix_time::ptime &endTime) {
+    if(this->endTime == boost::posix_time::not_a_date_time)
+    {
+        if(endTime == boost::posix_time::not_a_date_time) {
+            this->endTime = boost::posix_time::second_clock::local_time();
+        }
+        else
+        {
+            if(endTime<beginTime)
+                this->endTime = beginTime;
+            else
+                this->endTime = endTime;
+        }
+        vehicle->setRented(false);
+        client->removeCurrentRent(this);
+    }
 }
