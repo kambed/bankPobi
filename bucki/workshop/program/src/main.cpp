@@ -2,6 +2,9 @@
 #include <string>
 #include <model/Client.h>
 #include <model/Address.h>
+#include <model/Bicycle.h>
+#include "typedefs.h"
+#include "repositories/StorageContainer.h"
 
 using namespace std;
 
@@ -41,11 +44,30 @@ int main() {
 //    delete client2;
 //    delete address1;
 //    delete address2;
-    Address address("Lodz", "Politechniki", "38");
-    Client client("Jan", "Kowalski", "00000000000", &address);
-    Vehicle vehicle("AB1234", 10000);
-    Rent rent(1, &client, &vehicle,boost::posix_time::not_a_date_time);
-    cout << rent.getRentInfo();
+//    Address address("Lodz", "Politechniki", "38");
+//    Client client("Jan", "Kowalski", "00000000000", &address);
+//    Vehicle vehicle("AB1234", 10000);
+//    Rent rent(1, &client, &vehicle,boost::posix_time::not_a_date_time);
+//    cout << rent.getRentInfo();
+
+    StorageContainerPtr storage = new StorageContainer();
+    cout << "Przed: " << endl << endl;
+    cout << storage->getClientsRepo().reportClients() << endl;
+    cout << storage->getVehiclesRepo().reportVehicles() << endl;
+    cout << storage->getRentsRepo().reportRents() << endl;
+
+    AddressPtr address = new Address("Lodz","Zielona","5");
+    ClientPtr client = new Client("Ala","Kot","11111111111",address);
+    storage->getClientsRepo().addClient(client);
+    VehiclePtr bicycle = new Bicycle("AB0101",100);
+    storage->getVehiclesRepo().addVehicle(bicycle);
+    RentPtr rent = new Rent(2,client,bicycle,boost::posix_time::second_clock::local_time());
+    storage->getRentsRepo().addRent(rent);
+
+    cout << "Po: " << endl << endl;
+    cout << storage->getClientsRepo().reportClients() << endl;
+    cout << storage->getVehiclesRepo().reportVehicles() << endl;
+    cout << storage->getRentsRepo().reportRents() << endl;
 
     return 0;
 }

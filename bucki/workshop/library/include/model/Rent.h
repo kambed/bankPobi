@@ -1,6 +1,7 @@
 #include "Client.h"
 #include "Vehicle.h"
 #include <boost/date_time.hpp>
+#include <typedefs.h>
 
 #ifndef CARRENTAL_RENT_H
 #define CARRENTAL_RENT_H
@@ -12,17 +13,17 @@ class ptime;
 class Rent {
 private:
     unsigned int id;
-    Client *client;
-    Vehicle *vehicle;
+    ClientPtr client;
+    VehiclePtr vehicle;
     boost::posix_time::ptime beginTime;
     boost::posix_time::ptime endTime = boost::posix_time::not_a_date_time;
     int rentCost = 0;
 public:
-    Rent(unsigned int id, Client *client, Vehicle *vehicle, const boost::posix_time::ptime &beginTime);
+    Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime);
 
-    const Client *getClient() const;
+    const ClientPtr getClient() const;
 
-    const Vehicle *getVehicle() const;
+    const VehiclePtr getVehicle() const;
 
     const std::string getRentInfo() const;
 
@@ -32,7 +33,7 @@ public:
 
     const boost::posix_time::ptime &getEndTime() const;
 
-    const boost::posix_time::ptime &endRent(const boost::posix_time::ptime &endTime);
+    void endRent(const boost::posix_time::ptime &endTime);
 
     const int getRentDays() const;
 
