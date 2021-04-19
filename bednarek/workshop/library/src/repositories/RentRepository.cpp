@@ -23,7 +23,7 @@ void RentRepository::removeRent(RentPtr rent) {
         Rents.erase(std::remove(Rents.begin(),Rents.end(),rent));
     }
 }
-std::string RentRepository::reportRent(RentPtr rent) const{
+std::string RentRepository::reportRent() const{
     std::string rentlist=" ";
     for(int i=0;i<sizeRent();i++){
         rentlist=rentlist + "\n" + Rents[i]->getRentInfo();

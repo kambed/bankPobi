@@ -25,18 +25,11 @@ void ClientRepository::removeClient(ClientPtr client) {
         Clients.erase(std::remove(Clients.begin(),Clients.end(),client));
     }
 }
-std::string ClientRepository::reportClient(ClientPtr client) const{
+std::string ClientRepository::reportClient() const{
     std::string rentlist=" ";
-    if(client->getCurrentRents().size()==0)
+    for(int i=0;i<Clients.size();i++)
     {
-        return rentlist;
-    }
-    else
-    {
-        for(int i=0;i<client->getCurrentRents().size();i++)
-        {
-            rentlist=rentlist + "\n" + client->getCurrentRents()[i]->getRentInfo();
-        }
+        rentlist=rentlist + "\n" + Clients[i]->getClientInfo();
     }
     return rentlist;
 }

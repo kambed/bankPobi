@@ -15,18 +15,21 @@ public:
     //CONSTRUCTOR
     Vehicle(const std::string &plateNumber, unsigned int basePrice);
     //DESTRUCTOR
-    virtual ~Vehicle();
+    virtual ~Vehicle()=0;
 
     //GETTERS
     const std::string &getPlateNumber() const;
     unsigned int getBasePrice() const;
-    const std::string getVehicleInfo() const;
+
+    virtual const std::string getVehicleInfo() const;
     bool isRented() const;
 
     //SETTERS
     void setPlateNumber(const std::string &plateNumber);
     void setBasePrice(unsigned int basePrice);
     void setRented(bool rented);
+
+    virtual double getActualRentalPrice();
 };
 
 

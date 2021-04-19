@@ -16,7 +16,7 @@ public:
     VehiclePtr getVehicle(int vehicleIndex) const;
     void addVehicle(VehiclePtr vehicle);
     void removeVehicle(VehiclePtr vehicle);
-    std::string reportVehicle(VehiclePtr vehicle) const;
+    std::string reportVehicle() const;
     int sizeVehicle() const;
 };
 

@@ -15,7 +15,7 @@ public:
     ClientPtr getClient(int clientIndex) const;
     void addClient(ClientPtr client);
     void removeClient(ClientPtr client);
-    std::string reportClient(ClientPtr client) const;
+    std::string reportClient() const;
     int sizeClient() const;
     std::vector<ClientPtr> findBy(ClientPredicate predicate) const;
     std::vector<ClientPtr> findAll();

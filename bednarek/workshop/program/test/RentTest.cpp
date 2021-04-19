@@ -1,6 +1,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
+#include <model/Bicycle.h>
 #include "model/Client.h"
 #include "model/Address.h"
 #include "model/Vehicle.h"
@@ -12,7 +13,7 @@ struct TestSuiteRentFixture {
 
     TestSuiteRentFixture() {
         adres= new Address("Lodz", "Zielona", "22");
-        vehicle= new Vehicle("EL42354",100);
+        vehicle= new Bicycle("EL42354",100);
         client= new Client("Jan","Kowalski","12345678901",adres);
     }
 

@@ -22,8 +22,11 @@ void VehicleRepository::removeVehicle(VehiclePtr vehicle) {
         Vehicles.erase(std::remove(Vehicles.begin(),Vehicles.end(),vehicle));
     }
 }
-std::string VehicleRepository::reportVehicle(VehiclePtr vehicle) const{
+std::string VehicleRepository::reportVehicle() const{
     std::string rentlist=" ";
+    for(int i=0;i<sizeVehicle();i++){
+        rentlist=rentlist + "\n" + Vehicles[i]->getVehicleInfo();
+    }
     return rentlist;
 }
 int VehicleRepository::sizeVehicle() const{

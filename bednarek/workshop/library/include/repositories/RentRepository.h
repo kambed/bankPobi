@@ -15,7 +15,7 @@ public:
     RentPtr getRent(int rentIndex) const;
     void addRent(RentPtr rent);
     void removeRent(RentPtr rent);
-    std::string reportRent(RentPtr rent) const;
+    std::string reportRent() const;
     int sizeRent() const;
 };
 

@@ -38,3 +38,7 @@ void Vehicle::setBasePrice(unsigned int basePrice) {
 void Vehicle::setRented(bool rented) {
     Vehicle::rented = rented;
 }
+
+double Vehicle::getActualRentalPrice() {
+    return getBasePrice();
+}
