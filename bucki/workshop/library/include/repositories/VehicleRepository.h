@@ -25,7 +25,7 @@ public:
 
     std::vector<VehiclePtr> findBy(VehiclePredicate predicate) const;
 
-    std::vector<VehicletPtr> findAll() const;
+    std::vector<VehiclePtr> findAll() const;
 };
 
 

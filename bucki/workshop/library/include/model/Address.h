@@ -15,15 +15,10 @@ public:
 
     const std::string &getCity() const;
 
-//    void setCity(const std::string &city);
-
     const std::string &getStreet() const;
-
-//    void setStreet(const std::string &street);
 
     const std::string &getNumber() const;
 
-//    void setNumber(const std::string &number);
 };
 
 

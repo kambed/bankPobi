@@ -9,6 +9,16 @@
 #include "repositories/VehicleRepository.h"
 #include "repositories/RentRepository.h"
 
+bool testPredicateClient(ClientPtr client){
+        return client->getFirstName() == "Jan";
+}
+bool testPredicateVehicle(VehiclePtr vehicle){
+        return vehicle->getPlateNumber() == "AB1234";
+}
+bool testPredicateRent(RentPtr rent){
+        return rent->getId() == 1;
+}
+
 BOOST_AUTO_TEST_SUITE(TestSuiteStorageContainer)
 
     BOOST_AUTO_TEST_CASE(StorageContainerConstructorTest){
@@ -94,6 +104,31 @@ BOOST_AUTO_TEST_SUITE(TestSuiteClientRepository)
         delete storage;
     }
 
+    BOOST_AUTO_TEST_CASE(FindByClientTest){
+        StorageContainerPtr storage = new StorageContainer();
+        std::vector<ClientPtr> findByName;
+        for (unsigned int i = 0; i < storage->getClientsRepo().getClientsSize(); i++) {
+            ClientPtr client = storage->getClientsRepo().getClient(i);
+            if (client != nullptr && client->getFirstName() == "Jan") {
+                findByName.push_back(client);
+            }
+        }
+
+        BOOST_CHECK(findByName == storage->getClientsRepo().findBy(testPredicateClient));
+        delete storage;
+    }
+
+    BOOST_AUTO_TEST_CASE(FindAllClientTest){
+        StorageContainerPtr storage = new StorageContainer();
+        std::vector<ClientPtr> findAll;
+        for(int i=0;i<storage->getClientsRepo().getClientsSize();i++){
+            if(storage->getClientsRepo().getClient(i) != nullptr)
+                findAll.push_back(storage->getClientsRepo().getClient(i));
+        }
+        BOOST_CHECK(findAll == storage->getClientsRepo().findAll());
+        delete storage;
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(TestSuiteVehicleRepository)
@@ -160,6 +195,32 @@ BOOST_AUTO_TEST_SUITE(TestSuiteVehicleRepository)
         BOOST_CHECK_EQUAL(storage->getVehiclesRepo().reportVehicles(),report);
         delete storage;
     }
+
+    BOOST_AUTO_TEST_CASE(FindByVehicleTest){
+        StorageContainerPtr storage = new StorageContainer();
+        std::vector<VehiclePtr> findByPlate;
+        for (unsigned int i = 0; i < storage->getVehiclesRepo().getVehiclesSize(); i++) {
+            VehiclePtr vehicle= storage->getVehiclesRepo().getVehicle(i);
+            if (vehicle != nullptr && vehicle->getPlateNumber() == "AB1234") {
+                findByPlate.push_back(vehicle);
+            }
+        }
+
+        BOOST_CHECK(findByPlate == storage->getVehiclesRepo().findBy(testPredicateVehicle));
+        delete storage;
+    }
+
+    BOOST_AUTO_TEST_CASE(FindAllVEhicleTest){
+        StorageContainerPtr storage = new StorageContainer();
+        std::vector<VehiclePtr> findAll;
+        for(int i=0;i<storage->getVehiclesRepo().getVehiclesSize();i++){
+            if(storage->getVehiclesRepo().getVehicle(i) != nullptr)
+                findAll.push_back(storage->getVehiclesRepo().getVehicle(i));
+        }
+        BOOST_CHECK(findAll == storage->getVehiclesRepo().findAll());
+        delete storage;
+    }
+
 
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -257,6 +318,31 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
             report += storage->getRentsRepo().getRent(i)->getRentInfo() + "\n";
         }
         BOOST_CHECK_EQUAL(storage->getRentsRepo().reportRents(),report);
+        delete storage;
+    }
+
+    BOOST_AUTO_TEST_CASE(FindByRentTest){
+        StorageContainerPtr storage = new StorageContainer();
+        std::vector<RentPtr> findById;
+        for (unsigned int i = 0; i < storage->getRentsRepo().getRentsSize(); i++) {
+            RentPtr rent = storage->getRentsRepo().getRent(i);
+            if (rent != nullptr && rent->getId() == 1) {
+                findById.push_back(rent);
+            }
+        }
+
+        BOOST_CHECK(findById == storage->getRentsRepo().findBy(testPredicateRent));
+        delete storage;
+    }
+
+    BOOST_AUTO_TEST_CASE(FindAllRentTest){
+        StorageContainerPtr storage = new StorageContainer();
+        std::vector<RentPtr> findAll;
+        for(int i=0;i<storage->getRentsRepo().getRentsSize();i++){
+            if(storage->getRentsRepo().getRent(i) != nullptr)
+                findAll.push_back(storage->getRentsRepo().getRent(i));
+        }
+        BOOST_CHECK(findAll == storage->getRentsRepo().findAll());
         delete storage;
     }
 
