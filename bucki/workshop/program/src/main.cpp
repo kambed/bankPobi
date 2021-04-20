@@ -5,6 +5,7 @@
 #include <model/Bicycle.h>
 #include "typedefs.h"
 #include "repositories/StorageContainer.h"
+#include <vector>
 
 using namespace std;
 
@@ -68,6 +69,12 @@ int main() {
     cout << storage->getClientsRepo().reportClients() << endl;
     cout << storage->getVehiclesRepo().reportVehicles() << endl;
     cout << storage->getRentsRepo().reportRents() << endl;
+
+    vector<ClientPtr> findAll = storage->getClientsRepo().findAll();
+
+//    cout << endl << "FindAllTest:" << endl;
+//    for(int i=0;i<findAll.size();i++)
+//        cout << findAll[i]->getClientInfo() << endl;
 
     return 0;
 }

@@ -48,3 +48,11 @@ std::vector<VehiclePtr> VehicleRepository::findBy(VehiclePredicate predicate) co
     }
     return found;
 }
+
+bool predicateTrue(VehiclePtr vehicle){
+    return vehicle != nullptr;
+}
+
+std::vector<VehiclePtr> VehicleRepository::findAll() const{
+    return VehicleRepository::findBy(predicateTrue);
+}

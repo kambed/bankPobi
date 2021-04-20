@@ -46,6 +46,10 @@ std::vector<ClientPtr> ClientRepository::findBy(ClientPredicate predicate) const
     return found;
 }
 
+bool predicateTrue(ClientPtr client){
+    return client != nullptr;
+}
+
 std::vector<ClientPtr> ClientRepository::findAll() const{
-   return ClientRepository::findBy(reinterpret_cast<ClientPredicate>(true));
+   return ClientRepository::findBy(predicateTrue);
 }
