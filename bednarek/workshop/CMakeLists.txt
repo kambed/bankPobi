@@ -27,6 +27,6 @@ set(CMAKE_VERBOSE_MAKEFILE TRUE)
 add_subdirectory(program)
 add_subdirectory(library)
 #Restrykcyjne parametry kompilatora
-set(-Wall -Wpedantic -Wextra)
+set(-Wall -Wpedantic -Wextra -Wall -Wextra -Werror)
 #Włączenie testów powoduje pojawienie się celu test w makefiles
 enable_testing()
