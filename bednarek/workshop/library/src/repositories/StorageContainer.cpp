@@ -13,22 +13,22 @@
 #include "model/Address.h"
 
 StorageContainer::StorageContainer(){
-    Address *address = new Address("Lodz","Zielona","23");
-    Client *client1 = new Client("Anna","Nowak","98765432109",address);
-    Address *address2 = new Address("Lodz","Piotrkowska","123");
-    Client *client2 = new Client("Jan","Kowalski","1234567890",address2);
-    Bicycle *bicycle = new Bicycle("EL95353",100);
-    Moped *moped1 = new Moped("WE11",210,900);
-    Moped *moped2 = new Moped("WE11",210,1000);
-    Moped *moped3 = new Moped("WE11",210,1100);
-    Moped *moped4 = new Moped("WE11",210,2000);
-    Moped *moped5 = new Moped("WE11",210,2100);
-    Car *car1 = new Car("EL990LN",210,1600,Car::A);
-    Car *car2 = new Car("EL990LN",210,1600,Car::B);
-    Car *car3 = new Car("EL990LN",210,1600,Car::C);
-    Car *car4 = new Car("EL990LN",210,1600,Car::D);
-    Car *car5 = new Car("EL990LN",210,1600,Car::E);
-    Rent *rent1 = new Rent(1,client1,car1,boost::posix_time::not_a_date_time,car1->getBasePrice());
+    AddressPtr address = std::make_shared<Address>("Lodz","Zielona","23");
+    ClientPtr client1 = std::make_shared<Client>("Anna","Nowak","98765432109",address);
+    AddressPtr address2 = std::make_shared<Address>("Lodz","Piotrkowska","123");
+    ClientPtr client2 = std::make_shared<Client>("Jan","Kowalski","1234567890",address2);
+    BicyclePtr bicycle = std::make_shared<Bicycle>("EL95353",100);
+    MopedPtr moped1 = std::make_shared<Moped>("WE11",210,900);
+    MopedPtr moped2 = std::make_shared<Moped>("WE11",210,1000);
+    MopedPtr moped3 = std::make_shared<Moped>("WE11",210,1100);
+    MopedPtr moped4 = std::make_shared<Moped>("WE11",210,2000);
+    MopedPtr moped5 = std::make_shared<Moped>("WE11",210,2100);
+    CarPtr car1 = std::make_shared<Car>("EL990LN",210,1600,Car::A);
+    CarPtr car2 = std::make_shared<Car>("EL990LN",210,1600,Car::B);
+    CarPtr car3 = std::make_shared<Car>("EL990LN",210,1600,Car::C);
+    CarPtr car4 = std::make_shared<Car>("EL990LN",210,1600,Car::D);
+    CarPtr car5 = std::make_shared<Car>("EL990LN",210,1600,Car::E);
+    RentPtr rent1 = std::make_shared<Rent>(1,client1,car1,boost::posix_time::not_a_date_time,car1->getBasePrice());
     clientrepository.addClient(client1);
     clientrepository.addClient(client2);
     vehiclerepository.addVehicle(bicycle);

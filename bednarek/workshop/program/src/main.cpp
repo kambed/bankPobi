@@ -16,14 +16,14 @@ using namespace std;
 //    return ptr->getPersonalId()=="98765432109";
 //}
 int main() {
-    StorageContainer* st = new StorageContainer();
-    cout<<st->getVehiclerepository().reportVehicle()<<endl;
-    cout<<st->getClientrepository().reportClient()<<endl;
-    cout<<st->getRentrepository().reportRent()<<endl;
-    Rent *rent2 = new Rent(1,st->getClientrepository().getClient(1),st->getVehiclerepository().getVehicle(7),boost::posix_time::not_a_date_time,st->getVehiclerepository().getVehicle(7)->getBasePrice());
-    st->getRentrepository().addRent(rent2);
-    cout<<st->getVehiclerepository().reportVehicle()<<endl;
-    cout<<st->getClientrepository().reportClient()<<endl;
-    cout<<st->getRentrepository().reportRent()<<endl;
+//    StorageContainerPtr st = new StorageContainer();
+//    cout<<st->getVehiclerepository().reportVehicle()<<endl;
+//    cout<<st->getClientrepository().reportClient()<<endl;
+//    cout<<st->getRentrepository().reportRent()<<endl;
+//    RentPtr rent2 = new Rent(1,st->getClientrepository().getClient(1),st->getVehiclerepository().getVehicle(7),boost::posix_time::not_a_date_time,st->getVehiclerepository().getVehicle(7)->getBasePrice());
+//    st->getRentrepository().addRent(rent2);
+//    cout<<st->getVehiclerepository().reportVehicle()<<endl;
+//    cout<<st->getClientrepository().reportClient()<<endl;
+//    cout<<st->getRentrepository().reportRent()<<endl;
 return 0;
 }

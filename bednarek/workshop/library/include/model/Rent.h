@@ -24,8 +24,10 @@ public:
 
     //GETTERS
     unsigned int getId() const;
-    Client *getClient() const;
-    Vehicle *getVehicle() const;
+
+    const ClientPtr getClient() const;
+    const VehiclePtr getVehicle() const;
+
     const boost::posix_time::ptime &getBeginTime() const;
     const boost::posix_time::ptime &getEndTime() const;
     const std::string getRentInfo() const;
