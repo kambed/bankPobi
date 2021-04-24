@@ -10,14 +10,15 @@
 
 //CONSTRUCTOR
 Client::Client(const std::string &firstName, const std::string &lastName, const std::string &personalId,
-               AddressPtr address) : firstName(firstName), lastName(lastName), personalID(personalId),
-                                         address(address) {}
+               const AddressPtr &address, const ClientTypePtr &clientType) : firstName(firstName), lastName(lastName),
+                                                                             personalID(personalId), address(address),
+                                                                             clientType(clientType) {}
 //DESTRUCTOR
 Client::~Client() {}
 
 //GETTERS
 const std::string Client::getClientInfo() const{
-    return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo();
+    return "Client:" + firstName + " " + lastName + " " + personalID + " " + address->getAddressInfo() + " " + clientType->getTypeInfo();
 }
 const std::string &Client::getFirstName() const {
     return firstName;
@@ -51,5 +52,12 @@ void Client::setAddress(AddressPtr address) {
         Client::address = address;
     }
 }
-
-
+void Client::setClientType(const ClientTypePtr &clientType) {
+    Client::clientType = clientType;
+}
+int Client::getMaxVehicles() {
+    return clientType->getMaxVehicles();
+}
+double Client::applyDiscount(double price) {
+    return clientType->applyDiscount(price);
+}

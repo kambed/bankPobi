@@ -9,6 +9,7 @@
 #include "Rent.h"
 #include "../typedefs.h"
 #include <vector>
+#include "ClientType.h"
 
 class Rent;
 class Client {
@@ -17,9 +18,12 @@ private:
     std::string lastName;
     std::string personalID;
     AddressPtr address;
+    ClientTypePtr clientType;
 public:
     //CONSTRUCTOR
-    Client(const std::string &firstName, const std::string &lastName, const std::string &personalId, AddressPtr address);
+    Client(const std::string &firstName, const std::string &lastName, const std::string &personalId,
+           const AddressPtr &address, const ClientTypePtr &clientType);
+
     //DESTRUCTOR
     virtual ~Client();
 
@@ -34,6 +38,11 @@ public:
     void setFirstName(const std::string &firstName);
     void setLastName(const std::string &lastName);
     void setAddress(AddressPtr address);
+    void setClientType(const ClientTypePtr &clientType);
+
+    //METHODS
+    int getMaxVehicles();
+    double applyDiscount(double price);
 
 };
 

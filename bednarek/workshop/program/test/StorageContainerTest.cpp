@@ -8,9 +8,10 @@
 struct TestSuiteContainerFixture {
     AddressPtr address = std::make_shared<Address>("Lodz","Zielona","23");
     AddressPtr address2 = std::make_shared<Address>("Warszawa","Niezielona","12");
-    ClientPtr client1 = std::make_shared<Client>("Anna","Nowak","98765432109",address);
-    ClientPtr client2 = std::make_shared<Client>("Jan","Kowalski","95435345539",address2);
-    ClientPtr client3 = std::make_shared<Client>("Ryszard","Kozak","11111111",address2);
+    GoldPtr gold = std::make_shared<Gold>();
+    ClientPtr client1 = std::make_shared<Client>("Anna","Nowak","98765432109",address,gold);
+    ClientPtr client2 = std::make_shared<Client>("Jan","Kowalski","95435345539",address2,gold);
+    ClientPtr client3 = std::make_shared<Client>("Ryszard","Kozak","11111111",address2,gold);
     BicyclePtr vehicle1 = std::make_shared<Bicycle>("EL95353",100);
     BicyclePtr vehicle2 = std::make_shared<Bicycle>("EL94234",200);
     RentPtr rent1 = std::make_shared<Rent>(1,client1,vehicle1,boost::posix_time::not_a_date_time,vehicle1->getBasePrice());

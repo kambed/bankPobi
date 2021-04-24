@@ -9,9 +9,14 @@
 struct TestSuiteRentFixture {
     AddressPtr adres=std::make_shared<Address>("Lodz", "Zielona", "22");
     VehiclePtr vehicle=std::make_shared<Bicycle>("EL42354",100);
-    ClientPtr client=std::make_shared<Client>("Jan","Kowalski","12345678901",adres);
+    DefaultPtr defaultt = std::make_shared<Default>();
+    BronzePtr bronze = std::make_shared<Bronze>();
+    SilverPtr silver = std::make_shared<Silver>();
+    GoldPtr gold = std::make_shared<Gold>();
+    PlatinumPtr platinum = std::make_shared<Platinum>();
+    DiamondPtr diamond = std::make_shared<Diamond>();
+    ClientPtr client=std::make_shared<Client>("Jan","Kowalski","12345678901",adres,defaultt);
     RentPtr rent=std::make_shared<Rent>(1,client,vehicle,boost::posix_time::not_a_date_time,vehicle->getBasePrice());
-
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteRent, TestSuiteRentFixture)
 
@@ -126,5 +131,39 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRent, TestSuiteRentFixture)
         vehicle->setBasePrice(500);
         BOOST_TEST(rent9->getRentcost() == cost);
     }
-
+    BOOST_AUTO_TEST_CASE(EndRentDefaultDiscountTests) {
+        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
+        BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
+    }
+    BOOST_AUTO_TEST_CASE(EndRentBronzeDiscountTests) {
+        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        client->setClientType(bronze);
+        rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
+        BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
+    }
+    BOOST_AUTO_TEST_CASE(EndRentSilverDiscountTests) {
+        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        client->setClientType(silver);
+        rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
+        BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
+    }
+    BOOST_AUTO_TEST_CASE(EndRentGoldDiscountTests) {
+        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        client->setClientType(gold);
+        rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
+        BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
+    }
+    BOOST_AUTO_TEST_CASE(EndRentPlatinumDiscountTests) {
+        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        client->setClientType(platinum);
+        rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
+        BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
+    }
+    BOOST_AUTO_TEST_CASE(EndRentDiamondDiscountTests) {
+        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        client->setClientType(diamond);
+        rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
+        BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
+    }
 BOOST_AUTO_TEST_SUITE_END()

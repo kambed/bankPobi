@@ -11,12 +11,15 @@
 #include "model/Client.h"
 #include "model/Vehicle.h"
 #include "model/Address.h"
+#include <memory>
+#include <iostream>
 
 StorageContainer::StorageContainer(){
+    GoldPtr gold = std::make_shared<Gold>();
     AddressPtr address = std::make_shared<Address>("Lodz","Zielona","23");
-    ClientPtr client1 = std::make_shared<Client>("Anna","Nowak","98765432109",address);
+    ClientPtr client1 = std::make_shared<Client>("Anna","Nowak","98765432109",address,gold);
     AddressPtr address2 = std::make_shared<Address>("Lodz","Piotrkowska","123");
-    ClientPtr client2 = std::make_shared<Client>("Jan","Kowalski","1234567890",address2);
+    ClientPtr client2 = std::make_shared<Client>("Jan","Kowalski","1234567890",address2,gold);
     BicyclePtr bicycle = std::make_shared<Bicycle>("EL95353",100);
     MopedPtr moped1 = std::make_shared<Moped>("WE11",210,900);
     MopedPtr moped2 = std::make_shared<Moped>("WE11",210,1000);

@@ -16,7 +16,8 @@ using namespace std;
 //    return ptr->getPersonalId()=="98765432109";
 //}
 int main() {
-//    StorageContainerPtr st = new StorageContainer();
+    StorageContainerPtr st = std::make_shared<StorageContainer>();
+    cout<<st->getClientrepository().getClient(1)->getClientInfo();
 //    cout<<st->getVehiclerepository().reportVehicle()<<endl;
 //    cout<<st->getClientrepository().reportClient()<<endl;
 //    cout<<st->getRentrepository().reportRent()<<endl;

@@ -80,4 +80,5 @@ void Rent::endRent(const boost::posix_time::ptime &endTime) {
                 this->endTime = endTime;
         }
     }
+    rentCost=client->applyDiscount(rentCost);
 }

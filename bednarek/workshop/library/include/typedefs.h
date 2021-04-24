@@ -8,6 +8,13 @@
 #include <model/Moped.h>
 #include <model/Bicycle.h>
 #include <model/Car.h>
+#include <model/ClientType.h>
+#include <model/Default.h>
+#include <model/Platinum.h>
+#include <model/Gold.h>
+#include <model/Silver.h>
+#include <model/Diamond.h>
+#include <model/Bronze.h>
 
 class Client;
 class Address;
@@ -25,12 +32,20 @@ typedef std::shared_ptr<Vehicle> VehiclePtr;
 typedef std::shared_ptr<Moped> MopedPtr;
 typedef std::shared_ptr<Bicycle> BicyclePtr;
 typedef std::shared_ptr<Car> CarPtr;
+typedef std::shared_ptr<ClientType> ClientTypePtr;
 
 typedef std::shared_ptr<VehicleRepository> VehicleRepositoryPtr;
 typedef std::shared_ptr<RentRepository> RentRepositoryPtr;
 typedef std::shared_ptr<ClientRepository> ClientRepositoryPtr;
 
 typedef std::shared_ptr<StorageContainer> StorageContainerPtr;
+
+typedef std::shared_ptr<Default> DefaultPtr;
+typedef std::shared_ptr<Bronze> BronzePtr;
+typedef std::shared_ptr<Silver> SilverPtr;
+typedef std::shared_ptr<Gold> GoldPtr;
+typedef std::shared_ptr<Platinum> PlatinumPtr;
+typedef std::shared_ptr<Diamond> DiamondPtr;
 
 typedef bool (*RentPredicate)(RentPtr);
 typedef bool (*ClientPredicate)(ClientPtr);
