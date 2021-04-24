@@ -27,7 +27,8 @@ const string Client::getFullClientInfo() const {
 }
 
 Client::Client(const std::string &firstName, const std::string &lastName, const std::string &personalID,
-               Address *address) : firstName (firstName), lastName(lastName), personalID(personalID), address(address) {
+               AddressPtr address) : firstName (firstName), lastName(lastName), personalID(personalID), address
+               (address) {
     //cout << "Utworzono klienta." << endl;
     //cout << getClientInfo() << endl << endl;
 }
@@ -54,24 +55,24 @@ const string &Client::getPersonalId() const {
     return personalID;
 }
 
-const Address *Client::getAddress() const {
+const AddressPtr Client::getAddress() const {
     return address;
 }
 
-void Client::setAddress(Address *address) {
+void Client::setAddress(AddressPtr address) {
     if (address != nullptr)
         Client::address = address;
 }
 
-const std::vector<Rent *> &Client::getCurrentRents() const {
+const std::vector<RentPtr> &Client::getCurrentRents() const {
     return currentRents;
 }
 
-void Client::addRent(Rent *rent) {
+void Client::addRent(RentPtr rent) {
     currentRents.push_back(rent);
 }
 
-void Client::removeRent(Rent *rent) {
+void Client::removeRent(RentPtr rent) {
     currentRents.erase(std::remove(currentRents.begin(), currentRents.end(), rent));
 }
 

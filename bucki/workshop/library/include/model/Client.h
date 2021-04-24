@@ -11,11 +11,11 @@ private:
     std::string firstName;
     std::string lastName;
     std::string personalID;
-    Address *address;
-    std::vector<Rent*> currentRents;
+    AddressPtr address;
+    std::vector<RentPtr> currentRents;
     Client();
 public:
-    Client(const std::string &firstName, const std::string &lastName, const std::string &personalID,Address *adres);
+    Client(const std::string &firstName, const std::string &lastName, const std::string &personalID,AddressPtr adres);
 
     ~Client();
 
@@ -31,12 +31,12 @@ public:
 
     const std::string &getPersonalId() const;
 
-    const Address *getAddress() const;
-    void setAddress(Address *address);
+    const AddressPtr getAddress() const;
+    void setAddress(AddressPtr address);
 
-    const std::vector<Rent *> &getCurrentRents() const;
-    void addRent(Rent * rent);
-    void removeRent(Rent * rent);
+    const std::vector<RentPtr> &getCurrentRents() const;
+    void addRent(RentPtr rent);
+    void removeRent(RentPtr rent);
 };
 
 

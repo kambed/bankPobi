@@ -1,6 +1,7 @@
 #include "model/Rent.h"
+#include "typedefs.h"
 
-Rent::Rent(unsigned int id, Client *client, Vehicle *vehicle,const boost::posix_time::ptime &beginTime): id(id),
+Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle,const boost::posix_time::ptime &beginTime): id(id),
            client(client), vehicle(vehicle),  beginTime(beginTime) {
     client->addRent(this);
     vehicle->setRented(true);
@@ -10,18 +11,25 @@ Rent::Rent(unsigned int id, Client *client, Vehicle *vehicle,const boost::posix_
     rentCost = vehicle->getBasePrice();
 }
 
-const Client *Rent::getClient() const {
+const ClientPtr Rent::getClient() const {
     return client;
 }
 
-const Vehicle *Rent::getVehicle() const {
+const VehiclePtr Rent::getVehicle() const {
     return vehicle;
 }
 
 const std::string Rent::getRentInfo() const {
+    std::stringstream ss;
+    ss << beginTime;
+    std::string begin = ss.str();
+    std::stringstream ss2;
+    ss2 << endTime;
+    std::string end = ss2.str();
+    if(end == "not-a-date-time")
+        end = "nie zakonczono";
     return id + ", klient: " + client->getClientInfo() + ", pojazd: " + vehicle->getVehicleInfo() +
-           ", Rozpoczecie wyporzyczenia: " + beginTime.zone_as_posix_string() + ", Zakonczenie wyporzyczenia: " +
-           endTime.zone_as_posix_string();
+           ", Rozpoczecie wypozyczenia: " + begin + ", Zakonczenie wypozyczenia: " + end;
 }
 
 unsigned int Rent::getId() const {
@@ -36,7 +44,7 @@ const boost::posix_time::ptime &Rent::getEndTime() const {
     return endTime;
 }
 
-const boost::posix_time::ptime &Rent::endRent(const boost::posix_time::ptime &endTime) {
+void Rent::endRent(const boost::posix_time::ptime &endTime) {
     if(this->endTime == boost::posix_time::not_a_date_time) {
         if (endTime < beginTime)
             this->endTime = beginTime;
@@ -46,7 +54,7 @@ const boost::posix_time::ptime &Rent::endRent(const boost::posix_time::ptime &en
         vehicle->setRented(false);
         client->removeRent(this);
     }
-    rentCost=rentCost*getRentDays();
+    rentCost=rentCost * getRentDays();
 }
 
 const int Rent::getRentDays() const {

@@ -12,6 +12,8 @@ private:
 public:
     Vehicle(const std::string &plateNumber, const unsigned int basePrice);
 
+    virtual ~Vehicle();
+
     const std::string &getPlateNumber() const;
 
     void setPlateNumber(const std::string &plateNumber);
@@ -20,11 +22,13 @@ public:
 
     void setBasePrice(const unsigned int basePrice);
 
-    const std::string getVehicleInfo() const;
+    virtual const std::string getVehicleInfo() const;
 
     bool isRented() const;
 
     void setRented(bool rented);
+
+    virtual double getActualRentalPrice();
 };
 
 
