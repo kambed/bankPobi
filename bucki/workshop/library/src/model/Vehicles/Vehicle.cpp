@@ -1,4 +1,4 @@
-#include "model/Vehicle.h"
+#include "model/Vehicles/Vehicle.h"
 
 Vehicle::Vehicle(const std::string &plateNumber, const unsigned int basePrice) : plateNumber(plateNumber),
                                                                            basePrice(basePrice) {}
@@ -22,14 +22,6 @@ void Vehicle::setBasePrice(const unsigned int basePrice) {
 
 const std::string Vehicle::getVehicleInfo() const{
     return plateNumber + ", cena: " + std::to_string(basePrice);
-}
-
-bool Vehicle::isRented() const {
-    return rented;
-}
-
-void Vehicle::setRented(bool rented) {
-    Vehicle::rented = rented;
 }
 
 double Vehicle::getActualRentalPrice() {

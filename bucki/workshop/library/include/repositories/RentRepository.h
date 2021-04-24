@@ -21,9 +21,9 @@ public:
 
     unsigned int getRentsSize();
 
-    std::vector<RentPtr> findBy(RentPredicate predicate) const;
-
-    std::vector<RentPtr> findAll() const;
+//    std::vector<RentPtr> findBy(RentPredicate predicate) const;
+//
+//    std::vector<RentPtr> findAll() const;
 };
 
 

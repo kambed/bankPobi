@@ -1,6 +1,6 @@
 #include <algorithm>
 #include "repositories/VehicleRepository.h"
-#include "model/Vehicle.h"
+#include "model/Vehicles/Vehicle.h"
 #include "typedefs.h"
 #include "repositories/RentRepository.h"
 
@@ -38,21 +38,21 @@ unsigned int VehicleRepository::getVehiclesSize(){
     return vehicles.size();
 }
 
-std::vector<VehiclePtr> VehicleRepository::findBy(VehiclePredicate predicate) const {
-    std::vector<VehiclePtr> found;
-    for (unsigned int i = 0; i < vehicles.size(); i++) {
-        VehiclePtr vehicle = getVehicle(i);
-        if (vehicle != nullptr && predicate(vehicle)) {
-            found.push_back(vehicle);
-        }
-    }
-    return found;
-}
-
-bool predicateTrue(VehiclePtr vehicle){
-    return vehicle != nullptr;
-}
-
-std::vector<VehiclePtr> VehicleRepository::findAll() const{
-    return VehicleRepository::findBy(predicateTrue);
-}
+//std::vector<VehiclePtr> VehicleRepository::findBy(VehiclePredicate predicate) const {
+//    std::vector<VehiclePtr> found;
+//    for (unsigned int i = 0; i < vehicles.size(); i++) {
+//        VehiclePtr vehicle = getVehicle(i);
+//        if (vehicle != nullptr && predicate(vehicle)) {
+//            found.push_back(vehicle);
+//        }
+//    }
+//    return found;
+//}
+//
+//bool predicateTrue(VehiclePtr vehicle){
+//    return vehicle != nullptr;
+//}
+//
+//std::vector<VehiclePtr> VehicleRepository::findAll() const{
+//    return VehicleRepository::findBy(predicateTrue);
+//}

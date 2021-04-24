@@ -23,9 +23,9 @@ public:
 
     unsigned int getVehiclesSize();
 
-    std::vector<VehiclePtr> findBy(VehiclePredicate predicate) const;
-
-    std::vector<VehiclePtr> findAll() const;
+//    std::vector<VehiclePtr> findBy(VehiclePredicate predicate) const;
+//
+//    std::vector<VehiclePtr> findAll() const;
 };
 
 

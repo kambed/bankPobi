@@ -12,7 +12,6 @@ private:
     std::string lastName;
     std::string personalID;
     AddressPtr address;
-    std::vector<RentPtr> currentRents;
     Client();
 public:
     Client(const std::string &firstName, const std::string &lastName, const std::string &personalID,AddressPtr adres);
@@ -20,8 +19,6 @@ public:
     ~Client();
 
     const std::string getClientInfo() const;
-
-    const std::string getFullClientInfo() const;
 
     const std::string &getFirstName() const;
     void setFirstName(const std::string &firstName);
@@ -33,10 +30,6 @@ public:
 
     const AddressPtr getAddress() const;
     void setAddress(AddressPtr address);
-
-    const std::vector<RentPtr> &getCurrentRents() const;
-    void addRent(RentPtr rent);
-    void removeRent(RentPtr rent);
 };
 
 

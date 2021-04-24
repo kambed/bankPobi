@@ -4,7 +4,29 @@ project(Library)
 set(SOURCE_FILES
         src/model/Client.cpp
         include/model/Client.h
-        src/model/Address.cpp include/model/Address.h src/model/Vehicle.cpp include/model/Vehicle.h src/model/Rent.cpp include/model/Rent.h include/typedefs.h src/repositories/ClientRepository.cpp include/repositories/ClientRepository.h src/repositories/VehicleRepository.cpp include/repositories/VehicleRepository.h src/repositories/RentRepository.cpp include/repositories/RentRepository.h src/repositories/StorageContainer.cpp include/repositories/StorageContainer.h src/model/Bicycle.cpp include/model/Bicycle.h src/model/MotorVehicle.cpp include/model/MotorVehicle.h src/model/Moped.cpp include/model/Moped.h src/model/Car.cpp include/model/Car.h)
+        src/model/Address.cpp
+        include/model/Address.h
+        src/model/Vehicles/Vehicle.cpp
+        include/model/Vehicles/Vehicle.h
+        src/model/Rent.cpp
+        include/model/Rent.h
+        include/typedefs.h
+        src/repositories/ClientRepository.cpp
+        include/repositories/ClientRepository.h
+        src/repositories/VehicleRepository.cpp
+        include/repositories/VehicleRepository.h
+        src/repositories/RentRepository.cpp
+        include/repositories/RentRepository.h
+        src/repositories/StorageContainer.cpp
+        include/repositories/StorageContainer.h
+        src/model/Vehicles/Bicycle.cpp
+        include/model/Vehicles/Bicycle.h
+        src/model/Vehicles/MotorVehicle.cpp
+        include/model/Vehicles/MotorVehicle.h
+        src/model/Vehicles/Moped.cpp
+        include/model/Vehicles/Moped.h
+        src/model/Vehicles/Car.cpp
+        include/model/Vehicles/Car.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -19,7 +41,15 @@ include_directories(
         ${Boost_INCLUDE_DIRS}
 )
 
-set(SOURCE_TEST_FILES test/master.cpp test/ClientTest.cpp test/AddressTest.cpp test/VehicleTest.cpp test/RentTest.cpp test/RepositoriesTest.cpp test/VehiclePricesTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+set(SOURCE_TEST_FILES
+        test/master.cpp
+        test/ClientTest.cpp
+        test/AddressTest.cpp
+        test/VehicleTest.cpp
+        test/RentTest.cpp
+        test/RepositoriesTest.cpp
+        test/VehiclePricesTest.cpp
+        ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

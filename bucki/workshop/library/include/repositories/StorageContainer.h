@@ -9,10 +9,6 @@
 
 class StorageContainer {
 private:
-    VehiclePtr vehicle;
-    ClientPtr client;
-    AddressPtr address;
-    RentPtr rent;
     ClientRepository clientsRepo;
     RentRepository rentsRepo;
     VehicleRepository vehiclesRepo;

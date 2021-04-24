@@ -1,6 +1,6 @@
-#include <model/MotorVehicle.h>
+#include <model/Vehicles/MotorVehicle.h>
 #include <cmath>
-#include "model/Car.h"
+#include "model/Vehicles/Car.h"
 
 Car::Car(const std::string &plateNumber, const unsigned int basePrice, unsigned int engineDisplacement,
          Car::Segment segmentType) : MotorVehicle(plateNumber, basePrice, engineDisplacement),

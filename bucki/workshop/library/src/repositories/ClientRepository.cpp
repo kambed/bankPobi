@@ -35,21 +35,21 @@ unsigned int ClientRepository::getClientsSize(){
     return clients.size();
 }
 
-std::vector<ClientPtr> ClientRepository::findBy(ClientPredicate predicate) const {
-    std::vector<ClientPtr> found;
-    for (unsigned int i = 0; i < clients.size(); i++) {
-        ClientPtr client = getClient(i);
-        if (client != nullptr && predicate(client)) {
-            found.push_back(client);
-        }
-    }
-    return found;
-}
-
-bool predicateTrue(ClientPtr client){
-    return client != nullptr;
-}
-
-std::vector<ClientPtr> ClientRepository::findAll() const{
-   return ClientRepository::findBy(predicateTrue);
-}
+//std::vector<ClientPtr> ClientRepository::findBy(ClientPredicate predicate) const {
+//    std::vector<ClientPtr> found;
+//    for (unsigned int i = 0; i < clients.size(); i++) {
+//        ClientPtr client = getClient(i);
+//        if (client != nullptr && predicate(client)) {
+//            found.push_back(client);
+//        }
+//    }
+//    return found;
+//}
+//
+//bool predicateTrue(ClientPtr client){
+//    return client != nullptr;
+//}
+//
+//std::vector<ClientPtr> ClientRepository::findAll() const{
+//   return ClientRepository::findBy(predicateTrue);
+//}

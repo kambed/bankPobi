@@ -1,5 +1,5 @@
 #include <cmath>
-#include "model/MotorVehicle.h"
+#include "model/Vehicles/MotorVehicle.h"
 
 MotorVehicle::MotorVehicle(const std::string &plateNumber, const unsigned int basePrice,
                            unsigned int engineDisplacement) : Vehicle(plateNumber, basePrice),

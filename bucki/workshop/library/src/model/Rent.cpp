@@ -3,8 +3,8 @@
 
 Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle,const boost::posix_time::ptime &beginTime): id(id),
            client(client), vehicle(vehicle),  beginTime(beginTime) {
-    client->addRent(this);
-    vehicle->setRented(true);
+//    client->addRent(this);
+//    vehicle->setRented(true);
     if(beginTime == boost::posix_time::not_a_date_time)
         this->beginTime = boost::posix_time::second_clock::local_time();
     else this->beginTime = beginTime;
@@ -51,8 +51,8 @@ void Rent::endRent(const boost::posix_time::ptime &endTime) {
         else if (endTime == boost::posix_time::not_a_date_time)
             this->endTime = boost::posix_time::second_clock::local_time();
         else this->endTime = endTime;
-        vehicle->setRented(false);
-        client->removeRent(this);
+//        vehicle->setRented(false);
+//        client->removeRent(this);
     }
     rentCost=rentCost * getRentDays();
 }
