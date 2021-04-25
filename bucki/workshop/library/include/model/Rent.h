@@ -1,4 +1,4 @@
-#include "Client.h"
+#include "model/Clients/Client.h"
 #include "model/Vehicles/Vehicle.h"
 #include <boost/date_time.hpp>
 #include <typedefs.h>

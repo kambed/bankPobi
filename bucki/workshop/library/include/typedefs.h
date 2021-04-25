@@ -29,5 +29,9 @@ typedef bool (*ClientPredicate)(ClientPtr);
 typedef bool (*VehiclePredicate)(VehiclePtr);
 typedef bool (*RentPredicate)(RentPtr);
 
+class ClientType;
+
+typedef std::shared_ptr<ClientType> ClientTypePtr;
+
 
 #endif //CARRENTAL_TYPEDEFS_H

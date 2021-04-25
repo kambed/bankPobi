@@ -1,7 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
-#include "model/Client.h"
+#include <cmath>
+#include <model/Clients/ClientType.h>
+#include "model/Clients/Client.h"
 
 using namespace std;
 
@@ -16,14 +18,14 @@ Client::~Client() {
 }
 
 const string Client::getClientInfo() const {
-    return firstName + " " + lastName + " " + personalID + ", adres:" + address->getAddressInfo();
+    return firstName + " " + lastName + " " + personalID + ", adres:" + address->getAddressInfo() + ", \ntyp klienta: "
+    + clientType->getTypeInfo();
 }
 
 Client::Client(const std::string &firstName, const std::string &lastName, const std::string &personalID,
-               AddressPtr address) : firstName (firstName), lastName(lastName), personalID(personalID), address
-               (address) {
-    //cout << "Utworzono klienta." << endl;
-    //cout << getClientInfo() << endl << endl;
+               AddressPtr address, ClientTypePtr clientType) : firstName (firstName), lastName(lastName), personalID
+               (personalID), address(address), clientType(clientType){
+
 }
 
 const string &Client::getFirstName() const {
@@ -52,9 +54,21 @@ const AddressPtr Client::getAddress() const {
     return address;
 }
 
-void Client::setAddress(AddressPtr address) {
+void Client::setAddress(shared_ptr<Address> address) {
     if (address != nullptr)
         Client::address = address;
+}
+
+void Client::setClientType(shared_ptr<ClientType> clientType) {
+    Client::clientType = clientType;
+}
+
+const int Client::getMaxVehicles() const {
+    return clientType->getMaxVehicles();
+}
+
+const double Client::applyDiscount(double price) const {
+    return float(clientType->applyDiscount(price)*100)/100;
 }
 
 

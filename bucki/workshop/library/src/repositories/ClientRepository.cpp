@@ -1,6 +1,6 @@
 #include <algorithm>
 #include "repositories/ClientRepository.h"
-#include "model/Client.h"
+#include "model/Clients/Client.h"
 #include "typedefs.h"
 
 ClientPtr ClientRepository::getClient(unsigned int id) const{

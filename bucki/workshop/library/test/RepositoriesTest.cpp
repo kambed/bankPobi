@@ -1,8 +1,9 @@
 #include <boost/test/unit_test.hpp>
+#include <model/Clients/Bronze.h>
 #include "repositories/StorageContainer.h"
 #include "typedefs.h"
 #include "model/Address.h"
-#include "model/Client.h"
+#include "model/Clients/Client.h"
 #include "model/Vehicles/Vehicle.h"
 #include "model/Rent.h"
 #include "repositories/ClientRepository.h"
@@ -36,7 +37,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteClientRepository)
     BOOST_AUTO_TEST_CASE(ClientRepositoryGetClientTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         BOOST_CHECK_EQUAL(storage->getClientsRepo().getClient(1),client);
     }
@@ -49,7 +51,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteClientRepository)
     BOOST_AUTO_TEST_CASE(ClientRepositoryAddClientTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         BOOST_CHECK_EQUAL(storage->getClientsRepo().getClientsSize(),2);
     }
@@ -63,7 +66,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteClientRepository)
     BOOST_AUTO_TEST_CASE(ClientRepositoryRemoveClientTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         BOOST_CHECK_EQUAL(storage->getClientsRepo().getClientsSize(),2);
         storage->getClientsRepo().removeClient(client);
@@ -73,7 +77,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteClientRepository)
     BOOST_AUTO_TEST_CASE(ClientRepositoryRemoveClientNullPtrTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         BOOST_CHECK_EQUAL(storage->getClientsRepo().getClientsSize(),2);
         storage->getClientsRepo().removeClient(nullptr);
@@ -203,7 +208,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
     BOOST_AUTO_TEST_CASE(RentRepositoryGetRentTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234",100);
         storage->getVehiclesRepo().addVehicle(vehicle);
@@ -221,7 +227,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
     BOOST_AUTO_TEST_CASE(RentRepositoryAddRentTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234",100);
         storage->getVehiclesRepo().addVehicle(vehicle);
@@ -240,7 +247,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
     BOOST_AUTO_TEST_CASE(RentRepositoryRemoveRentTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234",100);
         storage->getVehiclesRepo().addVehicle(vehicle);
@@ -254,7 +262,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
     BOOST_AUTO_TEST_CASE(RentRepositoryRemoveRentNullPtrTest){
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         AddressPtr address = std::make_shared<Address>("Pacanow","Kozia","12");
-        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address);
+        ClientTypePtr bronze = std::make_shared<Bronze>();
+        ClientPtr client = std::make_shared<Client>("Ala","Kot","01010101010",address,bronze);
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234",100);
         storage->getVehiclesRepo().addVehicle(vehicle);

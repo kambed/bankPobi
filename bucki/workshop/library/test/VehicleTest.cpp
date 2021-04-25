@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include <model/vehicle.h>
+#include <model/vehicles/vehicle.h>
 #include "typedefs.h"
 
 BOOST_AUTO_TEST_SUITE(TestSuiteVehicle)

@@ -54,7 +54,7 @@ void Rent::endRent(const boost::posix_time::ptime &endTime) {
 //        vehicle->setRented(false);
 //        client->removeRent(this);
     }
-    rentCost=rentCost * getRentDays();
+    rentCost= (rentCost-client->applyDiscount(rentCost)) * getRentDays();
 }
 
 const int Rent::getRentDays() const {

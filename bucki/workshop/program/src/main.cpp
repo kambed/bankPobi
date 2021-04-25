@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string>
-#include <model/Client.h>
+#include <model/Clients/Client.h>
 #include <model/Address.h>
 #include <model/Vehicles/Bicycle.h>
 #include "typedefs.h"
 #include "repositories/StorageContainer.h"
 #include <vector>
+#include <model/Clients/Gold.h>
 
 using namespace std;
 
@@ -18,7 +19,8 @@ int main() {
     cout << storage->getRentsRepo().reportRents() << endl;
 
     AddressPtr address = make_shared<Address>("Lodz","Zielona","5");
-    ClientPtr client = make_shared<Client>("Ala","Kot","11111111111",address);
+    ClientTypePtr gold = make_shared<Gold>();
+    ClientPtr client = make_shared<Client>("Ala","Kot","11111111111",address,gold);
     storage->getClientsRepo().addClient(client);
     VehiclePtr bicycle = make_shared<Bicycle>("AB0101",100);
     storage->getVehiclesRepo().addVehicle(bicycle);

@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include <model/vehicle.h>
+#include <model/vehicles/vehicle.h>
 #include <model/Vehicles/Bicycle.h>
 #include <model/Vehicles/Moped.h>
 #include <model/Vehicles/Car.h>
