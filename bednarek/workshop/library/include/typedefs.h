@@ -15,6 +15,7 @@
 #include <model/Silver.h>
 #include <model/Diamond.h>
 #include <model/Bronze.h>
+#include <functional>
 
 class Client;
 class Address;
@@ -47,8 +48,8 @@ typedef std::shared_ptr<Gold> GoldPtr;
 typedef std::shared_ptr<Platinum> PlatinumPtr;
 typedef std::shared_ptr<Diamond> DiamondPtr;
 
-typedef bool (*RentPredicate)(RentPtr);
-typedef bool (*ClientPredicate)(ClientPtr);
-typedef bool (*VehiclePredicate)(VehiclePtr);
+typedef std::function<bool(RentPtr)> RentPredicate;
+typedef std::function<bool(ClientPtr)> ClientPredicate;
+typedef std::function<bool(VehiclePtr)> VehiclePredicate;
 
 #endif //CARRENTAL_TYPEDEFS_H

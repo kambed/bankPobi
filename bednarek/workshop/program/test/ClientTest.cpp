@@ -27,10 +27,10 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteClient, TestSuiteClientFixture)
         BOOST_TEST(client->getLastName() == testLastName);
         BOOST_TEST(client->getPersonalId() == testPersonalID);
         BOOST_TEST(client->getAddress() == adres);
+        BOOST_TEST(client->isArchive() == false);
         std::vector<Rent *> testRents;
         //BOOST_TEST(client->getCurrentRents() == testRents);
     }
-
     BOOST_AUTO_TEST_CASE(FirstNameSetterTests) {
         client->setFirstName("Mariusz");
         BOOST_TEST(client->getFirstName() == "Mariusz");
@@ -133,9 +133,12 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteClient, TestSuiteClientFixture)
         BOOST_TEST(clientdiamond->getClientInfo() == "Client:" + testFirstName + " " + testLastName + " " + testPersonalID + " " + adres->getAddressInfo() + " " + "Platinum");
         BOOST_TEST(clientdiamond->getMaxVehicles() == 5);
         BOOST_TEST(clientdiamond->applyDiscount(100) == 90);
-
     }
-
+    BOOST_AUTO_TEST_CASE(ClientArchiveTest) {
+        BOOST_TEST(client->isArchive() == false);
+        client->setArchive(true);
+        BOOST_TEST(client->isArchive() == true);
+    }
 
 BOOST_AUTO_TEST_SUITE_END()
 

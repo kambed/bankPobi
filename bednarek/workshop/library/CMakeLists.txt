@@ -9,7 +9,7 @@ set(SOURCE_FILES
         src/model/Vehicle.cpp
         include/model/Vehicle.h
         src/model/Rent.cpp
-        include/model/Rent.h include/typedefs.h src/repositories/ClientRepository.cpp include/repositories/ClientRepository.h src/repositories/VehicleRepository.cpp include/repositories/VehicleRepository.h src/repositories/RentRepository.cpp include/repositories/RentRepository.h src/repositories/StorageContainer.cpp include/repositories/StorageContainer.h src/model/Bicycle.cpp include/model/Bicycle.h src/model/MotorVehicle.cpp include/model/MotorVehicle.h src/model/Moped.cpp include/model/Moped.h src/model/Car.cpp include/model/Car.h src/model/ClientType.cpp include/model/ClientType.h src/model/Default.cpp include/model/Default.h src/model/Bronze.cpp include/model/Bronze.h src/model/Silver.cpp include/model/Silver.h src/model/Gold.cpp include/model/Gold.h src/model/Platinum.cpp include/model/Platinum.h src/model/Diamond.cpp include/model/Diamond.h)
+        include/model/Rent.h include/typedefs.h src/repositories/ClientRepository.cpp include/repositories/ClientRepository.h src/repositories/VehicleRepository.cpp include/repositories/VehicleRepository.h src/repositories/RentRepository.cpp include/repositories/RentRepository.h src/repositories/StorageContainer.cpp include/repositories/StorageContainer.h src/model/Bicycle.cpp include/model/Bicycle.h src/model/MotorVehicle.cpp include/model/MotorVehicle.h src/model/Moped.cpp include/model/Moped.h src/model/Car.cpp include/model/Car.h src/model/ClientType.cpp include/model/ClientType.h src/model/Default.cpp include/model/Default.h src/model/Bronze.cpp include/model/Bronze.h src/model/Silver.cpp include/model/Silver.h src/model/Gold.cpp include/model/Gold.h src/model/Platinum.cpp include/model/Platinum.h src/model/Diamond.cpp include/model/Diamond.h src/managers/ClientManager.cpp include/managers/ClientManager.h src/managers/VehicleManager.cpp include/managers/VehicleManager.h src/managers/RentManager.cpp include/managers/RentManager.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -24,7 +24,7 @@ include_directories(
         ${Boost_INCLUDE_DIRS}
 )
 
-set(SOURCE_TEST_FILES ../program/test/master.cpp ../program/test/ClientTest.cpp ../program/test/AddressTest.cpp ../program/test/VehicleTest.cpp ../program/test/RentTest.cpp ../program/test/StorageContainerTest.cpp ../program/test/VehicleClassesPriceTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+set(SOURCE_TEST_FILES ../program/test/master.cpp ../program/test/ClientTest.cpp ../program/test/AddressTest.cpp ../program/test/VehicleTest.cpp ../program/test/RentTest.cpp ../program/test/StorageContainerTest.cpp ../program/test/VehicleClassesPriceTest.cpp ../program/test/ClientManagerTest.cpp ../program/test/VehicleManagerTest.cpp ../program/test/RentManagerTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

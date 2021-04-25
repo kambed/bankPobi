@@ -67,18 +67,23 @@ int Rent::getRentcost() {
 
 //METHODS
 void Rent::endRent(const boost::posix_time::ptime &endTime) {
-    if(this->endTime == boost::posix_time::not_a_date_time)
-    {
-        if(endTime == boost::posix_time::not_a_date_time) {
+    if(this->endTime == boost::posix_time::not_a_date_time) {
+        if (endTime == boost::posix_time::not_a_date_time) {
             this->endTime = boost::posix_time::second_clock::local_time();
-        }
-        else
-        {
-            if(endTime<beginTime)
+        } else {
+            if (endTime < beginTime)
                 this->endTime = beginTime;
             else
                 this->endTime = endTime;
         }
     }
     rentCost=client->applyDiscount(rentCost);
+}
+
+bool Rent::isArchive() const {
+    return archive;
+}
+
+void Rent::setArchive(bool archive) {
+    Rent::archive = archive;
 }

@@ -7,6 +7,7 @@
 #include "../model/Client.h"
 #include "../typedefs.h"
 #include <string>
+#include <vector>
 
 class ClientRepository {
 private:
@@ -19,6 +20,7 @@ public:
     int sizeClient() const;
     std::vector<ClientPtr> findBy(ClientPredicate predicate) const;
     std::vector<ClientPtr> findAll();
+    ClientPtr findByPersonalId(std::string Id);
 };
 
 
