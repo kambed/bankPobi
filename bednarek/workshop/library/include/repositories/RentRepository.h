@@ -17,6 +17,8 @@ public:
     void removeRent(RentPtr rent);
     std::string reportRent() const;
     int sizeRent() const;
+    std::vector<RentPtr> findBy(RentPredicate predicate) const;
+    std::vector<RentPtr> findAll();
 };
 
 

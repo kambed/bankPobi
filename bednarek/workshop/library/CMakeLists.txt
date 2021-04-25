@@ -24,7 +24,7 @@ include_directories(
         ${Boost_INCLUDE_DIRS}
 )
 
-set(SOURCE_TEST_FILES ../program/test/master.cpp ../program/test/ClientTest.cpp ../program/test/AddressTest.cpp ../program/test/VehicleTest.cpp ../program/test/RentTest.cpp ../program/test/StorageContainerTest.cpp ../program/test/VehicleClassesPriceTest.cpp ../program/test/ClientManagerTest.cpp ../program/test/VehicleManagerTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+set(SOURCE_TEST_FILES ../program/test/master.cpp ../program/test/ClientTest.cpp ../program/test/AddressTest.cpp ../program/test/VehicleTest.cpp ../program/test/RentTest.cpp ../program/test/StorageContainerTest.cpp ../program/test/VehicleClassesPriceTest.cpp ../program/test/ClientManagerTest.cpp ../program/test/VehicleManagerTest.cpp ../program/test/RentManagerTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

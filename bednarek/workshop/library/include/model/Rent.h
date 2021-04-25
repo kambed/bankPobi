@@ -18,12 +18,17 @@ private:
     boost::posix_time::ptime beginTime;
     boost::posix_time::ptime endTime = boost::posix_time::not_a_date_time;
     int rentCost=0;
+    bool archive=false;
 public:
     //CONSTRUCTOR
     Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost);
 
     //GETTERS
     unsigned int getId() const;
+
+    bool isArchive() const;
+
+    void setArchive(bool archive);
 
     const ClientPtr getClient() const;
     const VehiclePtr getVehicle() const;
