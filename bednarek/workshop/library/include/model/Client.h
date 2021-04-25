@@ -19,6 +19,7 @@ private:
     std::string personalID;
     AddressPtr address;
     ClientTypePtr clientType;
+    bool archive=false;
 public:
     //CONSTRUCTOR
     Client(const std::string &firstName, const std::string &lastName, const std::string &personalId,
@@ -28,6 +29,7 @@ public:
     virtual ~Client();
 
     //GETTERS
+    bool isArchive() const;
     const std::string getClientInfo() const;
     const std::string &getFirstName() const;
     const std::string &getLastName() const;
@@ -35,6 +37,7 @@ public:
     const AddressPtr getAddress() const;
 
     //SETTERS
+    void setArchive(bool archive);
     void setFirstName(const std::string &firstName);
     void setLastName(const std::string &lastName);
     void setAddress(AddressPtr address);

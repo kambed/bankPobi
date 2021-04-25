@@ -36,3 +36,11 @@ void Vehicle::setBasePrice(unsigned int basePrice) {
 double Vehicle::getActualRentalPrice() {
     return getBasePrice();
 }
+
+bool Vehicle::isArchive() const {
+    return archive;
+}
+
+void Vehicle::setArchive(bool archive) {
+    Vehicle::archive = archive;
+}

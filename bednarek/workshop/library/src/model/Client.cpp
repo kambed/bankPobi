@@ -32,6 +32,9 @@ const std::string &Client::getPersonalId() const {
 const AddressPtr Client::getAddress() const {
     return address;
 }
+bool Client::isArchive() const {
+    return archive;
+}
 
 //SETTERS
 void Client::setFirstName(const std::string &firstName) {
@@ -55,6 +58,10 @@ void Client::setAddress(AddressPtr address) {
 void Client::setClientType(const ClientTypePtr &clientType) {
     Client::clientType = clientType;
 }
+void Client::setArchive(bool archive) {
+    Client::archive = archive;
+}
+
 int Client::getMaxVehicles() {
     return clientType->getMaxVehicles();
 }

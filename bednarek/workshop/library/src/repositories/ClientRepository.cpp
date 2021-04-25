@@ -53,3 +53,14 @@ bool testTrue(ClientPtr ptr)
 std::vector<ClientPtr> ClientRepository::findAll() {
     return findBy(testTrue);
 }
+ClientPtr ClientRepository::findByPersonalId(std::string ID) {
+    for(int i=0;i<Clients.size();i++)
+    {
+        if(Clients[i]->getPersonalId()==ID)
+        {
+            ClientPtr client = Clients[i];
+            return client;
+        }
+    }
+    return nullptr;
+}
