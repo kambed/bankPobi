@@ -4,10 +4,10 @@
 
 #include "ClientType.h"
 
-class Bronze : public ClientType{
+class Bronze : public ClientType {
 private:
-    int maxVehicles=2;
-    double discount=3;
+    int maxVehicles = 2;
+    double discount = 3;
 public:
     int getMaxVehicles() const override;
 

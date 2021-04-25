@@ -7,13 +7,13 @@ Car::Car(const std::string &plateNumber, const unsigned int basePrice, unsigned 
                                      SegmentType(segmentType) {}
 
 double Car::getActualRentalPrice() {
-    return floor(MotorVehicle::getActualRentalPrice()*(1+(SegmentType/10.0))*100.0)/100.0;
+    return floor(MotorVehicle::getActualRentalPrice() * (1 + (SegmentType / 10.0)) * 100.0) / 100.0;
 }
 
 Car::~Car() {}
 
 const std::string Car::getVehicleInfo() const {
-    return MotorVehicle::getVehicleInfo() + ", Segment: "+ std::to_string(SegmentType);
+    return MotorVehicle::getVehicleInfo() + ", Segment: " + std::to_string(SegmentType);
 }
 
 

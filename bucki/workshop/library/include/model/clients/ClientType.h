@@ -6,7 +6,7 @@
 
 class ClientType {
 private:
-    int maxVehicles=1;
+    int maxVehicles = 1;
 public:
     virtual int getMaxVehicles() const;
 

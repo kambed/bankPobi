@@ -8,6 +8,7 @@ class Vehicle {
 private:
     std::string plateNumber;
     unsigned int basePrice;
+    bool archive = false;
 public:
     Vehicle(const std::string &plateNumber, const unsigned int basePrice);
 
@@ -15,7 +16,7 @@ public:
 
     const std::string &getPlateNumber() const;
 
-    void setPlateNumber(const std::string &plateNumber);
+    //void setPlateNumber(const std::string &plateNumber);
 
     const unsigned int getBasePrice() const;
 
@@ -24,6 +25,10 @@ public:
     virtual const std::string getVehicleInfo() const;
 
     virtual double getActualRentalPrice();
+
+    bool isArchive() const;
+
+    void setArchive(bool archive);
 };
 
 

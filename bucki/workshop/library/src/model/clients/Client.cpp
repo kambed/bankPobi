@@ -19,12 +19,12 @@ Client::~Client() {
 
 const string Client::getClientInfo() const {
     return firstName + " " + lastName + " " + personalID + ", adres:" + address->getAddressInfo() + ", \ntyp klienta: "
-    + clientType->getTypeInfo();
+           + clientType->getTypeInfo();
 }
 
 Client::Client(const std::string &firstName, const std::string &lastName, const std::string &personalID,
-               AddressPtr address, ClientTypePtr clientType) : firstName (firstName), lastName(lastName), personalID
-               (personalID), address(address), clientType(clientType){
+               AddressPtr address, ClientTypePtr clientType) : firstName(firstName), lastName(lastName), personalID
+        (personalID), address(address), clientType(clientType) {
 
 }
 
@@ -54,12 +54,12 @@ const AddressPtr Client::getAddress() const {
     return address;
 }
 
-void Client::setAddress(shared_ptr<Address> address) {
+void Client::setAddress(shared_ptr <Address> address) {
     if (address != nullptr)
         Client::address = address;
 }
 
-void Client::setClientType(shared_ptr<ClientType> clientType) {
+void Client::setClientType(shared_ptr <ClientType> clientType) {
     Client::clientType = clientType;
 }
 
@@ -68,7 +68,15 @@ const int Client::getMaxVehicles() const {
 }
 
 const double Client::applyDiscount(double price) const {
-    return float(clientType->applyDiscount(price)*100)/100;
+    return float(clientType->applyDiscount(price) * 100) / 100;
+}
+
+bool Client::isArchive() const {
+    return archive;
+}
+
+void Client::setArchive(bool archive) {
+    Client::archive = archive;
 }
 
 

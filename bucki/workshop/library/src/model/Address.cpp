@@ -6,8 +6,8 @@ using namespace std;
 Address::Address(const string &city, const string &street, const string &number) : city(city), street(street),
                                                                                    number(number) {}
 
-const string Address::getAddressInfo() const{
-    return street+" "+number+", "+city;
+const string Address::getAddressInfo() const {
+    return street + " " + number + ", " + city;
 }
 
 const string &Address::getCity() const {

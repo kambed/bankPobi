@@ -18,13 +18,13 @@ int main() {
     cout << storage->getVehiclesRepo().reportVehicles() << endl;
     cout << storage->getRentsRepo().reportRents() << endl;
 
-    AddressPtr address = make_shared<Address>("Lodz","Zielona","5");
+    AddressPtr address = make_shared<Address>("Lodz", "Zielona", "5");
     ClientTypePtr gold = make_shared<Gold>();
-    ClientPtr client = make_shared<Client>("Ala","Kot","11111111111",address,gold);
+    ClientPtr client = make_shared<Client>("Ala", "Kot", "11111111111", address, gold);
     storage->getClientsRepo().addClient(client);
-    VehiclePtr bicycle = make_shared<Bicycle>("AB0101",100);
+    VehiclePtr bicycle = make_shared<Bicycle>("AB0101", 100);
     storage->getVehiclesRepo().addVehicle(bicycle);
-    RentPtr rent = make_shared<Rent>(2,client,bicycle,boost::posix_time::second_clock::local_time());
+    RentPtr rent = make_shared<Rent>(2, client, bicycle, boost::posix_time::second_clock::local_time());
     storage->getRentsRepo().addRent(rent);
 
     cout << "Po: " << endl << endl;

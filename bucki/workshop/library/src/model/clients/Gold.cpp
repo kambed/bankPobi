@@ -9,5 +9,5 @@ std::string Gold::getTypeInfo() {
 }
 
 double Gold::applyDiscount(double price) {
-    return ClientType::applyDiscount(price)*0.05;
+    return ClientType::applyDiscount(price) * 0.05;
 }

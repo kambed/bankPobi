@@ -1,12 +1,12 @@
-#ifndef CARRENTAL_DEFAULT_H
-#define CARRENTAL_DEFAULT_H
+#ifndef CARRENTAL_DIAMOND_H
+#define CARRENTAL_DIAMOND_H
 
 
 #include "ClientType.h"
 
-class Default : public ClientType {
+class Diamond : public ClientType {
 private:
-    int maxVehicles=1;
+    int maxVehicles = 10;
 public:
     int getMaxVehicles() const override;
 
@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //CARRENTAL_DEFAULT_H
+#endif //CARRENTAL_DIAMOND_H

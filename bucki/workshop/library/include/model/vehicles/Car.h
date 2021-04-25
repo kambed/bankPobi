@@ -3,10 +3,13 @@
 
 
 #include "Vehicle.h"
+#include "MotorVehicle.h"
 
 class Car : public MotorVehicle {
 public:
-    enum Segment{A=0,B=1,C=2,D=3,E=5};
+    enum Segment {
+        A = 0, B = 1, C = 2, D = 3, E = 5
+    };
 private:
     Segment SegmentType;
 public:

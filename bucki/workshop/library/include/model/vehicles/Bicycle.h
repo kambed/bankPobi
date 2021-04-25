@@ -4,7 +4,7 @@
 
 #include "Vehicle.h"
 
-class Bicycle : public Vehicle{
+class Bicycle : public Vehicle {
 public:
     Bicycle(const std::string &plateNumber, const unsigned int basePrice);
 };

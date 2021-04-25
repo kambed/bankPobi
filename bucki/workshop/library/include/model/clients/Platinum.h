@@ -1,12 +1,12 @@
-#ifndef CARRENTAL_GOLD_H
-#define CARRENTAL_GOLD_H
+#ifndef CARRENTAL_PLATINUM_H
+#define CARRENTAL_PLATINUM_H
 
 
 #include "ClientType.h"
 
-class Gold : public ClientType {
+class Platinum : public ClientType {
 private:
-    int maxVehicles=4;
+    int maxVehicles = 5;
 public:
     int getMaxVehicles() const override;
 
@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //CARRENTAL_GOLD_H
+#endif //CARRENTAL_PLATINUM_H

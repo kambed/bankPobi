@@ -6,7 +6,7 @@
 
 class Silver : public ClientType {
 private:
-    int maxVehicles=3;
+    int maxVehicles = 3;
 public:
     int getMaxVehicles() const override;
 

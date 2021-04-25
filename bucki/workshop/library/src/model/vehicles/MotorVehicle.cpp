@@ -6,12 +6,12 @@ MotorVehicle::MotorVehicle(const std::string &plateNumber, const unsigned int ba
                                                               engineDisplacement(engineDisplacement) {}
 
 double MotorVehicle::getActualRentalPrice() {
-    if(engineDisplacement<1000)
+    if (engineDisplacement < 1000)
         return Vehicle::getActualRentalPrice();
-    if(engineDisplacement>=1000 && engineDisplacement<=2000)
-        return floor((Vehicle::getActualRentalPrice()*((engineDisplacement/2000.0)+0.5)*100.0))/100.0;
-    if(engineDisplacement>=2000)
-        return Vehicle::getActualRentalPrice()*1.5;
+    if (engineDisplacement >= 1000 && engineDisplacement <= 2000)
+        return floor((Vehicle::getActualRentalPrice() * ((engineDisplacement / 2000.0) + 0.5) * 100.0)) / 100.0;
+    if (engineDisplacement >= 2000)
+        return Vehicle::getActualRentalPrice() * 1.5;
 }
 
 MotorVehicle::~MotorVehicle() {}

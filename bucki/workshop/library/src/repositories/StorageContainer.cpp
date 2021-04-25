@@ -13,25 +13,25 @@
 StorageContainer::StorageContainer() {
     AddressPtr address = std::make_shared<Address>("Lodz", "Politechniki", "38");
     ClientTypePtr bronze = std::make_shared<Bronze>();
-    ClientPtr client = std::make_shared<Client>("Jan","Kowalski","12345678900", address,bronze);
-    VehiclePtr vehicle = std::make_shared<Bicycle>("AB1234",10000);
-    RentPtr rent = std::make_shared<Rent>(1,client,vehicle,boost::posix_time::not_a_date_time);
+    ClientPtr client = std::make_shared<Client>("Jan", "Kowalski", "12345678900", address, bronze);
+    VehiclePtr vehicle = std::make_shared<Bicycle>("AB1234", 10000);
+    RentPtr rent = std::make_shared<Rent>(1, client, vehicle, boost::posix_time::not_a_date_time);
     clientsRepo.addClient(client);
     vehiclesRepo.addVehicle(vehicle);
     rentsRepo.addRent(rent);
 }
 
-StorageContainer::~StorageContainer(){
+StorageContainer::~StorageContainer() {
 }
 
-ClientRepository &StorageContainer::getClientsRepo(){
+ClientRepository &StorageContainer::getClientsRepo() {
     return clientsRepo;
 }
 
-RentRepository &StorageContainer::getRentsRepo(){
+RentRepository &StorageContainer::getRentsRepo() {
     return rentsRepo;
 }
 
-VehicleRepository &StorageContainer::getVehiclesRepo(){
+VehicleRepository &StorageContainer::getVehiclesRepo() {
     return vehiclesRepo;
 }

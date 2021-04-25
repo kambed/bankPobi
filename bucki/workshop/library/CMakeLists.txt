@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.4)
 project(Library)
 
 set(SOURCE_FILES
-        src/model/Clients/Client.cpp
-        include/model/Clients/Client.h
+        src/model/clients/Client.cpp
+        include/model/clients/Client.h
         src/model/Address.cpp
         include/model/Address.h
-        src/model/Vehicles/Vehicle.cpp
-        include/model/Vehicles/Vehicle.h
+        src/model/vehicles/Vehicle.cpp
+        include/model/vehicles/Vehicle.h
         src/model/Rent.cpp
         include/model/Rent.h
         include/typedefs.h
@@ -19,14 +19,14 @@ set(SOURCE_FILES
         include/repositories/RentRepository.h
         src/repositories/StorageContainer.cpp
         include/repositories/StorageContainer.h
-        src/model/Vehicles/Bicycle.cpp
-        include/model/Vehicles/Bicycle.h
-        src/model/Vehicles/MotorVehicle.cpp
-        include/model/Vehicles/MotorVehicle.h
-        src/model/Vehicles/Moped.cpp
-        include/model/Vehicles/Moped.h
-        src/model/Vehicles/Car.cpp
-        include/model/Vehicles/Car.h src/model/Clients/ClientType.cpp include/model/Clients/ClientType.h src/model/Clients/Default.cpp include/model/Clients/Default.h src/model/Clients/Bronze.cpp include/model/Clients/Bronze.h src/model/Clients/Silver.cpp include/model/Clients/Silver.h src/model/Clients/Gold.cpp include/model/Clients/Gold.h src/model/Clients/Platinum.cpp include/model/Clients/Platinum.h src/model/Clients/Diamond.cpp include/model/Clients/Diamond.h)
+        src/model/vehicles/Bicycle.cpp
+        include/model/vehicles/Bicycle.h
+        src/model/vehicles/MotorVehicle.cpp
+        include/model/vehicles/MotorVehicle.h
+        src/model/vehicles/Moped.cpp
+        include/model/vehicles/Moped.h
+        src/model/vehicles/Car.cpp
+        include/model/vehicles/Car.h src/model/clients/ClientType.cpp include/model/clients/ClientType.h src/model/clients/Default.cpp include/model/clients/Default.h src/model/clients/Bronze.cpp include/model/clients/Bronze.h src/model/clients/Silver.cpp include/model/clients/Silver.h src/model/clients/Gold.cpp include/model/clients/Gold.h src/model/clients/Platinum.cpp include/model/clients/Platinum.h src/model/clients/Diamond.cpp include/model/clients/Diamond.h src/model/managers/ClientManager.cpp include/model/managers/ClientManager.h src/model/managers/LogicContainer.cpp include/model/managers/LogicContainer.h src/model/managers/VehicleManager.cpp include/model/managers/VehicleManager.h src/model/managers/RentManager.cpp include/model/managers/RentManager.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -49,7 +49,7 @@ set(SOURCE_TEST_FILES
         test/RentTest.cpp
         test/RepositoriesTest.cpp
         test/VehiclePricesTest.cpp
-        ) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/ClientManagerTest.cpp test/VehicleManagerTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 
