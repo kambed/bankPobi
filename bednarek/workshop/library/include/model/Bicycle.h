@@ -16,6 +16,7 @@ public:
     const std::string getVehicleInfo() const;
 
     const std::string getInfo() const override;
+
 };
 
 

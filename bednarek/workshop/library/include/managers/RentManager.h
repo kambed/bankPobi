@@ -19,7 +19,7 @@ public:
     std::vector<RentPtr> findRents(RentPredicate predicate) const;
     std::vector<RentPtr> findAllRents() const;
     double checkClientRentBalance(ClientPtr client) const;
-    RentPtr rentVehicle(int id,ClientPtr client,VehiclePtr vehicle,boost::posix_time::ptime beginTime);
+    RentPtr rentVehicle(ClientPtr client,VehiclePtr vehicle,boost::posix_time::ptime beginTime);
     void returnVehicle(VehiclePtr vehicle,boost::posix_time::ptime endTime);
     void changeClientType(ClientPtr client) const;
 };

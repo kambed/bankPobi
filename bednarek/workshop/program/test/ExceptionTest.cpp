@@ -7,6 +7,7 @@
 #include "exceptions/VehicleException.h"
 #include "exceptions/ClientException.h"
 #include "exceptions/RentException.h"
+#include <boost/uuid/uuid_generators.hpp>
 BOOST_AUTO_TEST_SUITE(Exceptions)
 
 BOOST_AUTO_TEST_CASE(VehicleExceptionTest) {
@@ -19,10 +20,10 @@ BOOST_AUTO_TEST_CASE(RentExceptionTest) {
     AddressPtr address = std::make_shared<Address>("Lodz","Zielona","23");
     BicyclePtr bicycle = std::make_shared<Bicycle>("EL95353",100);
     ClientPtr client = std::make_shared<Client>("Anna","Nowak","98765432109",address,gold);
-    BOOST_CHECK_NO_THROW(RentPtr rentError = std::make_shared<Rent>(1,client,bicycle,boost::posix_time::not_a_date_time,bicycle->getBasePrice()));
-    BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(0,client,bicycle,boost::posix_time::not_a_date_time,bicycle->getBasePrice()),RentException::exception);
-    BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(1,nullptr,bicycle,boost::posix_time::not_a_date_time,bicycle->getBasePrice()),RentException::exception);
-    BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(1,client,nullptr,boost::posix_time::not_a_date_time,bicycle->getBasePrice()),RentException::exception);
+    boost::uuids::random_generator generator;
+    BOOST_CHECK_NO_THROW(RentPtr rentError = std::make_shared<Rent>(generator(),client,bicycle,boost::posix_time::not_a_date_time,bicycle->getBasePrice()));
+    BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(generator(),nullptr,bicycle,boost::posix_time::not_a_date_time,bicycle->getBasePrice()),RentException::exception);
+    BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(generator(),client,nullptr,boost::posix_time::not_a_date_time,bicycle->getBasePrice()),RentException::exception);
 }
 BOOST_AUTO_TEST_CASE(ClientExceptionTest) {
     GoldPtr gold = std::make_shared<Gold>();

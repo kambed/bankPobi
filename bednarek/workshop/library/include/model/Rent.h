@@ -9,10 +9,11 @@
 #include "Vehicle.h"
 #include "../typedefs.h"
 #include <boost/date_time/posix_time/ptime.hpp>
+#include <boost/uuid/uuid.hpp>
 class Client;
 class Rent {
 private:
-    unsigned int id;
+    boost::uuids::uuid id;
     ClientPtr client;
     VehiclePtr vehicle;
     boost::posix_time::ptime beginTime;
@@ -21,10 +22,10 @@ private:
     bool archive=false;
 public:
     //CONSTRUCTOR
-    Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost);
+    Rent(boost::uuids::uuid id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost);
 
     //GETTERS
-    unsigned int getId() const;
+    boost::uuids::uuid getId() const;
 
     bool isArchive() const;
 

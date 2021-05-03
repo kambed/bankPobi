@@ -6,6 +6,7 @@
 #include "model/Address.h"
 #include "model/Vehicle.h"
 #include "model/Rent.h"
+#include <boost/uuid/uuid_generators.hpp>
 struct TestSuiteRentFixture {
     AddressPtr adres=std::make_shared<Address>("Lodz", "Zielona", "22");
     VehiclePtr vehicle=std::make_shared<Bicycle>("EL42354",100);
@@ -16,14 +17,15 @@ struct TestSuiteRentFixture {
     PlatinumPtr platinum = std::make_shared<Platinum>();
     DiamondPtr diamond = std::make_shared<Diamond>();
     ClientPtr client=std::make_shared<Client>("Jan","Kowalski","12345678901",adres,defaultt);
-    RentPtr rent=std::make_shared<Rent>(1,client,vehicle,boost::posix_time::not_a_date_time,vehicle->getBasePrice());
+    boost::uuids::random_generator generator;
+    RentPtr rent=std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::not_a_date_time,vehicle->getBasePrice());
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteRent, TestSuiteRentFixture)
 
     BOOST_AUTO_TEST_CASE(RentConstructorTests) {
         //BOOST_TEST(vehicle->isRented() == false);
-        RentPtr rent=std::make_shared<Rent>(1,client,vehicle,boost::posix_time::not_a_date_time,vehicle->getBasePrice());
-        BOOST_TEST(rent->getId() == 1);
+        RentPtr rent=std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::not_a_date_time,vehicle->getBasePrice());
+        //BOOST_TEST(rent->getId() == 1);
         BOOST_TEST(rent->getClient() == client);
         BOOST_TEST(rent->getVehicle() == vehicle);
         //std::vector<RentPtr> testRents;
@@ -38,14 +40,14 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRent, TestSuiteRentFixture)
         BOOST_TEST(rent->getEndTime() == boost::posix_time::not_a_date_time);
     }
     BOOST_AUTO_TEST_CASE(RentTimesGivenConstructorTests) {
-        RentPtr rent1 = std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,5,13),boost::posix_time::hours(9)),vehicle->getBasePrice());
+        RentPtr rent1 = std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,5,13),boost::posix_time::hours(9)),vehicle->getBasePrice());
         BOOST_TEST_REQUIRE(!rent1->getBeginTime().is_not_a_date_time());
         BOOST_TEST(rent1->getBeginTime() == boost::posix_time::ptime(boost::gregorian::date(2021,5,13),boost::posix_time::hours(9)));
         BOOST_TEST(rent1->getEndTime() == boost::posix_time::not_a_date_time);
     }
 
     BOOST_AUTO_TEST_CASE(RentGettersTests) {
-        BOOST_TEST(rent->getId() == 1);
+        //BOOST_TEST(rent->getId() == 1);
         BOOST_TEST(rent->getClient() == client);
         BOOST_TEST(rent->getVehicle() == vehicle);
         BOOST_TEST(rent->getBeginTime() == boost::posix_time::second_clock::local_time());
@@ -91,77 +93,77 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRent, TestSuiteRentFixture)
         BOOST_TEST(rent->getEndTime() == boost::posix_time::second_clock::local_time());
     }
     BOOST_AUTO_TEST_CASE(RentDaysNotEndedTests) {
-        RentPtr rent2 = std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent2 = std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         BOOST_TEST(rent2->getRentdays() == 0);
     }
     BOOST_AUTO_TEST_CASE(RentDaysEndedlessthen1minTests) {
-        RentPtr rent3 = std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent3 = std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent3->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10))+boost::posix_time::seconds(59));
         BOOST_TEST(rent3->getRentdays() == 0);
     }
     BOOST_AUTO_TEST_CASE(RentDaysEnded1minTests) {
-        RentPtr rent4= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent4= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent4->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10))+boost::posix_time::minutes(1));
         BOOST_TEST(rent4->getRentdays() == 1);
     }
     BOOST_AUTO_TEST_CASE(RentDaysEnded23h59mTests) {
-        RentPtr rent5= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent5= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent5->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9))+boost::posix_time::minutes(59));
         BOOST_TEST(rent5->getRentdays() == 1);
     }
     BOOST_AUTO_TEST_CASE(RentDaysEnded24hTests) {
-        RentPtr rent6= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent6= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent6->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(10)));
         BOOST_TEST(rent6->getRentdays() == 2);
     }
     BOOST_AUTO_TEST_CASE(RentCost0Tests) {
-        RentPtr rent7= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent7= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent7->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)));
         BOOST_TEST(rent7->getRentcost() == 0);
     }
     BOOST_AUTO_TEST_CASE(RentCostTests) {
-        RentPtr rent8= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent8= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent8->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(10)));
         BOOST_TEST(rent8->getRentcost() == vehicle->getBasePrice() * rent8->getRentdays());
     }
     BOOST_AUTO_TEST_CASE(RentCostChangeBasePriceTests) {
-        RentPtr rent9= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent9= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent9->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,8),boost::posix_time::hours(9)));
         int cost=rent9->getRentcost();
         vehicle->setBasePrice(500);
         BOOST_TEST(rent9->getRentcost() == cost);
     }
     BOOST_AUTO_TEST_CASE(EndRentDefaultDiscountTests) {
-        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent10= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
         BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
     }
     BOOST_AUTO_TEST_CASE(EndRentBronzeDiscountTests) {
-        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent10= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         client->setClientType(bronze);
         rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
         BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
     }
     BOOST_AUTO_TEST_CASE(EndRentSilverDiscountTests) {
-        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent10= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         client->setClientType(silver);
         rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
         BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
     }
     BOOST_AUTO_TEST_CASE(EndRentGoldDiscountTests) {
-        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent10= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         client->setClientType(gold);
         rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
         BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
     }
     BOOST_AUTO_TEST_CASE(EndRentPlatinumDiscountTests) {
-        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent10= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         client->setClientType(platinum);
         rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
         BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());
     }
     BOOST_AUTO_TEST_CASE(EndRentDiamondDiscountTests) {
-        RentPtr rent10= std::make_shared<Rent>(1,client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
+        RentPtr rent10= std::make_shared<Rent>(generator(),client,vehicle,boost::posix_time::ptime(boost::gregorian::date(2021,4,6),boost::posix_time::hours(10)),vehicle->getBasePrice());
         client->setClientType(diamond);
         rent10->endRent(boost::posix_time::ptime(boost::gregorian::date(2021,4,7),boost::posix_time::hours(9)));
         BOOST_TEST(rent10->getRentcost() == client->applyDiscount(vehicle->getBasePrice()) * rent10->getRentdays());

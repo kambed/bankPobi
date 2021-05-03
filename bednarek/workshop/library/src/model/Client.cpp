@@ -42,6 +42,9 @@ const std::string &Client::getLastName() const {
 const std::string &Client::getPersonalId() const {
     return personalID;
 }
+const std::string &Client::getId() const {
+    return getPersonalId();
+}
 const AddressPtr Client::getAddress() const {
     return address;
 }

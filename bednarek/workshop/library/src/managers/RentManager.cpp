@@ -5,6 +5,7 @@
 #include "managers/RentManager.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
+#include <boost/uuid/random_generator.hpp>
 
 std::vector<RentPtr> RentManager::getAllClientRents(ClientPtr client) const {
     std::vector<RentPtr> found;
@@ -52,10 +53,11 @@ double RentManager::checkClientRentBalance(ClientPtr client) const {
     return rentbalance;
 }
 
-RentPtr RentManager::rentVehicle(int id,ClientPtr client, VehiclePtr vehicle, boost::posix_time::ptime beginTime) {
+RentPtr RentManager::rentVehicle(ClientPtr client, VehiclePtr vehicle, boost::posix_time::ptime beginTime) {
     if(client->isArchive()==false && vehicle->isArchive()==false && client->getMaxVehicles()>getAllClientRents(client).size() && getVehicleRent(vehicle)==nullptr)
     {
-        RentPtr rent = std::make_shared<Rent>(id,client,vehicle,beginTime,vehicle->getBasePrice());
+        boost::uuids::random_generator generator;
+        RentPtr rent = std::make_shared<Rent>(generator(),client,vehicle,beginTime,vehicle->getBasePrice());
         currentRents.addRent(rent);
         return rent;
     }

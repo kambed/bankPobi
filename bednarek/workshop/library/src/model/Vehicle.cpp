@@ -19,6 +19,9 @@ Vehicle::~Vehicle() {
 
 }
 //GETTERS
+const std::string &Vehicle::getId() const {
+    return getPlateNumber();
+}
 const std::string &Vehicle::getPlateNumber() const {
     return plateNumber;
 }

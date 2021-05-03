@@ -13,8 +13,11 @@
 #include "model/Address.h"
 #include <memory>
 #include <iostream>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 
 StorageContainer::StorageContainer(){
+    boost::uuids::random_generator generator;
     GoldPtr gold = std::make_shared<Gold>();
     AddressPtr address = std::make_shared<Address>("Lodz","Zielona","23");
     ClientPtr client1 = std::make_shared<Client>("Anna","Nowak","98765432109",address,gold);
@@ -31,7 +34,21 @@ StorageContainer::StorageContainer(){
     CarPtr car3 = std::make_shared<Car>("EL990LN",210,1600,Car::C);
     CarPtr car4 = std::make_shared<Car>("EL990LN",210,1600,Car::D);
     CarPtr car5 = std::make_shared<Car>("EL990LN",210,1600,Car::E);
-    RentPtr rent1 = std::make_shared<Rent>(1,client1,car1,boost::posix_time::not_a_date_time,car1->getBasePrice());
+    RentPtr rent1 = std::make_shared<Rent>(generator(),client1,car1,boost::posix_time::not_a_date_time,car1->getBasePrice());
+//    clientrepository.add(client1);
+//    clientrepository.add(client2);
+//    vehiclerepository.add(bicycle);
+//    vehiclerepository.add(moped1);
+//    vehiclerepository.add(moped2);
+//    vehiclerepository.add(moped3);
+//    vehiclerepository.add(moped4);
+//    vehiclerepository.add(moped5);
+//    vehiclerepository.add(car1);
+//    vehiclerepository.add(car2);
+//    vehiclerepository.add(car3);
+//    vehiclerepository.add(car4);
+//    vehiclerepository.add(car5);
+//    rentrepository.add(rent1);
     clientrepository.addClient(client1);
     clientrepository.addClient(client2);
     vehiclerepository.addVehicle(bicycle);

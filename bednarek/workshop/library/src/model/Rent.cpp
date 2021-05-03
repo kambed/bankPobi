@@ -10,21 +10,22 @@
 #include "model/Vehicle.h"
 #include "model/Rent.h"
 #include "exceptions/RentException.h"
+#include <boost/uuid/uuid_io.hpp>
 //CONSTRUCTOR
-Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost) try : id(id), client(client), vehicle(vehicle), beginTime(beginTime), rentCost(rentCost) {
+Rent::Rent(boost::uuids::uuid id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost) try : id(id), client(client), vehicle(vehicle), beginTime(beginTime), rentCost(rentCost) {
     if (beginTime == boost::posix_time::not_a_date_time) {
         this->beginTime = boost::posix_time::second_clock::local_time();
     }
     if(client==nullptr) throw RentException("Client not given");
     if(vehicle==nullptr) throw RentException("Vehicle not given");
-    if(id<=0) throw RentException("Bad RentID<=0");
+    //if(id<=0) throw RentException("Bad RentID<=0");
 }
     catch(const RentException &exception){
         std::cout<<"Exception: "<<exception.what()<<std::endl;
     }
 
 //GETTERS
-unsigned int Rent::getId() const {
+boost::uuids::uuid Rent::getId() const {
     return id;
 }
 const ClientPtr Rent::getClient() const {
@@ -46,7 +47,7 @@ const std::string Rent::getRentInfo() const{
     std::stringstream ss2;
     ss2 << endTime;
     std::string end = ss2.str();
-    return "Rent ID:" + std::to_string(id) + "Time: from:" + begin + " to: " + end + " " + client->getClientInfo() + " " + vehicle->getVehicleInfo();
+    return "Rent ID:" + to_string(id) + "Time: from:" + begin + " to: " + end + " " + client->getClientInfo() + " " + vehicle->getVehicleInfo();
 }
 const std::string Rent::getInfo() const {
     return getRentInfo();
