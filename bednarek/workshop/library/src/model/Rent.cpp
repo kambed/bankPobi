@@ -48,6 +48,9 @@ const std::string Rent::getRentInfo() const{
     std::string end = ss2.str();
     return "Rent ID:" + std::to_string(id) + "Time: from:" + begin + " to: " + end + " " + client->getClientInfo() + " " + vehicle->getVehicleInfo();
 }
+const std::string Rent::getInfo() const {
+    return getRentInfo();
+}
 int Rent::getRentdays() {
     boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
     if(endTime == boost::posix_time::not_a_date_time)

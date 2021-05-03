@@ -16,6 +16,7 @@ public:
 
     double getActualRentalPrice();
     const std::string getVehicleInfo() const;
+    const std::string getInfo() const override;
 };
 
 

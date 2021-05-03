@@ -60,3 +60,6 @@ const std::string Car::getVehicleInfo() const {
     }
     return MotorVehicle::getVehicleInfo() + " Klasa: " + cls;
 }
+const std::string Car::getInfo() const {
+    return MotorVehicle::getInfo();
+}

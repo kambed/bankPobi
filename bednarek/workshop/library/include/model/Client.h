@@ -30,6 +30,7 @@ public:
 
     //GETTERS
     bool isArchive() const;
+    const std::string getInfo() const;
     const std::string getClientInfo() const;
     const std::string &getFirstName() const;
     const std::string &getLastName() const;

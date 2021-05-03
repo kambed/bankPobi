@@ -25,6 +25,9 @@ const std::string &Vehicle::getPlateNumber() const {
 unsigned int Vehicle::getBasePrice() const {
     return basePrice;
 }
+const std::string Vehicle::getInfo() const {
+    return getVehicleInfo();
+}
 const std::string Vehicle::getVehicleInfo() const{
     return "Pojazd:" + plateNumber + " " + std::to_string(basePrice) + "zl/day";
 }

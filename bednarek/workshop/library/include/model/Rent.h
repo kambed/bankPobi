@@ -35,6 +35,7 @@ public:
 
     const boost::posix_time::ptime &getBeginTime() const;
     const boost::posix_time::ptime &getEndTime() const;
+    const std::string getInfo() const;
     const std::string getRentInfo() const;
     int getRentdays();
     int getRentcost();
