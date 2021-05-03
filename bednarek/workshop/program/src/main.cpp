@@ -17,7 +17,7 @@ using namespace std;
 //}
 int main() {
     StorageContainerPtr st = std::make_shared<StorageContainer>();
-    cout<<st->getClientrepository().getClient(1)->getClientInfo();
+    cout<<st->getClientrepository().getClient(1)->getClientInfo()<<endl;
 //    cout<<st->getVehiclerepository().reportVehicle()<<endl;
 //    cout<<st->getClientrepository().reportClient()<<endl;
 //    cout<<st->getRentrepository().reportRent()<<endl;

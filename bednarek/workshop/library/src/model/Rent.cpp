@@ -9,13 +9,19 @@
 #include "model/Client.h"
 #include "model/Vehicle.h"
 #include "model/Rent.h"
+#include "exceptions/RentException.h"
 //CONSTRUCTOR
-Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost) : id(id), client(client), vehicle(vehicle), beginTime(beginTime), rentCost(rentCost){
-    if(beginTime == boost::posix_time::not_a_date_time)
-    {
+Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime,int rentCost) try : id(id), client(client), vehicle(vehicle), beginTime(beginTime), rentCost(rentCost) {
+    if (beginTime == boost::posix_time::not_a_date_time) {
         this->beginTime = boost::posix_time::second_clock::local_time();
     }
+    if(client==nullptr) throw RentException("Client not given");
+    if(vehicle==nullptr) throw RentException("Vehicle not given");
+    if(id<=0) throw RentException("Bad RentID<=0");
 }
+    catch(const RentException &exception){
+        std::cout<<"Exception: "<<exception.what()<<std::endl;
+    }
 
 //GETTERS
 unsigned int Rent::getId() const {

@@ -6,8 +6,6 @@
 #include <string>
 #include "model/Address.h"
 
-using namespace std;
-
 //CONSTRUCTOR
 Address::Address(const std::string &city, const std::string &street, const std::string &number) : city(city),street(street),number(number) {
 

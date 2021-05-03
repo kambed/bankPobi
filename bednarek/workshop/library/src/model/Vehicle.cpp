@@ -4,10 +4,16 @@
 
 #include <iostream>
 #include <string>
+#include <exceptions/VehicleException.h>
 #include "model/Vehicle.h"
 //CONSTRUCTOR
-Vehicle::Vehicle(const std::string &plateNumber, unsigned int basePrice) : plateNumber(plateNumber),
-                                                                           basePrice(basePrice) {}
+Vehicle::Vehicle(const std::string &plateNumber, unsigned int basePrice) try : plateNumber(plateNumber),basePrice(basePrice) {
+    if(basePrice<=0) throw VehicleException("Bad basePrice<=0");
+    if(plateNumber.empty()) throw VehicleException("Empty plateNUmber");
+}
+catch(const VehicleException  &exception){
+    std::cout<<"Exception: "<<exception.what()<<std::endl;
+}
 //DESTRUCTOR
 Vehicle::~Vehicle() {
 
