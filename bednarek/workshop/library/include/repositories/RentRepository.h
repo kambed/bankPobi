@@ -8,6 +8,7 @@
 #include "../typedefs.h"
 #include <string>
 #include "repositories/Repository.h"
+#include "functors/IdPredicate.h"
 
 class RentRepository : public Repository<Rent>{
 private:
@@ -20,6 +21,19 @@ public:
     int sizeRent() const;
     std::vector<RentPtr> findBy(RentPredicate predicate) const;
     std::vector<RentPtr> findAll();
+    template<class P> std::vector<RentPtr> findAllNew(const P &predicate) const
+    {
+        std::vector<RentPtr> result;
+        for(int i = 0; i<Rents.size(); ++i)
+        {
+            RentPtr rent = Rents[i];
+            if(predicate(rent))
+            {
+                result.push_back(rent);
+            }
+        }
+        return result;
+    }
 };
 
 
