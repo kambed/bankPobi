@@ -30,10 +30,12 @@ public:
 
     //GETTERS
     bool isArchive() const;
+    const std::string getInfo() const;
     const std::string getClientInfo() const;
     const std::string &getFirstName() const;
     const std::string &getLastName() const;
     const std::string &getPersonalId() const;
+    const std::string &getId() const;
     const AddressPtr getAddress() const;
 
     //SETTERS

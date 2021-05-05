@@ -18,9 +18,11 @@ public:
     virtual ~Vehicle()=0;
 
     //GETTERS
+    const std::string &getId() const;
     const std::string &getPlateNumber() const;
     unsigned int getBasePrice() const;
     bool isArchive() const;
+    virtual const std::string getInfo() const;
     virtual const std::string getVehicleInfo() const;
 
     //SETTERS

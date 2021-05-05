@@ -16,6 +16,8 @@ public:
     virtual ~MotorVehicle()=0;
     virtual double getActualRentalPrice();
     virtual const std::string getVehicleInfo() const;
+
+    const std::string getInfo() const override;
 };
 
 

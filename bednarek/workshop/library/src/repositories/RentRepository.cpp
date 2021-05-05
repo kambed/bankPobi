@@ -3,6 +3,7 @@
 //
 
 #include "repositories/RentRepository.h"
+#include "repositories/Repository.h"
 RentPtr RentRepository::getRent(int rentIndex) const{
     if(Rents.size()>rentIndex)
     {

@@ -26,3 +26,7 @@ double MotorVehicle::getActualRentalPrice() {
 const std::string MotorVehicle::getVehicleInfo() const {
     return Vehicle::getVehicleInfo() + " Pojemnosc silnika: " + std::to_string(engineDisplacement);
 }
+
+const std::string MotorVehicle::getInfo() const {
+    return Vehicle::getInfo();
+}

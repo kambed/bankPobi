@@ -1,5 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include <model/Bicycle.h>
+#include <boost/uuid/random_generator.hpp>
 #include "repositories/StorageContainer.h"
 #include "repositories/VehicleRepository.h"
 #include "repositories/RentRepository.h"
@@ -14,8 +15,9 @@ struct TestSuiteContainerFixture {
     ClientPtr client3 = std::make_shared<Client>("Ryszard","Kozak","11111111",address2,gold);
     BicyclePtr vehicle1 = std::make_shared<Bicycle>("EL95353",100);
     BicyclePtr vehicle2 = std::make_shared<Bicycle>("EL94234",200);
-    RentPtr rent1 = std::make_shared<Rent>(1,client1,vehicle1,boost::posix_time::not_a_date_time,vehicle1->getBasePrice());
-    RentPtr rent2 = std::make_shared<Rent>(2,client1,vehicle2,boost::posix_time::not_a_date_time,vehicle1->getBasePrice());
+    boost::uuids::random_generator generator;
+    RentPtr rent1 = std::make_shared<Rent>(generator(),client1,vehicle1,boost::posix_time::not_a_date_time,vehicle1->getBasePrice());
+    RentPtr rent2 = std::make_shared<Rent>(generator(),client1,vehicle2,boost::posix_time::not_a_date_time,vehicle1->getBasePrice());
     StorageContainerPtr st = std::make_shared<StorageContainer>();
 };
 bool testId1(ClientPtr ptr)

@@ -16,6 +16,7 @@ public:
     Address(const std::string &city, const std::string &street, const std::string &number);
 
     //GETTERS
+    const std::string getInfo() const;
     const std::string getAddressInfo() const;
     const std::string &getCity() const;
     const std::string &getStreet() const;

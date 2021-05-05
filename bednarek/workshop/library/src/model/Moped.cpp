@@ -18,3 +18,7 @@ const std::string Moped::getVehicleInfo() const {
     return MotorVehicle::getVehicleInfo();
 }
 
+const std::string Moped::getInfo() const {
+    return Vehicle::getInfo();
+}
+

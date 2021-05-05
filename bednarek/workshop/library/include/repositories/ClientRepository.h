@@ -8,8 +8,9 @@
 #include "../typedefs.h"
 #include <string>
 #include <vector>
+#include "repositories/Repository.h"
 
-class ClientRepository {
+class ClientRepository : public Repository<Client>{
 private:
     std::vector<ClientPtr> Clients;
 public:
@@ -21,6 +22,19 @@ public:
     std::vector<ClientPtr> findBy(ClientPredicate predicate) const;
     std::vector<ClientPtr> findAll();
     ClientPtr findByPersonalId(std::string Id);
+    template<class P> std::vector<ClientPtr> findAllNew(const P &predicate) const
+    {
+        std::vector<ClientPtr> result;
+        for(int i = 0; i<Clients.size(); ++i)
+        {
+            ClientPtr client = Clients[i];
+            if(predicate(client))
+            {
+                result.push_back(client);
+            }
+        }
+        return result;
+    }
 };
 
 
