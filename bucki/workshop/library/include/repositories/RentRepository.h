@@ -11,19 +11,19 @@ private:
     std::vector<RentPtr> rents;
 public:
 
-    RentPtr getRent(unsigned int id) const;
+    RentPtr getRent(unsigned int id);
 
     void addRent(RentPtr Rent);
 
     void removeRent(RentPtr Rent);
 
-    const std::string reportRents() const;
+    const std::string reportRents();
 
     unsigned int getRentsSize();
 
-//    std::vector<RentPtr> findBy(RentPredicate predicate) const;
-//
-//    std::vector<RentPtr> findAll() const;
+    std::vector<RentPtr> findBy(RentPredicate predicate);
+
+    std::vector<RentPtr> findAll();
 };
 
 

@@ -12,8 +12,6 @@ private:
 public:
     VehicleManager();
 
-    VehicleManager(const VehicleRepositoryPtr &vehicleRepository);
-
     VehiclePtr getVehicle(std::string plateNumber);
 
     VehiclePtr registerBicycle(const std::string &plateNumber, const unsigned int basePrice);

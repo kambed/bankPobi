@@ -9,5 +9,5 @@ std::string Platinum::getTypeInfo() {
 }
 
 double Platinum::applyDiscount(double price) {
-    return ClientType::applyDiscount(price) * 0.1;
+    return price * 0.1;
 }

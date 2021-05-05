@@ -13,8 +13,6 @@ VehicleManager::VehicleManager() {
     vehicleRepository = std::make_shared<VehicleRepository>();
 }
 
-VehicleManager::VehicleManager(const VehicleRepositoryPtr &vehicleRepository) : vehicleRepository(vehicleRepository) {}
-
 VehiclePtr VehicleManager::getVehicle(std::string plateNumber) {
     return vehicleRepository->findByPlateNumber(plateNumber);
 }

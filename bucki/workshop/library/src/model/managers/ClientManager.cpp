@@ -2,7 +2,7 @@
 #include <functional>
 #include "model/managers/ClientManager.h"
 #include "typedefs.h"
-#include <model/clients/Client.h>
+#include "model/clients/Client.h"
 #include "repositories/ClientRepository.h"
 
 ClientPtr ClientManager::getClient(std::string personalId) {
@@ -19,8 +19,6 @@ ClientPtr ClientManager::registerClient(const std::string &firstName, const std:
         return client;
     }
 }
-
-ClientManager::ClientManager(const ClientRepositoryPtr &clientRepository) : clientRepository(clientRepository) {}
 
 ClientManager::ClientManager() {
     clientRepository = std::make_shared<ClientRepository>();

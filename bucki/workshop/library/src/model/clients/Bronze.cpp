@@ -1,7 +1,7 @@
 #include "model/Clients/Bronze.h"
 
 int Bronze::getMaxVehicles() const {
-    return Bronze::getMaxVehicles();
+    return maxVehicles;
 }
 
 std::string Bronze::getTypeInfo() {

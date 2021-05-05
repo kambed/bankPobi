@@ -9,8 +9,6 @@ class ClientManager {
 private:
     ClientRepositoryPtr clientRepository;
 public:
-    ClientManager(const ClientRepositoryPtr &clientRepository);
-
     ClientManager();
 
     ClientPtr getClient(std::string personalId);

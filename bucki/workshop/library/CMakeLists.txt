@@ -49,7 +49,7 @@ set(SOURCE_TEST_FILES
         test/RentTest.cpp
         test/RepositoriesTest.cpp
         test/VehiclePricesTest.cpp
-        test/ClientManagerTest.cpp test/VehicleManagerTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/ClientManagerTest.cpp test/VehicleManagerTest.cpp test/RentManagerTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

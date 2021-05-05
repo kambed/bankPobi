@@ -11,7 +11,7 @@ private:
     std::vector<ClientPtr> clients;
 public:
 
-    ClientPtr getClient(unsigned int id) const;
+    ClientPtr getClient(unsigned int id);
 
     void addClient(ClientPtr client);
 
@@ -21,11 +21,11 @@ public:
 
     unsigned int getClientsSize();
 
-    ClientPtr findByPersonalId(std::string personalId) const;
+    ClientPtr findByPersonalId(std::string personalId);
 
-    std::vector<ClientPtr> findBy(ClientPredicate predicate) const;
+    std::vector<ClientPtr> findBy(ClientPredicate predicate);
 
-    std::vector<ClientPtr> findAll() const;
+    std::vector<ClientPtr> findAll();
 };
 
 

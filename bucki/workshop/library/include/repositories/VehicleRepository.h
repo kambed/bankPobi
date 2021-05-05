@@ -13,21 +13,21 @@ private:
 public:
 
 
-    VehiclePtr getVehicle(unsigned int id) const;
+    VehiclePtr getVehicle(unsigned int id);
 
     void addVehicle(VehiclePtr vehicle);
 
     void removeVehicle(VehiclePtr vehicle);
 
-    const std::string reportVehicles() const;
+    const std::string reportVehicles();
 
     unsigned int getVehiclesSize();
 
-    std::vector<VehiclePtr> findBy(VehiclePredicate predicate) const;
+    std::vector<VehiclePtr> findBy(VehiclePredicate predicate);
 
-    std::vector<VehiclePtr> findAll() const;
+    std::vector<VehiclePtr> findAll();
 
-    VehiclePtr findByPlateNumber(std::string plateNumber) const;
+    VehiclePtr findByPlateNumber(std::string plateNumber);
 };
 
 

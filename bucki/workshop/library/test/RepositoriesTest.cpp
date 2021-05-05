@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_SUITE(TestSuiteClientRepository)
         StorageContainerPtr storage = std::make_shared<StorageContainer>();
         std::string report = "";
         for (int i = 0; i < storage->getClientsRepo().getClientsSize(); i++) {
-            report += storage->getClientsRepo().getClient(i)->getClientInfo() + "\n";
+            report +=storage->getClientsRepo().getClient(i)->getClientInfo()+"\n";
         }
         BOOST_CHECK_EQUAL(storage->getClientsRepo().reportClients(), report);
     }

@@ -11,11 +11,7 @@ Client::Client() {
     //cout << "Utworzono klienta." << endl << endl;
 }
 
-Client::~Client() {
-    //cout << "Usunieto klienta" << endl;
-    //cout << getClientInfo() << endl << endl;
-    //delete address;
-}
+Client::~Client() {}
 
 const string Client::getClientInfo() const {
     return firstName + " " + lastName + " " + personalID + ", adres:" + address->getAddressInfo() + ", \ntyp klienta: "

@@ -4,7 +4,7 @@
 #include "typedefs.h"
 #include "repositories/RentRepository.h"
 
-VehiclePtr VehicleRepository::getVehicle(unsigned int id) const {
+VehiclePtr VehicleRepository::getVehicle(unsigned int id) {
     if (vehicles.size() - 1 < id)
         return nullptr;
     if (vehicles.at(id) == nullptr)
@@ -22,12 +22,7 @@ void VehicleRepository::removeVehicle(VehiclePtr vehicle) {
         vehicles.erase(std::remove(vehicles.begin(), vehicles.end(), vehicle));
 }
 
-const std::string VehicleRepository::reportVehicles() const {
-//    if(vehicle->isRented())
-//        for(int i=0;i<rentRepo.getRentsSize();i++)
-//            if(rentRepo.getRent(0)->getVehicle()==vehicle)
-//                return rentRepo.getRent(0)->getRentInfo();
-//    return "Pojazd nie jest wypozyczony";
+const std::string VehicleRepository::reportVehicles() {
     std::string report;
     for (int i = 0; i < vehicles.size(); i++)
         report += vehicles[i]->getVehicleInfo() + "\n";
@@ -38,7 +33,7 @@ unsigned int VehicleRepository::getVehiclesSize() {
     return vehicles.size();
 }
 
-std::vector<VehiclePtr> VehicleRepository::findBy(VehiclePredicate predicate) const {
+std::vector<VehiclePtr> VehicleRepository::findBy(VehiclePredicate predicate) {
     std::vector<VehiclePtr> found;
     for (unsigned int i = 0; i < vehicles.size(); i++) {
         VehiclePtr vehicle = getVehicle(i);
@@ -53,11 +48,11 @@ bool predicateTrue(VehiclePtr vehicle){
     return vehicle != nullptr;
 }
 
-std::vector<VehiclePtr> VehicleRepository::findAll() const{
+std::vector<VehiclePtr> VehicleRepository::findAll(){
     return VehicleRepository::findBy(predicateTrue);
 }
 
-VehiclePtr VehicleRepository::findByPlateNumber(std::string plateNumber) const {
+VehiclePtr VehicleRepository::findByPlateNumber(std::string plateNumber){
     for (unsigned int i = 0; i < vehicles.size(); i++) {
         VehiclePtr vehicle = getVehicle(i);
         if (vehicle->getPlateNumber() == plateNumber)

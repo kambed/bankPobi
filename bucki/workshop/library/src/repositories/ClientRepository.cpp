@@ -3,7 +3,7 @@
 #include "model/Clients/Client.h"
 #include "typedefs.h"
 
-ClientPtr ClientRepository::getClient(unsigned int id) const {
+ClientPtr ClientRepository::getClient(unsigned int id) {
     if (clients.size() - 1 < id)
         return nullptr;
     if (clients.at(id) == nullptr)
@@ -35,7 +35,7 @@ unsigned int ClientRepository::getClientsSize() {
     return clients.size();
 }
 
-ClientPtr ClientRepository::findByPersonalId(std::string personalId) const {
+ClientPtr ClientRepository::findByPersonalId(std::string personalId){
     for (unsigned int i = 0; i < clients.size(); i++) {
         ClientPtr client = getClient(i);
         if (client->getPersonalId() == personalId)
@@ -44,7 +44,7 @@ ClientPtr ClientRepository::findByPersonalId(std::string personalId) const {
     return nullptr;
 }
 
-std::vector<ClientPtr> ClientRepository::findBy(ClientPredicate predicate) const {
+std::vector<ClientPtr> ClientRepository::findBy(ClientPredicate predicate){
     std::vector<ClientPtr> found;
     for (unsigned int i = 0; i < clients.size(); i++) {
         ClientPtr client = getClient(i);
@@ -59,6 +59,6 @@ bool predicateTrue(ClientPtr client){
     return client != nullptr;
 }
 
-std::vector<ClientPtr> ClientRepository::findAll() const{
+std::vector<ClientPtr> ClientRepository::findAll(){
    return ClientRepository::findBy(predicateTrue);
 }

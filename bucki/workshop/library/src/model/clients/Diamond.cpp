@@ -10,11 +10,11 @@ std::string Diamond::getTypeInfo() {
 
 double Diamond::applyDiscount(double price) {
     if (0 <= price && price <= 125)
-        return ClientType::applyDiscount(price) * 0.1;
+        return price * 0.1;
     else if (price <= 250)
-        return ClientType::applyDiscount(price) * 0.2;
+        return price * 0.2;
     else if (price <= 500)
-        return ClientType::applyDiscount(price) * 0.3;
+        return price * 0.3;
     else
-        return ClientType::applyDiscount(price) * 0.4;
+        return price * 0.4;
 }
