@@ -1,8 +1,16 @@
-#include <model/vehicles/Vehicle.h>
+#include "model/vehicles/Vehicle.h"
+#include <iostream>
 #include "model/Vehicles/Vehicle.h"
+#include "exceptions/VehicleException.h"
 
-Vehicle::Vehicle(const std::string &plateNumber, const unsigned int basePrice) : plateNumber(plateNumber),
-                                                                                 basePrice(basePrice) {}
+Vehicle::Vehicle(const std::string &plateNumber, const unsigned int basePrice) try : plateNumber(plateNumber),
+                                                                                 basePrice(basePrice) {
+    if(basePrice<=0) throw VehicleException("BasePrice must be greater than 0");
+    if(plateNumber.empty()) throw VehicleException("PlateNumber is empty");
+}
+catch(const VehicleException &exception){
+    std::cout <<" Exception: " << exception.what() << std::endl;
+}
 
 const std::string &Vehicle::getPlateNumber() const {
     return plateNumber;

@@ -1,17 +1,21 @@
 #include "model/Rent.h"
 #include "typedefs.h"
+#include "exceptions/RentException.h"
 
-Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime) : id(id),
-                                                                                                               client(client),
-                                                                                                               vehicle(vehicle),
-                                                                                                               beginTime(
-                                                                                                                       beginTime) {
-//    client->addRent(this);
-//    vehicle->setRented(true);
+Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime)
+           try : id(id),client(client),vehicle(vehicle),beginTime(beginTime) {
+
     if (beginTime == boost::posix_time::not_a_date_time)
         this->beginTime = boost::posix_time::second_clock::local_time();
     else this->beginTime = beginTime;
+
+    if(client == nullptr) throw RentException("Client not received");
+    if(vehicle == nullptr) throw RentException("Vehicle not received");
+
     rentCost = vehicle->getBasePrice();
+}
+catch(const RentException &exception){
+    std::cout <<" Exception: " << exception.what() << std::endl;
 }
 
 const ClientPtr Rent::getClient() const {

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <model/Clients/ClientType.h>
 #include "model/Clients/Client.h"
+#include "exceptions/ClientException.h"
 
 using namespace std;
 
@@ -19,9 +20,16 @@ const string Client::getClientInfo() const {
 }
 
 Client::Client(const std::string &firstName, const std::string &lastName, const std::string &personalID,
-               AddressPtr address, ClientTypePtr clientType) : firstName(firstName), lastName(lastName), personalID
-        (personalID), address(address), clientType(clientType) {
-
+        AddressPtr address, ClientTypePtr clientType) try : firstName(firstName), lastName(lastName),
+                                                      personalID(personalID), address(address),clientType(clientType){
+    if(firstName.empty()) throw ClientException("FirstName is empty");
+    if(lastName.empty()) throw ClientException("LastName is empty");
+    if(personalID.empty()) throw ClientException("PersonalID is empty");
+    if(address == nullptr) throw ClientException("Address is empty");
+    if(clientType == nullptr) throw ClientException("ClientType is empty");
+}
+catch(const ClientException &exception){
+    std::cout<<"Exception: "<<exception.what()<<std::endl;
 }
 
 const string &Client::getFirstName() const {

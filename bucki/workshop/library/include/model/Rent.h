@@ -8,8 +8,6 @@
 
 class Client;
 
-class ptime;
-
 class Rent {
 private:
     unsigned int id;
@@ -36,8 +34,6 @@ public:
     void endRent(const boost::posix_time::ptime &endTime);
 
     const int getRentDays() const;
-
-    const ptime &endRent(const ptime &endTime);
 
     const int &getRentCost() const;
 

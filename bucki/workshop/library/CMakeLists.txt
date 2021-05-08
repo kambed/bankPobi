@@ -26,7 +26,7 @@ set(SOURCE_FILES
         src/model/vehicles/Moped.cpp
         include/model/vehicles/Moped.h
         src/model/vehicles/Car.cpp
-        include/model/vehicles/Car.h src/model/clients/ClientType.cpp include/model/clients/ClientType.h src/model/clients/Default.cpp include/model/clients/Default.h src/model/clients/Bronze.cpp include/model/clients/Bronze.h src/model/clients/Silver.cpp include/model/clients/Silver.h src/model/clients/Gold.cpp include/model/clients/Gold.h src/model/clients/Platinum.cpp include/model/clients/Platinum.h src/model/clients/Diamond.cpp include/model/clients/Diamond.h src/model/managers/ClientManager.cpp include/model/managers/ClientManager.h src/model/managers/LogicContainer.cpp include/model/managers/LogicContainer.h src/model/managers/VehicleManager.cpp include/model/managers/VehicleManager.h src/model/managers/RentManager.cpp include/model/managers/RentManager.h)
+        include/model/vehicles/Car.h src/model/clients/ClientType.cpp include/model/clients/ClientType.h src/model/clients/Default.cpp include/model/clients/Default.h src/model/clients/Bronze.cpp include/model/clients/Bronze.h src/model/clients/Silver.cpp include/model/clients/Silver.h src/model/clients/Gold.cpp include/model/clients/Gold.h src/model/clients/Platinum.cpp include/model/clients/Platinum.h src/model/clients/Diamond.cpp include/model/clients/Diamond.h src/model/managers/ClientManager.cpp include/model/managers/ClientManager.h src/model/managers/LogicContainer.cpp include/model/managers/LogicContainer.h src/model/managers/VehicleManager.cpp include/model/managers/VehicleManager.h src/model/managers/RentManager.cpp include/model/managers/RentManager.h src/exceptions/ClientException.cpp include/exceptions/ClientException.h src/exceptions/VehicleException.cpp include/exceptions/VehicleException.h src/exceptions/RentException.cpp include/exceptions/RentException.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -49,7 +49,7 @@ set(SOURCE_TEST_FILES
         test/RentTest.cpp
         test/RepositoriesTest.cpp
         test/VehiclePricesTest.cpp
-        test/ClientManagerTest.cpp test/VehicleManagerTest.cpp test/RentManagerTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/ClientManagerTest.cpp test/VehicleManagerTest.cpp test/RentManagerTest.cpp test/ExceptionsTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 
