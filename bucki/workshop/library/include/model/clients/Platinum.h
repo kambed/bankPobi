@@ -8,10 +8,16 @@ class Platinum : public ClientType {
 private:
     int maxVehicles = 5;
 public:
+    /// GETTERS
+
+    /// \return
     int getMaxVehicles() const override;
 
+    /// \return
     std::string getTypeInfo() override;
 
+    /// \param price
+    /// \return
     double applyDiscount(double price) override;
 };
 

@@ -8,10 +8,18 @@ class Diamond : public ClientType {
 private:
     int maxVehicles = 10;
 public:
+    /// GETTERS
+
+    /// \return
     int getMaxVehicles() const override;
 
+    /// \return
     std::string getTypeInfo() override;
 
+    /// METHODS
+
+    /// \param price
+    /// \return
     double applyDiscount(double price) override;
 };
 

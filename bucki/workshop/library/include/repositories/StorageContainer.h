@@ -13,14 +13,23 @@ private:
     RentRepository rentsRepo;
     VehicleRepository vehiclesRepo;
 public:
+    /// CONSTRUCTOR
+
     StorageContainer();
+
+    /// DESTRUCTOR
 
     ~StorageContainer();
 
+    /// GETTERS
+
+    /// \return
     ClientRepository &getClientsRepo();
 
+    /// \return
     RentRepository &getRentsRepo();
 
+    /// \return
     VehicleRepository &getVehiclesRepo();
 };
 

@@ -12,22 +12,35 @@ class VehicleRepository : public Repository<Vehicle> {
 private:
     std::vector<VehiclePtr> vehicles;
 public:
+    /// GETTERS
 
-
+    /// \param id
+    /// \return
     VehiclePtr getVehicle(unsigned int id);
 
-    void addVehicle(VehiclePtr vehicle);
-
-    void removeVehicle(VehiclePtr vehicle);
-
-    const std::string reportVehicles();
-
+    /// \return
     unsigned int getVehiclesSize();
 
+    /// METHODS
+
+    /// \param vehicle
+    void addVehicle(VehiclePtr vehicle);
+
+    /// \param vehicle
+    void removeVehicle(VehiclePtr vehicle);
+
+    /// \return
+    const std::string reportVehicles();
+
+    /// \param predicate
+    /// \return
     std::vector<VehiclePtr> findBy(VehiclePredicate predicate);
 
+    /// \return
     std::vector<VehiclePtr> findAll();
 
+    /// \param plateNumber
+    /// \return
     VehiclePtr findByPlateNumber(std::string plateNumber);
 };
 

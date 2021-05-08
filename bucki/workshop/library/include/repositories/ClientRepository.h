@@ -11,21 +11,35 @@ class ClientRepository : public Repository<Client>{
 private:
     std::vector<ClientPtr> clients;
 public:
+    /// GETTERS
 
+    /// \param id
+    /// \return
     ClientPtr getClient(unsigned int id);
 
-    void addClient(ClientPtr client);
-
-    void removeClient(ClientPtr client);
-
-    const std::string reportClients() const;
-
+    /// \return
     unsigned int getClientsSize();
 
+    /// METHODS
+
+    /// \param client
+    void addClient(ClientPtr client);
+
+    /// \param client
+    void removeClient(ClientPtr client);
+
+    /// \return
+    const std::string reportClients() const;
+
+    /// \param personalId
+    /// \return
     ClientPtr findByPersonalId(std::string personalId);
 
+    /// \param predicate
+    /// \return
     std::vector<ClientPtr> findBy(ClientPredicate predicate);
 
+    /// \return
     std::vector<ClientPtr> findAll();
 };
 

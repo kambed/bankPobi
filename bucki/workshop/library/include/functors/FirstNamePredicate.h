@@ -9,7 +9,11 @@ class FirstNamePredicate {
 private:
     std::string firstname;
 public:
+    /// \param firstname
     FirstNamePredicate(const std::string &firstname);
+
+    /// \param ptr
+    /// \return
     bool operator()(const ClientPtr &ptr) const;
 };
 

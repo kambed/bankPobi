@@ -51,7 +51,7 @@ double RentManager::checkClientRentBalance(ClientPtr client) {
     return suma;
 }
 
-RentPtr RentManager::rentVehicle(int id,ClientPtr client, VehiclePtr vehicle, boost::posix_time::ptime beginTime) {
+RentPtr RentManager::rentVehicle(ClientPtr client, VehiclePtr vehicle, boost::posix_time::ptime beginTime) {
     if(client->isArchive() == false && vehicle->isArchive() == false && client->getMaxVehicles()>getAllClientRents
     (client).size() && getVehicleRent(vehicle) == nullptr) {
         boost::uuids::random_generator generator;

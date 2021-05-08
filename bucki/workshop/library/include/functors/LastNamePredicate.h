@@ -6,7 +6,12 @@ class LastNamePredicate {
 private:
     std::string lastname;
 public:
+
+    /// \param lastname
     LastNamePredicate(const std::string &lastname);
+
+    /// \param ptr
+    /// \return
     bool operator()(const ClientPtr &ptr) const;
 };
 

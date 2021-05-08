@@ -13,13 +13,25 @@ public:
 private:
     Segment SegmentType;
 public:
+    /// CONSTRUCTOR
+
+    /// \param plateNumber
+    /// \param basePrice
+    /// \param engineDisplacement
+    /// \param segmentType
     Car(const std::string &plateNumber, const unsigned int basePrice, unsigned int engineDisplacement,
         Segment segmentType);
 
+    /// DESTRUCTOR
+
     ~Car();
 
+    /// GETTERS
+
+    /// \return
     double getActualRentalPrice() override;
 
+    /// \return
     const std::string getVehicleInfo() const override;
 };
 

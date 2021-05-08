@@ -6,7 +6,11 @@
 
 class Moped : public MotorVehicle {
 public:
+    /// CONSTRUCTOR
+
     Moped(const std::string &plateNumber, const unsigned int basePrice, unsigned int engineDisplacement);
+
+    /// DESTRUCTOR
 
     ~Moped();
 };

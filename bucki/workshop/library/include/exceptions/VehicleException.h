@@ -5,6 +5,7 @@
 
 class VehicleException : public std::logic_error {
 public:
+    /// \param arg
     explicit VehicleException(const std::string &arg);
 };
 

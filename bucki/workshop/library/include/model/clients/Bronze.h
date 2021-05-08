@@ -9,10 +9,18 @@ private:
     int maxVehicles = 2;
     double discount = 3;
 public:
+    /// GETTERS
+
+    /// \return
     int getMaxVehicles() const override;
 
+    /// \return
     std::string getTypeInfo() override;
 
+    /// METHODS
+
+    /// \param in_price
+    /// \return
     double applyDiscount(double in_price) override;
 };
 

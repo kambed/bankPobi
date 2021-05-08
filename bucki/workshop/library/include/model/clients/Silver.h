@@ -8,10 +8,18 @@ class Silver : public ClientType {
 private:
     int maxVehicles = 3;
 public:
+    /// GETTERS
+
+    /// \return
     int getMaxVehicles() const override;
 
+    /// \return
     std::string getTypeInfo() override;
 
+    /// METHODS
+
+    /// \param in_price
+    /// \return
     double applyDiscount(double in_price) override;
 };
 

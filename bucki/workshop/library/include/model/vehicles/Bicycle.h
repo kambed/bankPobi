@@ -6,6 +6,10 @@
 
 class Bicycle : public Vehicle {
 public:
+    /// CONSTRUCTOR
+
+    /// \param plateNumber
+    /// \param basePrice
     Bicycle(const std::string &plateNumber, const unsigned int basePrice);
 };
 

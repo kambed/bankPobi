@@ -10,7 +10,7 @@
 #include "exceptions/VehicleException.h"
 #include "exceptions/ClientException.h"
 #include "exceptions/RentException.h"
-BOOST_AUTO_TEST_SUITE(Exceptions)
+BOOST_AUTO_TEST_SUITE(ExceptionsTest)
 
     BOOST_AUTO_TEST_CASE(ClientExceptionTest) {
         ClientTypePtr gold = std::make_shared<Bronze>();
@@ -44,4 +44,3 @@ BOOST_AUTO_TEST_SUITE(Exceptions)
     }
     
 BOOST_AUTO_TEST_SUITE_END()
-

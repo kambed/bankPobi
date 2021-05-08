@@ -10,16 +10,26 @@ private:
     std::string street;
     std::string number;
 public:
+    /// CONSTRUCTOR
+
+    /// \param city
+    /// \param street
+    /// \param number
     Address(const std::string &city, const std::string &street, const std::string &number);
 
+    /// GETTERS
+
+    /// \return
     const std::string getAddressInfo() const;
 
+    /// \return
     const std::string &getCity() const;
 
+    /// \return
     const std::string &getStreet() const;
 
+    /// \return
     const std::string &getNumber() const;
-
 };
 
 

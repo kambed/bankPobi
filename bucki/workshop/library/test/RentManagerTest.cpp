@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
 
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",100);
-        rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
                                  now);
 
         BOOST_TEST(rentManager->getAllClientRents(clientManager->getClient("12345678900")).size() == 1);
@@ -59,7 +59,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
 
             clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
             vehicleManager->registerBicycle("AB1234",100);
-            rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
+            rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
             now);
 
             BOOST_TEST(rentManager->getVehicleRent(vehicleManager->getVehicle("AB1234")) ==
@@ -75,7 +75,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
 
             clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
             vehicleManager->registerBicycle("AB1234",100);
-            rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
+            rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
             now);
 
             BOOST_TEST(rentManager->findRents(rentPredicate)[0]->getClient()->getFirstName() == "Jan");
@@ -93,9 +93,9 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
         vehicleManager->registerBicycle("AB1234",100);
         vehicleManager->registerBicycle("CD5678",200);
 
-        rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
                                 now);
-        rentManager->rentVehicle(2,clientManager->getClient("98765432100"),vehicleManager->getVehicle("CD5678"),
+        rentManager->rentVehicle(clientManager->getClient("98765432100"),vehicleManager->getVehicle("CD5678"),
                                  now);
 
         BOOST_TEST(rentManager->findAllRents().size() == 2);
@@ -111,10 +111,10 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",10);
 
-        rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now -
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now -
                                                                                                                 boost::posix_time::hours(48));
         rentManager->returnVehicle(vehicleManager->getVehicle("AB1234"),now-boost::posix_time::hours(25));
-        rentManager->rentVehicle(2,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now -
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now -
                                                                                                                 boost::posix_time::hours(20));
         rentManager->returnVehicle(vehicleManager->getVehicle("AB1234"),now);
 
@@ -130,7 +130,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
 
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",100);
-        rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
                                 now-boost::posix_time::hours(16));
 
         BOOST_TEST(rentManager->checkClientRentBalance(clientManager->getClient("12345678900")) == 0);
@@ -149,7 +149,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
 
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",100);
-        BOOST_CHECK_EQUAL(rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
+        BOOST_CHECK_EQUAL(rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
                                 now)->getVehicle(),vehicleManager->getVehicle("AB1234"));
     }
 
@@ -163,7 +163,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",100);
         vehicleManager->unregisterVehicle("AB1234");
-        BOOST_CHECK_EQUAL(rentManager->rentVehicle(1,clientManager->getClient("12345678900"),
+        BOOST_CHECK_EQUAL(rentManager->rentVehicle(clientManager->getClient("12345678900"),
                                                     vehicleManager->getVehicle("AB1234"),now),nullptr);
     }
 
@@ -177,7 +177,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",100);
         clientManager->unregisterClient("12345678900");
-        BOOST_CHECK_EQUAL(rentManager->rentVehicle(1,clientManager->getClient("12345678900"),
+        BOOST_CHECK_EQUAL(rentManager->rentVehicle(clientManager->getClient("12345678900"),
                                                     vehicleManager->getVehicle("AB1234"),now),nullptr);
     }
 
@@ -190,7 +190,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
 
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",100);
-        rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now-
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now-
                                                                                                                 boost::posix_time::hours(25));
         rentManager->returnVehicle(vehicleManager->getVehicle("AB1234"),now);
         rentManager->changeClientType(clientManager->getClient("12345678900"));
@@ -208,11 +208,11 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
         clientManager->registerClient("Jan", "Kowalski", "12345678900", address, defaultType);
         vehicleManager->registerBicycle("AB1234",100);
 
-        rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now-
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now-
                                                                                                                 boost::posix_time::hours(49));
         rentManager->returnVehicle(vehicleManager->getVehicle("AB1234"),now-boost::posix_time::hours(24));
 
-        rentManager->rentVehicle(2,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now-
+        rentManager->rentVehicle(clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),now-
                                                                                                                 boost::posix_time::hours(2));
         rentManager->returnVehicle(vehicleManager->getVehicle("AB1234"),now);
         BOOST_CHECK_EQUAL(clientManager->getClient("12345678900")->applyDiscount(100),6.0);

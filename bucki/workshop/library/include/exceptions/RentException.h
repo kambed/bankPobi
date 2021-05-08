@@ -5,6 +5,7 @@
 
 class RentException : public std::logic_error {
 public:
+    /// \param arg
     explicit RentException(const std::string &arg);
 };
 

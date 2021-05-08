@@ -10,12 +10,18 @@ private:
     VehicleManagerPtr vehicleManager;
     RentManagerPtr rentManager;
 public:
-    LogicContainer();
+    ///CONSTRUCTOR
 
+    LogicContainer();
+    /// GETTERS
+
+    /// \return
     ClientManagerPtr &getClientManager();
 
+    /// \return
     const VehicleManagerPtr &getVehicleManager() const;
 
+    /// \return
     const RentManagerPtr &getRentManager() const;
 };
 

@@ -9,10 +9,13 @@ class IdPredicate
 {
 private:
     boost::uuids::uuid id;
-
 public:
+
+    /// \param id
     IdPredicate(boost::uuids::uuid id);
 
+    /// \param ptr
+    /// \return
     bool operator()(const RentPtr &ptr) const;
 };
 
