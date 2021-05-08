@@ -14,7 +14,7 @@
 #include "typedefs.h"
 
 bool rentPredicate(RentPtr rent) {
-    return rent->getId() == 1;
+    return rent->getClient()->getFirstName() == "Jan";
 }
 
 struct TestSuiteRentManagerTestFixture {
@@ -24,6 +24,8 @@ struct TestSuiteRentManagerTestFixture {
     ClientTypePtr defaultType;
 
     boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
+
+    boost::uuids::random_generator generator;
 
     TestSuiteRentManagerTestFixture() {
         address = std::make_shared<Address>("Lodz", "Politechniki", "38");
@@ -76,7 +78,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRentManagerTest, TestSuiteRentManagerTestFixtu
             rentManager->rentVehicle(1,clientManager->getClient("12345678900"),vehicleManager->getVehicle("AB1234"),
             now);
 
-            BOOST_TEST(rentManager->findRents(rentPredicate)[0]->getId() == 1);
+            BOOST_TEST(rentManager->findRents(rentPredicate)[0]->getClient()->getFirstName() == "Jan");
     }
 
     BOOST_AUTO_TEST_CASE(ManagerFindAllRentsTest) {

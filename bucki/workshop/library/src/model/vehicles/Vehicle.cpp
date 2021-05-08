@@ -29,6 +29,10 @@ void Vehicle::setBasePrice(const unsigned int basePrice) {
     Vehicle::basePrice = basePrice;
 }
 
+const std::string Vehicle::getInfo() const {
+    return getVehicleInfo();
+}
+
 const std::string Vehicle::getVehicleInfo() const {
     return plateNumber + ", cena: " + std::to_string(basePrice);
 }
@@ -45,4 +49,8 @@ bool Vehicle::isArchive() const {
 
 void Vehicle::setArchive(bool archive) {
     Vehicle::archive = archive;
+}
+
+const std::string Vehicle::getId() const {
+    return getPlateNumber();
 }

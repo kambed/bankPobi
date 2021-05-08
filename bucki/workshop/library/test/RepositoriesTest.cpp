@@ -19,7 +19,7 @@ bool testPredicateVehicle(VehiclePtr vehicle) {
 }
 
 bool testPredicateRent(RentPtr rent) {
-    return rent->getId() == 1;
+    return rent->getClient()->getFirstName() == "Jan";
 }
 
 BOOST_AUTO_TEST_SUITE(TestSuiteStorageContainer)
@@ -215,7 +215,8 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234", 100);
         storage->getVehiclesRepo().addVehicle(vehicle);
-        RentPtr rent = std::make_shared<Rent>(2, client, vehicle, boost::posix_time::second_clock::local_time());
+        boost::uuids::random_generator generator;
+        RentPtr rent = std::make_shared<Rent>(generator(), client, vehicle, boost::posix_time::second_clock::local_time());
         storage->getRentsRepo().addRent(rent);
         BOOST_CHECK_EQUAL(storage->getRentsRepo().getRent(1), rent);
 
@@ -234,7 +235,9 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234", 100);
         storage->getVehiclesRepo().addVehicle(vehicle);
-        RentPtr rent = std::make_shared<Rent>(2, client, vehicle, boost::posix_time::second_clock::local_time());
+        boost::uuids::random_generator generator;
+        RentPtr rent = std::make_shared<Rent>(generator(), client, vehicle, boost::posix_time::second_clock::local_time
+        ());
         storage->getRentsRepo().addRent(rent);
         BOOST_CHECK_EQUAL(storage->getRentsRepo().getRentsSize(), 2);
 
@@ -254,7 +257,9 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234", 100);
         storage->getVehiclesRepo().addVehicle(vehicle);
-        RentPtr rent = std::make_shared<Rent>(2, client, vehicle, boost::posix_time::second_clock::local_time());
+        boost::uuids::random_generator generator;
+        RentPtr rent = std::make_shared<Rent>(generator(), client, vehicle, boost::posix_time::second_clock::local_time
+        ());
         storage->getRentsRepo().addRent(rent);
         BOOST_CHECK_EQUAL(storage->getRentsRepo().getRentsSize(), 2);
         storage->getRentsRepo().removeRent(rent);
@@ -269,7 +274,9 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
         storage->getClientsRepo().addClient(client);
         VehiclePtr vehicle = std::make_shared<Vehicle>("AB1234", 100);
         storage->getVehiclesRepo().addVehicle(vehicle);
-        RentPtr rent = std::make_shared<Rent>(2, client, vehicle, boost::posix_time::second_clock::local_time());
+        boost::uuids::random_generator generator;
+        RentPtr rent = std::make_shared<Rent>(generator(), client, vehicle, boost::posix_time::second_clock::local_time
+        ());
         storage->getRentsRepo().addRent(rent);
         BOOST_CHECK_EQUAL(storage->getRentsRepo().getRentsSize(), 2);
         storage->getRentsRepo().removeRent(nullptr);
@@ -285,29 +292,29 @@ BOOST_AUTO_TEST_SUITE(TestSuiteRentRepository)
         BOOST_CHECK_EQUAL(storage->getRentsRepo().reportRents(), report);
     }
 
-//    BOOST_AUTO_TEST_CASE(FindByRentTest){
-//        StorageContainerPtr storage = std::make_shared<StorageContainer>();
-//        std::vector<RentPtr> findById;
-//        for (unsigned int i = 0; i < storage->getRentsRepo().getRentsSize(); i++) {
-//            RentPtr rent = storage->getRentsRepo().getRent(i);
-//            if (rent != nullptr && rent->getId() == 1) {
-//                findById.push_back(rent);
-//            }
-//        }
-//
-//        BOOST_CHECK(findById == storage->getRentsRepo().findBy(testPredicateRent));
-//
-//    }
-//
-//    BOOST_AUTO_TEST_CASE(FindAllRentTest){
-//        StorageContainerPtr storage = std::make_shared<StorageContainer>();
-//        std::vector<RentPtr> findAll;
-//        for(int i=0;i<storage->getRentsRepo().getRentsSize();i++){
-//            if(storage->getRentsRepo().getRent(i) != nullptr)
-//                findAll.push_back(storage->getRentsRepo().getRent(i));
-//        }
-//        BOOST_CHECK(findAll == storage->getRentsRepo().findAll());
-//
-//    }
+    BOOST_AUTO_TEST_CASE(FindByRentTest){
+        StorageContainerPtr storage = std::make_shared<StorageContainer>();
+        std::vector<RentPtr> findById;
+        for (unsigned int i = 0; i < storage->getRentsRepo().getRentsSize(); i++) {
+            RentPtr rent = storage->getRentsRepo().getRent(i);
+            if (rent != nullptr &&  rent->getClient()->getFirstName() == "Jan") {
+                findById.push_back(rent);
+            }
+        }
+
+        BOOST_CHECK(findById == storage->getRentsRepo().findBy(testPredicateRent));
+
+    }
+
+    BOOST_AUTO_TEST_CASE(FindAllRentTest){
+        StorageContainerPtr storage = std::make_shared<StorageContainer>();
+        std::vector<RentPtr> findAll;
+        for(int i=0;i<storage->getRentsRepo().getRentsSize();i++){
+            if(storage->getRentsRepo().getRent(i) != nullptr)
+                findAll.push_back(storage->getRentsRepo().getRent(i));
+        }
+        BOOST_CHECK(findAll == storage->getRentsRepo().findAll());
+
+    }
 
 BOOST_AUTO_TEST_SUITE_END()

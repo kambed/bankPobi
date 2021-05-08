@@ -6,8 +6,9 @@
 #include "typedefs.h"
 #include <string>
 #include "repositories/RentRepository.h"
+#include "repositories/Repository.h"
 
-class VehicleRepository {
+class VehicleRepository : public Repository<Vehicle> {
 private:
     std::vector<VehiclePtr> vehicles;
 public:

@@ -34,11 +34,12 @@ BOOST_AUTO_TEST_SUITE(Exceptions)
         AddressPtr address = std::make_shared<Address>("Lodz", "Politechniki", "38");
         VehiclePtr bicycle = std::make_shared<Bicycle>("AB1234",100);
         ClientPtr client = std::make_shared<Client>("Jan", "Kowalski", "12345678900",address,bronze);
-        BOOST_CHECK_NO_THROW(RentPtr rentError = std::make_shared<Rent>(1,client,bicycle,
+        boost::uuids::random_generator generator;
+        BOOST_CHECK_NO_THROW(RentPtr rentError = std::make_shared<Rent>(generator(),client,bicycle,
                                                                         boost::posix_time::second_clock::local_time()));
-        BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(2,nullptr,bicycle,
+        BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(generator(),nullptr,bicycle,
                                                                      boost::posix_time::second_clock::local_time()),RentException::exception);
-        BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(3,client,nullptr,
+        BOOST_CHECK_THROW(RentPtr rentError = std::make_shared<Rent>(generator(),client,nullptr,
                                                                      boost::posix_time::second_clock::local_time()),RentException::exception);
     }
     

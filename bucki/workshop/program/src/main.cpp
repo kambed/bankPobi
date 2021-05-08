@@ -20,7 +20,7 @@
 using namespace std;
 
 bool rentPredicate(RentPtr rent) {
-    return rent->getId() == 1;
+    return rent->getClient()->getFirstName() == "Jan";
 }
 
 int main() {

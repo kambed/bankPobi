@@ -5,8 +5,9 @@
 #include <typedefs.h>
 #include <vector>
 #include <string>
+#include <repositories/Repository.h>
 
-class ClientRepository {
+class ClientRepository : public Repository<Client>{
 private:
     std::vector<ClientPtr> clients;
 public:

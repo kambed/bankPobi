@@ -16,7 +16,9 @@ public:
 
     const std::string &getPlateNumber() const;
 
-    //void setPlateNumber(const std::string &plateNumber);
+    const std::string getInfo() const;
+
+    const std::string getId() const;
 
     const unsigned int getBasePrice() const;
 

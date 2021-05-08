@@ -13,6 +13,7 @@
 #include <model/clients/Gold.h>
 #include <model/clients/Diamond.h>
 #include <model/clients/Platinum.h>
+#include <boost/uuid/uuid_generators.hpp>
 
 RentManager::RentManager() {
     currentRents = std::make_shared<RentRepository>();
@@ -53,7 +54,8 @@ double RentManager::checkClientRentBalance(ClientPtr client) {
 RentPtr RentManager::rentVehicle(int id,ClientPtr client, VehiclePtr vehicle, boost::posix_time::ptime beginTime) {
     if(client->isArchive() == false && vehicle->isArchive() == false && client->getMaxVehicles()>getAllClientRents
     (client).size() && getVehicleRent(vehicle) == nullptr) {
-        RentPtr rent = std::make_shared<Rent>(id,client,vehicle,beginTime);
+        boost::uuids::random_generator generator;
+        RentPtr rent = std::make_shared<Rent>(generator(),client,vehicle,beginTime);
         currentRents->addRent(rent);
         return rent;
     }else return nullptr;

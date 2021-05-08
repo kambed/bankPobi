@@ -1,8 +1,10 @@
 #include "model/Rent.h"
 #include "typedefs.h"
 #include "exceptions/RentException.h"
+#include <string>
+#include <boost/uuid/uuid_io.hpp>
 
-Rent::Rent(unsigned int id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime)
+Rent::Rent(boost::uuids::uuid id, ClientPtr client, VehiclePtr vehicle, const boost::posix_time::ptime &beginTime)
            try : id(id),client(client),vehicle(vehicle),beginTime(beginTime) {
 
     if (beginTime == boost::posix_time::not_a_date_time)
@@ -26,6 +28,10 @@ const VehiclePtr Rent::getVehicle() const {
     return vehicle;
 }
 
+const std::string Rent::getInfo() const {
+    return getRentInfo();
+}
+
 const std::string Rent::getRentInfo() const {
     std::stringstream ss;
     ss << beginTime;
@@ -35,11 +41,11 @@ const std::string Rent::getRentInfo() const {
     std::string end = ss2.str();
     if (end == "not-a-date-time")
         end = "nie zakonczono";
-    return id + ", klient: " + client->getClientInfo() + ", pojazd: " + vehicle->getVehicleInfo() +
+    return to_string(id) + ", klient: " + client->getClientInfo() + ", pojazd: " + vehicle->getVehicleInfo() +
            ", Rozpoczecie wypozyczenia: " + begin + ", Zakonczenie wypozyczenia: " + end;
 }
 
-unsigned int Rent::getId() const {
+boost::uuids::uuid Rent::getId() const {
     return id;
 }
 

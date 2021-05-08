@@ -1,6 +1,7 @@
 #ifndef CARRENTAL_CLIENT_H
 #define CARRENTAL_CLIENT_H
 
+#include "typedefs.h"
 #include "model/Address.h"
 #include "model/Rent.h"
 #include "ClientType.h"
@@ -24,6 +25,8 @@ public:
 
     ~Client();
 
+    const std::string getInfo() const;
+
     const std::string getClientInfo() const;
 
     const std::string &getFirstName() const;
@@ -33,6 +36,8 @@ public:
     const std::string &getLastName() const;
 
     void setLastName(const std::string &lastName);
+
+    const std::string &getId() const;
 
     const std::string &getPersonalId() const;
 

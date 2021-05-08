@@ -14,6 +14,10 @@ Client::Client() {
 
 Client::~Client() {}
 
+const std::string Client::getInfo() const {
+    return getClientInfo();
+}
+
 const string Client::getClientInfo() const {
     return firstName + " " + lastName + " " + personalID + ", adres:" + address->getAddressInfo() + ", \ntyp klienta: "
            + clientType->getTypeInfo();
@@ -48,6 +52,10 @@ const string &Client::getLastName() const {
 void Client::setLastName(const string &lastName) {
     if (lastName != "")
         Client::lastName = lastName;
+}
+
+const std::string &Client::getId() const {
+    return getPersonalId();
 }
 
 const string &Client::getPersonalId() const {
