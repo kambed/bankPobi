@@ -4,10 +4,16 @@
 #include <memory>
 #include <functional>
 
+class Client;
+class Account;
+
 class Interest;
 class ClientManager;
 class AccountManager;
 class TransactionManager;
+
+typedef std::shared_ptr<Client> ClientPtr;
+typedef std::shared_ptr<Account> AccountPtr;
 
 typedef std::shared_ptr<Interest> InterestPtr;
 typedef std::shared_ptr<ClientManager> ClientManagerPtr;

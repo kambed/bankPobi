@@ -5,7 +5,7 @@ set(SOURCE_FILES
         include/typedefs.h
         include/Bank.h
         src/Bank.cpp
-        )
+        include/SavingsAccount.cpp include/SavingsAccount.h include/CurrentAccount.cpp include/CurrentAccount.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -23,7 +23,7 @@ include_directories(
 set(SOURCE_TEST_FILES
         test/master.cpp
 
-        ) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/AccountsTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 
