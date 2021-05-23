@@ -11,7 +11,7 @@ set(SOURCE_FILES
         include/CurrentAccount.h
         src/Client.cpp
         include/Client.h
-        )
+        src/Interest.cpp include/Interest.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
