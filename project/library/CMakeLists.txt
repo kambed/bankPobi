@@ -5,7 +5,13 @@ set(SOURCE_FILES
         include/typedefs.h
         include/Bank.h
         src/Bank.cpp
-        include/SavingsAccount.cpp include/SavingsAccount.h include/CurrentAccount.cpp include/CurrentAccount.h)
+        src/SavingsAccount.cpp
+        include/SavingsAccount.h
+        src/CurrentAccount.cpp
+        include/CurrentAccount.h
+        src/Client.cpp
+        include/Client.h
+        )
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 

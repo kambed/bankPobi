@@ -3,6 +3,7 @@
 //
 
 #include "Account.h"
+#include "Client.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
 
@@ -32,8 +33,9 @@ std::string Account::getAccountInfo() const {
     std::stringstream ss;
     ss << creationDate;
     std::string creation = ss.str();
-    return "Numer konta: "+accountNumber+" Wlasciciel: "+" Stan konta: "+std::to_string(getBalance())+"zl Data zalozenia: "+creation;
-    //+getOwner()->getClientInfo()
+    return "Numer konta: "+accountNumber+" Wlasciciel: "+owner->getClientInfo()+" Stan konta: "+std::to_string
+    (getBalance())+"zl Data zalozenia: "+creation;
+
 }
 
 bool Account::sendMoney(std::string accountNumber, double amount) {
