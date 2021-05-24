@@ -11,14 +11,16 @@ class SavingsAccount : public Account{
 private:
     bool wasTransferThisMonth;
     boost::posix_time::ptime lastInterest;
+    AccountPtr currentAccount;
 public:
     //CONSTRUCTOR
-    SavingsAccount(const ClientPtr &owner);
+    SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount);
     //DESTRUCTOR
     virtual ~SavingsAccount();
     //GETTERS
-    bool getWasInterestThisMonth() const;
+    bool getWasTransferThisMonth() const;
     const boost::posix_time::ptime &getLastInterest() const;
+    const AccountPtr &getCurrentAccount() const;
     //METHODS
     std::string getAccountInfo() const override;
     bool sendToCurrentAccount(double amount);

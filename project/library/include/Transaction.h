@@ -13,8 +13,8 @@ private:
     std::string title;
 public:
     ///CONSTRUCTOR
-    Transaction(const AccountPtr &accountFrom, const AccountPtr &accountTo, double amount, const std::string &title);
-
+    Transaction(const AccountPtr &accountFrom, const AccountPtr &accountTo, double amount,
+                const std::string &title);
     ///GETTERS
     const AccountPtr &getAccountFrom() const;
 

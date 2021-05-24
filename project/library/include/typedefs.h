@@ -6,6 +6,9 @@
 
 class Client;
 class Account;
+class SavingsAccount;
+class CurrentAccount;
+class Transaction;
 
 class Interest;
 class ClientManager;
@@ -14,6 +17,9 @@ class TransactionManager;
 
 typedef std::shared_ptr<Client> ClientPtr;
 typedef std::shared_ptr<Account> AccountPtr;
+typedef std::shared_ptr<SavingsAccount> SavingsAccountPtr;
+typedef std::shared_ptr<CurrentAccount> CurrentAccountPtr;
+typedef std::shared_ptr<Transaction> TransactionPtr;
 
 typedef std::shared_ptr<Interest> InterestPtr;
 typedef std::shared_ptr<ClientManager> ClientManagerPtr;

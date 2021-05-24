@@ -30,7 +30,7 @@ include_directories(
 
 set(SOURCE_TEST_FILES
         test/master.cpp
-        test/AccountsTest.cpp test/ClientsTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/AccountsTest.cpp test/ClientsTest.cpp test/TransactionsTests.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 
