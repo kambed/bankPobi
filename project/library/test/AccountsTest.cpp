@@ -9,7 +9,7 @@ struct TestSuiteAccountFixture {
     ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     AccountPtr acc = std::make_shared<CurrentAccount>(client,"12345");
 };
-BOOST_FIXTURE_TEST_SUITE(TestSuiteAddress,TestSuiteAccountFixture)
+BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
 
     BOOST_AUTO_TEST_CASE(AccountConstructorTests) {
         BOOST_TEST(acc->getOwner()==client);
