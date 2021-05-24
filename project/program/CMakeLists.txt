@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.4)
 project(Program)
 
 #Ustaw we własnej zmiennej SOURCE_FILES zbiór plików źródłowych projektu
-set(SOURCE_FILES src/main.cpp ../library/src/Account.cpp ../library/include/Account.h)
+set(SOURCE_FILES src/main.cpp)
 
 #Włącz powyższy zbiór plików do zbudowania programu wykonywalnego Program
 add_executable(Program ${SOURCE_FILES})

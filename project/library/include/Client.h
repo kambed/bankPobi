@@ -29,7 +29,7 @@ public:
 
     void changeLastName(const std::string &lastName);
 
-    const std::string &getClientInfo() const;
+    std::string getClientInfo() const;
 };
 
 

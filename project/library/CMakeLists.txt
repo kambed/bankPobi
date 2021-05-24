@@ -5,6 +5,8 @@ set(SOURCE_FILES
         include/typedefs.h
         include/Bank.h
         src/Bank.cpp
+        src/Account.cpp
+        include/Account.h
         src/SavingsAccount.cpp
         include/SavingsAccount.h
         src/CurrentAccount.cpp
@@ -28,7 +30,6 @@ include_directories(
 
 set(SOURCE_TEST_FILES
         test/master.cpp
-
         test/AccountsTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
