@@ -13,7 +13,13 @@ set(SOURCE_FILES
         include/CurrentAccount.h
         src/Client.cpp
         include/Client.h
-        src/Interest.cpp include/Interest.h src/Transaction.cpp include/Transaction.h)
+        src/Interest.cpp
+        include/Interest.h
+        src/Transaction.cpp
+        include/Transaction.h
+        include/ClientRepository.cpp
+        include/ClientRepository.h
+        )
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -30,7 +36,11 @@ include_directories(
 
 set(SOURCE_TEST_FILES
         test/master.cpp
-        test/AccountsTest.cpp test/ClientsTest.cpp test/TransactionsTests.cpp test/InterestTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/AccountsTest.cpp
+        test/ClientsTest.cpp
+        test/TransactionsTests.cpp
+        test/InterestTest.cpp
+        ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

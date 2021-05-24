@@ -21,6 +21,10 @@ typedef std::shared_ptr<SavingsAccount> SavingsAccountPtr;
 typedef std::shared_ptr<CurrentAccount> CurrentAccountPtr;
 typedef std::shared_ptr<Transaction> TransactionPtr;
 
+typedef std::function<bool(ClientPtr)> ClientPredicate;
+typedef std::function<bool(AccountPtr)> AccountPredicate;
+typedef std::function<bool(TransactionPtr)> TransactionPredicate;
+
 typedef std::shared_ptr<Interest> InterestPtr;
 typedef std::shared_ptr<ClientManager> ClientManagerPtr;
 typedef std::shared_ptr<AccountManager> AccountManagerPtr;
