@@ -1,4 +1,4 @@
-#include "ClientManager.h"
+#include "managers/ClientManager.h"
 #include "Client.h"
 #include "typedefs.h"
 #include <boost/date_time.hpp>

@@ -1,4 +1,4 @@
-#include "ClientRepository.h"
+#include "repositories/ClientRepository.h"
 #include "Client.h"
 
 ClientRepository::ClientRepository() {}

@@ -5,8 +5,8 @@
 #include "Account.h"
 #include "CurrentAccount.h"
 #include "SavingsAccount.h"
-#include "ClientRepository.h"
-#include "AccountRepository.h"
+#include "repositories/ClientRepository.h"
+#include "repositories/AccountRepository.h"
 struct TestSuiteRepoFixture {
     ClientRepositoryPtr CR = std::make_shared<ClientRepository>();
     AccountRepositoryPtr AR = std::make_shared<AccountRepository>();

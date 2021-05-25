@@ -2,7 +2,7 @@
 // Created by student on 25.05.2021.
 //
 
-#include "AccountRepository.h"
+#include "repositories/AccountRepository.h"
 #include "Account.h"
 
 AccountRepository::AccountRepository() {}

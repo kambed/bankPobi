@@ -1,7 +1,7 @@
 #ifndef BANK_CLIENTMANAGER_H
 #define BANK_CLIENTMANAGER_H
 
-#include "ClientRepository.h"
+#include "repositories/ClientRepository.h"
 #include <boost/date_time.hpp>
 
 class ClientManager {

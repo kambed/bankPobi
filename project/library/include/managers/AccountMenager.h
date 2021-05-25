@@ -5,7 +5,7 @@
 #ifndef BANK_ACCOUNTMENAGER_H
 #define BANK_ACCOUNTMENAGER_H
 
-#include "AccountRepository.h"
+#include "repositories/AccountRepository.h"
 
 class AccountMenager {
 private:
