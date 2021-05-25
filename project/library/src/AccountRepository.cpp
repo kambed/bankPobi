@@ -40,3 +40,8 @@ std::vector<AccountPtr> AccountRepository::findBy(AccountPredicate predicate) {
     }
     return found;
 }
+
+bool AccountRepository::setBalance(AccountPtr account, double balance) {
+    account->setBalance(balance);
+    return true;
+}

@@ -47,3 +47,7 @@ std::string Account::getAccountInfo() const {
 bool Account::sendMoney(std::string accountNumber, double amount) {
     return false; //TO BE IMPLEMENTED
 }
+
+void Account::setBalance(double balance) {
+    Account::balance = balance;
+}

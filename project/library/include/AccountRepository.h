@@ -18,6 +18,7 @@ public:
     AccountPtr getAccount(std::string accountNumber);
     void addAccount(AccountPtr account);
     bool removeAccount(AccountPtr account);
+    bool setBalance(AccountPtr account,double balance);
     std::vector<AccountPtr> findBy(AccountPredicate predicate);
 };
 

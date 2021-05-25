@@ -26,6 +26,8 @@ public:
     const ClientPtr &getOwner() const;
     double getBalance() const;
     const boost::posix_time::ptime &getCreationDate() const;
+    //SETTERS
+    void setBalance(double balance);
     //METHODS
     virtual std::string getAccountInfo() const;
     bool sendMoney(std::string accountNumber,double amount);
