@@ -12,8 +12,8 @@ private:
     boost::posix_time::ptime birthDate;
 public:
     ///CONSTRUCTOR
-    Client(const std::string &personalId, const std::string &firstName, const std::string &lastName,
-           const boost::posix_time::ptime &birthDate);
+    Client(std::string personalId, std::string firstName, std::string lastName,
+           boost::posix_time::ptime birthDate);
     ///DESTRUCTOR
     virtual ~Client();
     ///GETTERS

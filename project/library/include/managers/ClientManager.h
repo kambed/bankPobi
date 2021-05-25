@@ -9,11 +9,11 @@ private:
     ClientRepositoryPtr clientRepository;
 public:
     ///CONSTRUCTOR
-    ClientManager(const ClientRepositoryPtr &clientRepository);
+    ClientManager();
     ///METHODS
     ClientPtr getClient(std::string personalId);
-    void addClient(const std::string &personalId, const std::string &firstName, const std::string &lastName,
-                   const boost::posix_time::ptime &birthDate);
+    void addClient(std::string personalId, std::string firstName, std::string lastName,
+                   boost::posix_time::ptime birthDate);
     std::vector<ClientPtr> findAll();
     std::vector<ClientPtr> findClients(ClientPredicate predicate);
 };

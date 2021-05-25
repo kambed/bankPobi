@@ -2,6 +2,7 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <typedefs.h>
 #include "managers/AccountManager.h"
+#include "managers/ClientManager.h"
 #include "Client.h"
 #include "Account.h"
 #include "CurrentAccount.h"
@@ -9,8 +10,11 @@
 #include "repositories/ClientRepository.h"
 #include "repositories/AccountRepository.h"
 #include <algorithm>
+#include <vector>
+#include <memory>
 struct TestSuiteManagerFixture {
     AccountManagerPtr AM = std::make_shared<AccountManager>();
+    ClientManagerPtr CM = std::make_shared<ClientManager>();
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
 };
@@ -42,6 +46,15 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
         status = AM->removeAccount("losowaNieprawidlowa");
         BOOST_TEST(status==false);
         BOOST_TEST(AM->findAll()==testowy);
+    }
+    BOOST_AUTO_TEST_CASE(ClientManagerAddClientTests){
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        BOOST_CHECK_EQUAL(CM->findAll().size(),1);
+    }
+    BOOST_AUTO_TEST_CASE(ClientManagerAddClientNegativeTests){
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        CM->addClient("01234567891","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        BOOST_CHECK_EQUAL(CM->findAll().size(),1);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

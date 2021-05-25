@@ -1,8 +1,8 @@
 #include "Client.h"
 #include <string>
 
-Client::Client(const std::string &personalId, const std::string &firstName, const std::string &lastName,
-               const boost::posix_time::ptime &birthDate) : personalID(personalId), firstName(firstName),
+Client::Client(std::string personalId, std::string firstName, std::string lastName,
+               boost::posix_time::ptime birthDate) : personalID(personalId), firstName(firstName),
                                                           lastName(lastName), birthDate(birthDate) {}
 
 Client::~Client() {}

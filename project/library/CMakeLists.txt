@@ -48,6 +48,7 @@ set(SOURCE_TEST_FILES
         test/TransactionsTests.cpp
         test/InterestTest.cpp
         test/RepositoriesTest.cpp
+        test/ManagersTests.cpp
         ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})

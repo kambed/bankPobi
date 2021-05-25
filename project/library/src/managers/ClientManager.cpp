@@ -3,26 +3,25 @@
 #include "typedefs.h"
 #include <boost/date_time.hpp>
 
-ClientManager::ClientManager(const ClientRepositoryPtr &clientRepository) : clientRepository(clientRepository) {}
-
-ClientPtr ClientManager::getClient(std::string personalId) {
-    return ClientPtr();
+ClientManager::ClientManager(){
+    clientRepository = std::make_shared<ClientRepository>();
 }
 
-void ClientManager::addClient(const std::string &personalId, const std::string &firstName, const std::string &lastName,
-                              const boost::posix_time::ptime &birthDate) {
-    if (clientRepository->getClient(personalId) != nullptr){
+ClientPtr ClientManager::getClient(std::string personalId) {
+    return clientRepository->getClient(personalId);
+}
+
+void ClientManager::addClient(std::string personalId, std::string firstName, std::string lastName,
+                              boost::posix_time::ptime birthDate) {
+    if (clientRepository->getClient(personalId) == nullptr){
         ClientPtr client = std::make_shared<Client>(personalId,firstName,lastName,birthDate);
         clientRepository->addClient(client);
     }
 }
 
-bool predicateTrueManager(ClientPtr client){
-    return client != nullptr;
-}
-
 std::vector<ClientPtr> ClientManager::findAll() {
-    return findClients(predicateTrueManager);
+    auto function = [&](const ClientPtr &ptr)->bool{return(true);};
+    return clientRepository->findBy(function);
 }
 
 std::vector<ClientPtr> ClientManager::findClients(ClientPredicate predicate) {
