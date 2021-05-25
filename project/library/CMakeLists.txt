@@ -17,9 +17,9 @@ set(SOURCE_FILES
         include/Interest.h
         src/Transaction.cpp
         include/Transaction.h
-        include/ClientRepository.cpp
+        src/ClientRepository.cpp
         include/ClientRepository.h
-        )
+        src/AccountRepository.cpp include/AccountRepository.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
