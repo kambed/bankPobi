@@ -38,6 +38,14 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(savacc->getLastInterest()==savacc->getCreationDate());
         BOOST_TEST(savacc->getWasTransferThisMonth()==false);
     }
+    BOOST_AUTO_TEST_CASE(AccountSetBalancePositiveTest){
+        acc->setBalance(5.5);
+        BOOST_CHECK_EQUAL(acc->getBalance(),5.5);
+    }
+    BOOST_AUTO_TEST_CASE(AccountSetBalanceNegativeTest){
+        acc->setBalance(-5.0);
+        BOOST_CHECK_EQUAL(acc->getBalance(),0);
+    }
     BOOST_AUTO_TEST_CASE(AccountInfoTests) {
         std::stringstream ss;
         ss << acc->getCreationDate();

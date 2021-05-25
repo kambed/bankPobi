@@ -49,5 +49,6 @@ bool Account::sendMoney(std::string accountNumber, double amount) {
 }
 
 void Account::setBalance(double balance) {
-    Account::balance = balance;
+    if(balance >= 0)
+        Account::balance = balance;
 }
