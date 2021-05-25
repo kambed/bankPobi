@@ -40,7 +40,7 @@ set(SOURCE_TEST_FILES
         test/ClientsTest.cpp
         test/TransactionsTests.cpp
         test/InterestTest.cpp
-        ) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/RepositoriesTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 
