@@ -15,9 +15,9 @@ class Bank
 private:
     std::string bankNumber;
 	InterestPtr interest;
-//	ClientManagerPtr clientManager;
-//	AccountManagerPtr accountManager;
-//	TransactionManagerPtr transactionManager;
+	ClientManagerPtr clientManager;
+	AccountManagerPtr accountManager;
+	TransactionManagerPtr transactionManager;
 
 public:
     Bank(const std::string &bankNumber);
@@ -26,11 +26,11 @@ public:
 
     const InterestPtr &getInterest() const;
 
-//    const ClientManagerPtr &getClientManager() const;
-//
-//    const AccountManagerPtr &getAccountManager() const;
-//
-//    const TransactionManagerPtr &getTransactionManager() const;
+    const ClientManagerPtr &getClientManager() const;
+
+    const AccountManagerPtr &getAccountManager() const;
+
+    const TransactionManagerPtr &getTransactionManager() const;
 
 
 };
