@@ -7,7 +7,8 @@ double Interest::getPercentage() const {
 }
 
 void Interest::setPercentage(double percentage) {
-    Interest::percentage = percentage;
+    if(percentage>=0)
+        Interest::percentage = percentage;
 }
 
 double Interest::getTax() const {
@@ -15,7 +16,8 @@ double Interest::getTax() const {
 }
 
 void Interest::setTax(double tax) {
-    Interest::tax = tax;
+    if(tax>=0)
+        Interest::tax = tax;
 }
 
 int getNumberOfDaysInYear(int year){
