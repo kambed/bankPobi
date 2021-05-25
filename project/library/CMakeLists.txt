@@ -19,7 +19,7 @@ set(SOURCE_FILES
         include/Transaction.h
         src/ClientRepository.cpp
         include/ClientRepository.h
-        src/AccountRepository.cpp include/AccountRepository.h src/AccountMenager.cpp include/AccountMenager.h)
+        src/AccountRepository.cpp include/AccountRepository.h src/AccountManager.cpp include/AccountManager.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -40,7 +40,7 @@ set(SOURCE_TEST_FILES
         test/ClientsTest.cpp
         test/TransactionsTests.cpp
         test/InterestTest.cpp
-        test/RepositoriesTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+        test/RepositoriesTest.cpp test/ManagersTests.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

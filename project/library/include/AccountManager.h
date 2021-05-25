@@ -2,17 +2,17 @@
 // Created by student on 25.05.2021.
 //
 
-#ifndef BANK_ACCOUNTMENAGER_H
-#define BANK_ACCOUNTMENAGER_H
+#ifndef BANK_ACCOUNTMANAGER_H
+#define BANK_ACCOUNTMANAGER_H
 
 #include "AccountRepository.h"
 
-class AccountMenager {
+class AccountManager {
 private:
     AccountRepository accountRepository;
 public:
     //CONSTRUCTOR
-    AccountMenager(const AccountRepository &accountRepository);
+    AccountManager();
     //METHODS
     AccountPtr getAccount(std::string accountNumber);
     void createCurrentAccount(ClientPtr owner);
@@ -24,4 +24,4 @@ public:
 };
 
 
-#endif //BANK_ACCOUNTMENAGER_H
+#endif //BANK_ACCOUNTMANAGER_H

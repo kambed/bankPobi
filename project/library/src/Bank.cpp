@@ -17,16 +17,16 @@ const InterestPtr &Bank::getInterest() const {
     return interest;
 }
 
-const ClientManagerPtr &Bank::getClientManager() const {
-    return clientManager;
-}
-
-const AccountManagerPtr &Bank::getAccountManager() const {
-    return accountManager;
-}
-
-const TransactionManagerPtr &Bank::getTransactionManager() const {
-    return transactionManager;
-}
+//const ClientManagerPtr &Bank::getClientManager() const {
+//    return clientManager;
+//}
+//
+//const AccountManagerPtr &Bank::getAccountManager() const {
+//    return accountManager;
+//}
+//
+//const TransactionManagerPtr &Bank::getTransactionManager() const {
+//    return transactionManager;
+//}
 
 
