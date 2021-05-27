@@ -17,8 +17,9 @@ TransactionPtr TransactionRepository::getTransaction(boost::uuids::uuid Id) {
 }
 
 void TransactionRepository::addTransaction(TransactionPtr transaction) {
-    if (transaction != nullptr)
+    if (transaction != nullptr){
         transactions.push_back(transaction);
+    }
 }
 
 std::vector<TransactionPtr> TransactionRepository::findBy(TransactionPredicate predicate) {

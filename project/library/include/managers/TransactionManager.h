@@ -5,9 +5,21 @@
 #ifndef BANK_TRANSACTIONMANAGER_H
 #define BANK_TRANSACTIONMANAGER_H
 
+#include <boost/uuid/uuid.hpp>
+#include <typedefs.h>
+#include <vector>
 
 class TransactionManager {
-
+private:
+    TransactionRepositoryPtr transactionRepository;
+public:
+    ///CONSTRUCTOR
+    TransactionManager();
+    ///METHODS
+    void createTransaction(AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
+    TransactionPtr getTransaction(boost::uuids::uuid Id);
+    std::vector<TransactionPtr> findAll();
+    std::vector<TransactionPtr> findTransactions(TransactionManagerPtr predicate);
 };
 
 

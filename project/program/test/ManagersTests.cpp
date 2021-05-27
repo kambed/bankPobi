@@ -3,6 +3,7 @@
 #include <typedefs.h>
 #include "managers/AccountManager.h"
 #include "managers/ClientManager.h"
+#include "managers/TransactionManager.h"
 #include "model/Client.h"
 #include "model/Account.h"
 #include "model/CurrentAccount.h"
@@ -15,8 +16,11 @@
 struct TestSuiteManagerFixture {
     AccountManagerPtr AM = std::make_shared<AccountManager>();
     ClientManagerPtr CM = std::make_shared<ClientManager>();
+    TransactionManagerPtr TM = std::make_shared<TransactionManager>();
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,"12345");
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,"54321");
 };
 
 BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
@@ -55,6 +59,17 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
         CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
         CM->addClient("01234567891","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
         BOOST_CHECK_EQUAL(CM->findAll().size(),1);
+    }
+    BOOST_AUTO_TEST_CASE(TransactionManagerTests){
+        TM->createTransaction(acc1,acc2,100,"Testowy przelew");
+        BOOST_CHECK_EQUAL(TM->findAll().size(),1);
+        std::vector<TransactionPtr>testowy;
+        testowy.push_back(TM->findAll()[0]);
+        BOOST_TEST(testowy==TM->findAll());
+        TM->createTransaction(acc1,acc2,100,"Testowy przelew");
+        testowy.push_back(TM->findAll()[1]);
+        BOOST_TEST(testowy==TM->findAll());
+        BOOST_CHECK_EQUAL(TM->findAll().size(),2);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

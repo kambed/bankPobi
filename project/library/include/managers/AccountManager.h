@@ -9,7 +9,7 @@
 
 class AccountManager {
 private:
-    AccountRepository accountRepository;
+    AccountRepositoryPtr accountRepository;
 public:
     //CONSTRUCTOR
     AccountManager();

@@ -18,7 +18,7 @@ class AccountRepository;
 
 class ClientManager;
 class AccountManager;
-class TransactionMenager;
+class TransactionManager;
 
 typedef std::shared_ptr<Client> ClientPtr;
 typedef std::shared_ptr<Account> AccountPtr;
@@ -37,6 +37,6 @@ typedef std::shared_ptr<ClientRepository> ClientRepositoryPtr;
 typedef std::shared_ptr<Interest> InterestPtr;
 typedef std::shared_ptr<ClientManager> ClientManagerPtr;
 typedef std::shared_ptr<AccountManager> AccountManagerPtr;
-typedef std::shared_ptr<TransactionMenager> TransactionManagerPtr;
+typedef std::shared_ptr<TransactionManager> TransactionManagerPtr;
 
 #endif //BANK_TYPEDEFS_H
