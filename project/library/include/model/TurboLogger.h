@@ -9,7 +9,7 @@ public:
     ///CONSTRUCTOR
     TurboLogger();
     ///METHODS
-    void addLog(std::string whatToLog);
+    bool addLog(std::string whatToLog);
 };
 
 
