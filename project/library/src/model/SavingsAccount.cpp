@@ -2,7 +2,7 @@
 // Created by student on 22.05.2021.
 //
 
-#include "SavingsAccount.h"
+#include "model/SavingsAccount.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
 

@@ -1,5 +1,5 @@
 #include "repositories/ClientRepository.h"
-#include "Client.h"
+#include "model/Client.h"
 
 ClientRepository::ClientRepository() {}
 

@@ -16,6 +16,8 @@ public:
     Transaction(const AccountPtr &accountFrom, const AccountPtr &accountTo, double amount,
                 const std::string &title);
     ///GETTERS
+    const boost::uuids::uuid &getId() const;
+
     const AccountPtr &getAccountFrom() const;
 
     const AccountPtr &getAccountTo() const;

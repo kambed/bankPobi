@@ -1,6 +1,6 @@
 #include <string>
-#include "Bank.h"
-#include "Interest.h"
+#include "model/Bank.h"
+#include "model/Interest.h"
 //#include "ClientManager.h"
 //#include "AccountManager.h"
 //#include "TransactionManager.h"

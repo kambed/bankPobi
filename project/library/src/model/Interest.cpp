@@ -1,4 +1,4 @@
-#include "Interest.h"
+#include "model/Interest.h"
 
 Interest::Interest(double percentage, double tax) : percentage(percentage), tax(tax) {}
 

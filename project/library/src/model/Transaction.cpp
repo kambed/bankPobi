@@ -1,6 +1,6 @@
-#include "Transaction.h"
+#include "model/Transaction.h"
 #include <boost/uuid/uuid_io.hpp>
-#include "Account.h"
+#include "model/Account.h"
 #include <boost/uuid/uuid_generators.hpp>
 
 Transaction::Transaction(const AccountPtr &accountFrom, const AccountPtr &accountTo,
@@ -10,7 +10,9 @@ Transaction::Transaction(const AccountPtr &accountFrom, const AccountPtr &accoun
     boost::uuids::random_generator generator;
     id=generator();
 }
-
+const boost::uuids::uuid &Transaction::getId() const {
+    return id;
+}
 const AccountPtr &Transaction::getAccountFrom() const {
     return accountFrom;
 }

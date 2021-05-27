@@ -3,10 +3,10 @@
 //
 
 #include "managers/AccountManager.h"
-#include "Client.h"
-#include "Account.h"
-#include "CurrentAccount.h"
-#include "SavingsAccount.h"
+#include "model/Client.h"
+#include "model/Account.h"
+#include "model/CurrentAccount.h"
+#include "model/SavingsAccount.h"
 
 AccountManager::AccountManager() {}
 

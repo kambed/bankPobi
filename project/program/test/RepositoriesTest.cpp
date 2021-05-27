@@ -1,19 +1,26 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <typedefs.h>
-#include "Client.h"
-#include "Account.h"
-#include "CurrentAccount.h"
-#include "SavingsAccount.h"
+#include "model/Client.h"
+#include "model/Account.h"
+#include "model/CurrentAccount.h"
+#include "model/SavingsAccount.h"
 #include "repositories/ClientRepository.h"
 #include "repositories/AccountRepository.h"
+#include "model/Transaction.h"
+#include "repositories/TransactionRepository.h"
+#include <boost/uuid/random_generator.hpp>
 struct TestSuiteRepoFixture {
     ClientRepositoryPtr CR = std::make_shared<ClientRepository>();
     AccountRepositoryPtr AR = std::make_shared<AccountRepository>();
+    TransactionRepositoryPtr TR =std::make_shared<TransactionRepository>();
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
     CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,"12345");
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,"54321");
     SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client2,acc1);
+    TransactionPtr trans1 = std::make_shared<Transaction>(acc1,acc2,100,"Przelew");
+    boost::uuids::random_generator generator;
 };
 
 BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteRepoFixture)
@@ -37,6 +44,12 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteRepoFixture)
         BOOST_TEST(status==false);
         BOOST_TEST(AR->getAccount(acc1->getAccountNumber())==nullptr);
         BOOST_TEST(AR->getAccount(savacc->getAccountNumber())==savacc);
+    }
+    BOOST_AUTO_TEST_CASE(TransactionRepoTests) {
+        BOOST_TEST(TR->getTransaction(generator())==nullptr);
+        TR->addTransaction(trans1);
+        BOOST_TEST(TR->getTransaction(trans1->getId())==trans1);
+        BOOST_TEST(TR->getTransaction(generator())==nullptr);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

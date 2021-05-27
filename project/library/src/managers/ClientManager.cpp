@@ -1,5 +1,5 @@
 #include "managers/ClientManager.h"
-#include "Client.h"
+#include "model/Client.h"
 #include "typedefs.h"
 #include <boost/date_time.hpp>
 

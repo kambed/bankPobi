@@ -3,7 +3,7 @@
 //
 
 #include "repositories/AccountRepository.h"
-#include "Account.h"
+#include "model/Account.h"
 
 AccountRepository::AccountRepository() {}
 

@@ -1,10 +1,10 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <typedefs.h>
-#include "Client.h"
-#include "Account.h"
-#include "CurrentAccount.h"
-#include "SavingsAccount.h"
+#include "model/Client.h"
+#include "model/Account.h"
+#include "model/CurrentAccount.h"
+#include "model/SavingsAccount.h"
 struct TestSuiteAccountFixture {
     ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client,"12345");

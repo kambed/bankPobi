@@ -2,7 +2,7 @@
 // Created by student on 22.05.2021.
 //
 
-#include "CurrentAccount.h"
+#include "model/CurrentAccount.h"
 
 CurrentAccount::CurrentAccount(const ClientPtr &owner, const std::string &password) : Account(owner),
                                                                                       password(password) {}

@@ -3,20 +3,20 @@ project(Library)
 
 set(SOURCE_FILES
         include/typedefs.h
-        include/Bank.h
-        src/Bank.cpp
-        src/Account.cpp
-        include/Account.h
-        src/SavingsAccount.cpp
-        include/SavingsAccount.h
-        src/CurrentAccount.cpp
-        include/CurrentAccount.h
-        src/Client.cpp
-        include/Client.h
-        src/Interest.cpp
-        include/Interest.h
-        src/Transaction.cpp
-        include/Transaction.h
+        include/model/Bank.h
+        src/model/Bank.cpp
+        src/model/Account.cpp
+        include/model/Account.h
+        src/model/SavingsAccount.cpp
+        include/model/SavingsAccount.h
+        src/model/CurrentAccount.cpp
+        include/model/CurrentAccount.h
+        src/model/Client.cpp
+        include/model/Client.h
+        src/model/Interest.cpp
+        include/model/Interest.h
+        src/model/Transaction.cpp
+        include/model/Transaction.h
         src/repositories/ClientRepository.cpp
         include/repositories/ClientRepository.h
         src/repositories/AccountRepository.cpp
@@ -26,7 +26,7 @@ set(SOURCE_FILES
         src/managers/ClientManager.cpp
         include/managers/ClientManager.h
 
-        )
+        src/repositories/TransactionRepository.cpp include/repositories/TransactionRepository.h src/managers/TransactionManager.cpp include/managers/TransactionManager.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -42,13 +42,13 @@ include_directories(
 )
 
 set(SOURCE_TEST_FILES
-        test/master.cpp
-        test/AccountsTest.cpp
-        test/ClientsTest.cpp
-        test/TransactionsTests.cpp
-        test/InterestTest.cpp
-        test/RepositoriesTest.cpp
-        test/ManagersTests.cpp
+        ../program/test/master.cpp
+        ../program/test/AccountsTest.cpp
+        ../program/test/ClientsTest.cpp
+        ../program/test/TransactionsTests.cpp
+        ../program/test/InterestTest.cpp
+        ../program/test/RepositoriesTest.cpp
+        ../program/test/ManagersTests.cpp
         ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})

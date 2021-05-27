@@ -1,7 +1,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <typedefs.h>
-#include "Client.h"
+#include "model/Client.h"
 struct TestSuiteClientFixture {
     ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
 };

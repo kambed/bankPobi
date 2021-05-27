@@ -2,8 +2,8 @@
 // Created by student on 22.05.2021.
 //
 
-#include "Account.h"
-#include "Client.h"
+#include "model/Account.h"
+#include "model/Client.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
 #include <cstdlib>
