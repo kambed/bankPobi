@@ -26,7 +26,7 @@ set(SOURCE_FILES
         src/managers/ClientManager.cpp
         include/managers/ClientManager.h
 
-        src/repositories/TransactionRepository.cpp include/repositories/TransactionRepository.h src/managers/TransactionManager.cpp include/managers/TransactionManager.h)
+        src/repositories/TransactionRepository.cpp include/repositories/TransactionRepository.h src/managers/TransactionManager.cpp include/managers/TransactionManager.h src/model/TurboLogger.cpp include/model/TurboLogger.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
