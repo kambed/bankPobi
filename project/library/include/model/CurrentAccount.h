@@ -10,19 +10,19 @@
 
 class CurrentAccount : public Account{
 private:
-    std::string password;
+
 public:
     //CONSTRUCTOR
-    CurrentAccount(const ClientPtr &owner, const std::string &password);
+    CurrentAccount(const ClientPtr &owner);
     //DESTRUCTOR
     virtual ~CurrentAccount();
     //METHODS
     std::string getAccountInfo() const override;
-    bool changePassword(std::string passwd);
     bool sendToSavingsAccount(double amount);
-    bool sendMoney(std::string account,double amount,std::string password);
 
-
+    bool
+    sendMoney(std::string accountNumber, double amount, std::string title, TransactionManagerPtr transactionManager,
+              AccountManagerPtr accountManager) override;
 };
 
 

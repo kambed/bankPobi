@@ -8,7 +8,7 @@
 AccountRepository::AccountRepository() {}
 
 AccountPtr AccountRepository::getAccount(std::string accountNumber) {
-    for (int i = 0; i < accounts.size(); i++) {
+    for (int i = 0; i<accounts.size(); i++) {
         if (accounts[i]->getAccountNumber() == accountNumber)
             return accounts[i];
     }

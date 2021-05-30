@@ -18,7 +18,7 @@ AccountPtr AccountManager::getAccount(std::string accountNumber) {
 }
 
 void AccountManager::createCurrentAccount(ClientPtr owner) {
-    CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner,owner->getPersonalId());
+    CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner);
     accountRepository->addAccount(account);
 }
 
