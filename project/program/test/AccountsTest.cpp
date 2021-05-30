@@ -5,10 +5,20 @@
 #include "model/Account.h"
 #include "model/CurrentAccount.h"
 #include "model/SavingsAccount.h"
+#include "managers/ClientManager.h"
+#include "managers/AccountManager.h"
+#include "managers/TransactionManager.h"
 struct TestSuiteAccountFixture {
     ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
-    CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client,"12345");
+    CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client);
     SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client,acc);
+    ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,4,10)));
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2);
+};
+struct SendMoneyFixture {
+    AccountManagerPtr AM = std::make_shared<AccountManager>();
+    TransactionManagerPtr TM = std::make_shared<TransactionManager>();
+    ClientManagerPtr CM = std::make_shared<ClientManager>();
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
 
@@ -54,8 +64,42 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         std::stringstream ss2;
         ss2 << savacc->getLastInterest();
         std::string interest = ss2.str();
-        BOOST_TEST(savacc->getAccountInfo()=="KONTO OSZCZEDNOSCIOWE Numer konta: "+savacc->getAccountNumber()+" Wlasciciel: "+savacc->getOwner()->getClientInfo()+" Stan konta: "+std::to_string(acc->getBalance())+"zl Data zalozenia: "+creation+" Transfer w tym miesiacu: " + std::to_string(
-                savacc->getWasTransferThisMonth()) + " Ostatnie naliczenie odsetek: " + interest);
+        BOOST_TEST(savacc->getAccountInfo()=="KONTO OSZCZEDNOSCIOWE Numer konta: "+savacc->getAccountNumber()+" Wlasciciel: "+savacc->getOwner()->getClientInfo()+" Stan konta: "+std::to_string(acc->getBalance())+"zl Data zalozenia: "+creation+" Transfer w tym miesiacu: " + std::to_string(savacc->getWasTransferThisMonth()) + " Ostatnie naliczenie odsetek: " + interest);
+    }
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_FIXTURE_TEST_SUITE(TestSuiteAccountSendMoney,SendMoneyFixture)
+    BOOST_AUTO_TEST_CASE(AccountSendMoneyTests){
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        AM->createCurrentAccount(CM->getClient("01234567891"));
+        CM->addClient("12345678912","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        AM->createCurrentAccount(CM->getClient("12345678912"));
+        AccountPtr acc=AM->getAccount(AM->findAll()[0]->getAccountNumber());
+        AccountPtr acc2=AM->getAccount(AM->findAll()[1]->getAccountNumber());
+        AM->setBalance(AM->findAll()[0]->getAccountNumber(),1000);
+        AM->setBalance(AM->findAll()[1]->getAccountNumber(),200);
+        bool status=acc->sendMoney(acc2->getAccountNumber(),200,"Testowy przelew",TM,AM);
+        BOOST_TEST(status==true);
+        BOOST_TEST(AM->getAccount(AM->findAll()[0]->getAccountNumber())->getBalance()==800);
+        BOOST_TEST(AM->getAccount(AM->findAll()[1]->getAccountNumber())->getBalance()==400);
+    }
+    BOOST_AUTO_TEST_CASE(AccountSendMoneyTestsNegative){
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        AM->createCurrentAccount(CM->getClient("01234567891"));
+        CM->addClient("12345678912","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        AM->createCurrentAccount(CM->getClient("12345678912"));
+        AccountPtr acc=AM->getAccount(AM->findAll()[0]->getAccountNumber());
+        AccountPtr acc2=AM->getAccount(AM->findAll()[1]->getAccountNumber());
+        AM->setBalance(AM->findAll()[0]->getAccountNumber(),1000);
+        AM->setBalance(AM->findAll()[1]->getAccountNumber(),200);
+        bool status=acc->sendMoney(acc2->getAccountNumber(),2000,"Testowy przelew",TM,AM);
+        BOOST_TEST(status==false);
+        BOOST_TEST(AM->getAccount(AM->findAll()[0]->getAccountNumber())->getBalance()==1000);
+        BOOST_TEST(AM->getAccount(AM->findAll()[1]->getAccountNumber())->getBalance()==200);
+        status=acc->sendMoney("LOSOWYBLEDNY",200,"Testowy przelew",TM,AM);
+        BOOST_TEST(status==false);
+        BOOST_TEST(AM->getAccount(AM->findAll()[0]->getAccountNumber())->getBalance()==1000);
+        BOOST_TEST(AM->getAccount(AM->findAll()[1]->getAccountNumber())->getBalance()==200);
     }
 BOOST_AUTO_TEST_SUITE_END()
 

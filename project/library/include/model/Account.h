@@ -30,7 +30,7 @@ public:
     void setBalance(double balance);
     //METHODS
     virtual std::string getAccountInfo() const;
-    bool sendMoney(std::string accountNumber,double amount);
+    virtual bool sendMoney(std::string accountNumber,double amount,std::string title,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager);
 };
 
 
