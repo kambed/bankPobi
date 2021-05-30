@@ -2,17 +2,22 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
 #include <fstream>
+#include "functions.h"
 
-TurboLogger::TurboLogger() {}
+TurboLogger::TurboLogger() {
+    fileName = "logs_"+nowFileName()+".txt";
+    logs.open(fileName, std::ofstream::out | std::ofstream::app);
+    if(logs.is_open()) {
+        logs << "Logs file, created at: " + nowString() + "\n";
+        logs.close();
+    }else{
+        //throw extension
+    }
+}
 
 bool TurboLogger::addLog(std::string whatToLog) {
-    std::stringstream ss;
-    ss << boost::posix_time::second_clock::local_time();
-    std::string now= ss.str();
-    std::string log = now+"   "+whatToLog+"\n";
-
-    std::ofstream logs;
-    logs.open("logs.txt", std::ofstream::out | std::ofstream::app);
+    std::string log = nowString()+"   "+whatToLog+"\n";
+    logs.open(fileName, std::ofstream::out | std::ofstream::app);
     if(logs.is_open()) {
         logs << log;
         logs.close();
@@ -20,4 +25,8 @@ bool TurboLogger::addLog(std::string whatToLog) {
     }else{
         return false;
     }
+}
+
+const std::string &TurboLogger::getFileName() const {
+    return fileName;
 }

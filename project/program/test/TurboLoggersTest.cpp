@@ -5,12 +5,25 @@
 #include "typedefs.h"
 #include <memory>
 #include <fstream>
+#include "functions.h"
 
 BOOST_AUTO_TEST_SUITE(TestSuiteTurboLogger)
+    BOOST_AUTO_TEST_CASE(TurboLoggerConstructorTest) {
+        TurboLoggerPtr tl = std::make_shared<TurboLogger>();
+        std::ifstream logs;
+        logs.open(tl->getFileName(), std::ifstream::in | std::ifstream::app);
+        std::string lineContent;
+        if (logs.is_open()) {
+            std::getline(logs, lineContent);
+            logs.close();
+        }
+        BOOST_CHECK_EQUAL(lineContent,"Logs file, created at: " + nowString());
+    }
+
     BOOST_AUTO_TEST_CASE(TurboLoggerLogAddTestTest) {
         TurboLoggerPtr tl = std::make_shared<TurboLogger>();
         std::ifstream logs;
-        logs.open("logs.txt", std::ifstream::in | std::ifstream::app);
+        logs.open(tl->getFileName(), std::ifstream::in | std::ifstream::app);
         int lines = 0;
         if (logs.is_open()) {
             std::string lineContent;
@@ -18,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(TestSuiteTurboLogger)
             logs.close();
         }
         BOOST_CHECK_EQUAL(tl->addLog("test"), true);
-        logs.open("logs.txt", std::ifstream::in | std::ifstream::app);
+        logs.open(tl->getFileName(), std::ifstream::in | std::ifstream::app);
         int lines2 = 0;
         std::string lastNonEmptyLineContent;
         if (logs.is_open()) {
@@ -30,10 +43,6 @@ BOOST_AUTO_TEST_SUITE(TestSuiteTurboLogger)
             logs.close();
         }
         BOOST_CHECK_EQUAL(lines2,lines+1);
-        std::stringstream ss;
-        ss << boost::posix_time::second_clock::local_time();
-        std::string now= ss.str();
-        std::string log = now+"   test";
-        BOOST_CHECK_EQUAL(lastNonEmptyLineContent,log);
+        BOOST_CHECK_EQUAL(lastNonEmptyLineContent,nowString()+"   test");
     }
 BOOST_AUTO_TEST_SUITE_END()

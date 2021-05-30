@@ -5,3 +5,5 @@
 std::string dateTimeToString(boost::posix_time::ptime dateTime);
 
 std::string nowString();
+
+std::string nowFileName();
