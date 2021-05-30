@@ -14,12 +14,14 @@
 
 Account::Account(const ClientPtr &owner,int ClientAccNumber) : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()) {
     int kontrol;
-    kontrol=ClientAccNumber%10;
+    kontrol=ClientAccNumber%100;
     if(kontrol<=9){
         kontrol=kontrol+10;
     }
     ClientAccNumber=ClientAccNumber+1000;
-    accountNumber=std::to_string(kontrol)+"246813570"+getOwner()->getPersonalId()+std::to_string(ClientAccNumber);
+    if(ClientAccNumber<=9999) {
+        accountNumber=std::to_string(kontrol)+"246813570"+getOwner()->getPersonalId()+std::to_string(ClientAccNumber);
+    }
 }
 
 Account::~Account() {

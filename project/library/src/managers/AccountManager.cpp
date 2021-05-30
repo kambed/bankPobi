@@ -20,15 +20,19 @@ AccountPtr AccountManager::getAccount(std::string accountNumber) {
 void AccountManager::createCurrentAccount(ClientPtr owner) {
     auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
     int number=findAccounts(function).size();
-    CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner,number);
-    accountRepository->addAccount(account);
+    if(number<=8999) {
+        CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner, number);
+        accountRepository->addAccount(account);
+    }
 }
 
 void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAccountNumber) {
     auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
     int number=findAccounts(function).size();
-    SavingsAccountPtr account2 = std::make_shared<SavingsAccount>(owner,accountRepository->getAccount(currentAccountNumber),number);
-    accountRepository->addAccount(account2);
+    if(number<=8999){
+        SavingsAccountPtr account2 = std::make_shared<SavingsAccount>(owner,accountRepository->getAccount(currentAccountNumber),number);
+        accountRepository->addAccount(account2);
+    }
 }
 
 bool AccountManager::removeAccount(std::string accountNumber) {
