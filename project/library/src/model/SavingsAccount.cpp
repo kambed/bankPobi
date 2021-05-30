@@ -5,6 +5,7 @@
 #include "model/SavingsAccount.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
+#include "functions.h"
 
 SavingsAccount::SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount) : Account(owner),
                                                                                            currentAccount(currentAccount), wasTransferThisMonth(false), lastInterest(getCreationDate()){}
@@ -24,11 +25,8 @@ const AccountPtr &SavingsAccount::getCurrentAccount() const {
     return currentAccount;
 }
 std::string SavingsAccount::getAccountInfo() const {
-    std::stringstream ss;
-    ss << lastInterest;
-    std::string interest = ss.str();
     return "KONTO OSZCZEDNOSCIOWE " + Account::getAccountInfo() + " Transfer w tym miesiacu: " + std::to_string(
-            getWasTransferThisMonth()) + " Ostatnie naliczenie odsetek: " + interest;
+            getWasTransferThisMonth()) + " Ostatnie naliczenie odsetek: " + dateTimeToString(lastInterest);
 }
 
 bool SavingsAccount::sendToCurrentAccount(double amount) {

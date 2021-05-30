@@ -25,8 +25,16 @@ set(SOURCE_FILES
         include/managers/AccountManager.h
         src/managers/ClientManager.cpp
         include/managers/ClientManager.h
+        src/repositories/TransactionRepository.cpp
+        include/repositories/TransactionRepository.h
+        src/managers/TransactionManager.cpp
+        include/managers/TransactionManager.h
+        src/model/TurboLogger.cpp
+        include/model/TurboLogger.h
+        include/functions.h
+        src/functions.cpp
 
-        src/repositories/TransactionRepository.cpp include/repositories/TransactionRepository.h src/managers/TransactionManager.cpp include/managers/TransactionManager.h src/model/TurboLogger.cpp include/model/TurboLogger.h)
+        )
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -49,7 +57,9 @@ set(SOURCE_TEST_FILES
         ../program/test/InterestTest.cpp
         ../program/test/RepositoriesTest.cpp
         ../program/test/ManagersTests.cpp
-        ../program/test/TurboLoggersTest.cpp ../program/test/TurboLoggersTest.h) # tu w przyszłości będą dodawane pliki źródłowe testów
+        ../program/test/TurboLoggersTest.cpp
+
+        ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

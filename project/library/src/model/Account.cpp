@@ -8,6 +8,8 @@
 #include <boost/date_time.hpp>
 #include <cstdlib>
 #include <ctime>
+#include "functions.h"
+
 
 Account::Account(const ClientPtr &owner) : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()) {
     srand(time(NULL));
@@ -37,10 +39,8 @@ const boost::posix_time::ptime &Account::getCreationDate() const {
 }
 
 std::string Account::getAccountInfo() const {
-    std::stringstream ss;
-    ss << creationDate;
-    std::string creation = ss.str();
-    return "Numer konta: "+accountNumber+" Wlasciciel: "+getOwner()->getClientInfo()+" Stan konta: "+std::to_string(getBalance())+"zl Data zalozenia: "+creation;
+    return "Numer konta: "+accountNumber+" Wlasciciel: "+getOwner()->getClientInfo()+" Stan konta: "+std::to_string
+    (getBalance())+"zl Data zalozenia: "+dateTimeToString(creationDate);
 
 }
 

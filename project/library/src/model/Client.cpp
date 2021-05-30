@@ -1,5 +1,6 @@
 #include "model/Client.h"
 #include <string>
+#include "functions.h"
 
 Client::Client(std::string personalId, std::string firstName, std::string lastName,
                boost::posix_time::ptime birthDate) : personalID(personalId), firstName(firstName),
@@ -34,9 +35,6 @@ void Client::changeLastName(const std::string &lastName) {
 }
 
 std::string Client::getClientInfo() const {
-    std::stringstream ss;
-    ss << birthDate;
-    std::string birthdate = ss.str();
-    return personalID+", "+firstName+" "+lastName+" Data urodzenia: "+birthdate;
+    return personalID+", "+firstName+" "+lastName+" Data urodzenia: "+dateTimeToString(birthDate);
 }
 
