@@ -25,6 +25,8 @@ void AccountManager::createCurrentAccount(ClientPtr owner) {
         CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner, number);
         accountRepository->addAccount(account);
         turboLogger->addLog("Create: "+account->getAccountInfo());
+    }else{
+        turboLogger->addLog("Create account fail: wlasiciel: "+owner->getClientInfo());
     }
 }
 
@@ -35,12 +37,18 @@ void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAc
         SavingsAccountPtr account2 = std::make_shared<SavingsAccount>(owner,accountRepository->getAccount(currentAccountNumber),number);
         accountRepository->addAccount(account2);
         turboLogger->addLog("Create: "+account2->getAccountInfo());
+    }else{
+        turboLogger->addLog("Create account fail: wlasiciel: "+owner->getClientInfo()+
+        "; konto bierzacae"+accountRepository->getAccount(currentAccountNumber)->getAccountInfo());
     }
 }
 
 bool AccountManager::removeAccount(std::string accountNumber) {
-    turboLogger->addLog("Remove: "+accountNumber);
-    return accountRepository->removeAccount(accountRepository->getAccount(accountNumber));
+    bool status = accountRepository->removeAccount(accountRepository->getAccount(accountNumber));
+    if(status==true)
+        turboLogger->addLog("Remove: "+accountNumber);
+    else turboLogger->addLog("Remove failed: "+accountNumber);
+    return status;
 }
 
 bool AccountManager::setBalance(std::string accountNumber, double balance) {

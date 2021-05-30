@@ -14,10 +14,12 @@ ClientPtr ClientManager::getClient(std::string personalId) {
 
 void ClientManager::addClient(std::string personalId, std::string firstName, std::string lastName,
                               boost::posix_time::ptime birthDate) {
+    ClientPtr client = std::make_shared<Client>(personalId,firstName,lastName,birthDate);
     if (clientRepository->getClient(personalId) == nullptr){
-        ClientPtr client = std::make_shared<Client>(personalId,firstName,lastName,birthDate);
         clientRepository->addClient(client);
         turboLogger->addLog("Create client: "+client->getClientInfo());
+    }else{
+        turboLogger->addLog("Create client fail: "+client->getClientInfo());
     }
 }
 
