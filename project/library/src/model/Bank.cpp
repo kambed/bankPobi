@@ -1,16 +1,18 @@
 #include <string>
+#include <memory>
 #include "model/Bank.h"
 #include "model/Interest.h"
-//#include "ClientManager.h"
-//#include "AccountManager.h"
-//#include "TransactionManager.h"
+#include "managers/ClientManager.h"
+#include "managers/AccountManager.h"
+#include "managers/TransactionManager.h"
 
 
 
-Bank::Bank(const std::string &bankNumber) : bankNumber(bankNumber) {}
-
-const std::string &Bank::getBankNumber() const {
-    return bankNumber;
+Bank::Bank(){
+    interest = std::make_shared<Interest>(0.01,0.19);
+    clientManager = std::make_shared<ClientManager>();
+    accountManager = std::make_shared<AccountManager>();
+    transactionManager = std::make_shared<TransactionManager>();
 }
 
 const InterestPtr &Bank::getInterest() const {

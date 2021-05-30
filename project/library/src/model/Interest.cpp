@@ -16,7 +16,7 @@ double Interest::getTax() const {
 }
 
 void Interest::setTax(double tax) {
-    if(tax>=0)
+    if(tax>=0 && tax<=1)
         Interest::tax = tax;
 }
 

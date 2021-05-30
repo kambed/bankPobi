@@ -23,6 +23,8 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteInterest,TestSuiteInterestFixture)
     BOOST_AUTO_TEST_CASE(TaxSetterNegativeTest) {
         interest->setTax(-0.1);
         BOOST_CHECK_EQUAL(interest->getTax(),0.19);
+        interest->setTax(1.1);
+        BOOST_CHECK_EQUAL(interest->getTax(),0.19);
     }
     BOOST_AUTO_TEST_CASE(PrecentageSetterNegativeTest) {
         interest->setPercentage(-0.01);

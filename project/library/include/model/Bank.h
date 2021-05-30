@@ -13,16 +13,12 @@ class TransactionManager;
 class Bank
 {
 private:
-    std::string bankNumber;
 	InterestPtr interest;
 	ClientManagerPtr clientManager;
 	AccountManagerPtr accountManager;
 	TransactionManagerPtr transactionManager;
-
 public:
-    Bank(const std::string &bankNumber);
-
-    const std::string &getBankNumber() const;
+    Bank();
 
     const InterestPtr &getInterest() const;
 
