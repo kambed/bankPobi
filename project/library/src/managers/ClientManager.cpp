@@ -1,9 +1,10 @@
 #include "managers/ClientManager.h"
 #include "model/Client.h"
+#include "model/TurboLogger.h"
 #include "typedefs.h"
 #include <boost/date_time.hpp>
 
-ClientManager::ClientManager(){
+ClientManager::ClientManager(const TurboLoggerPtr &turboLogger) : turboLogger(turboLogger) {
     clientRepository = std::make_shared<ClientRepository>();
 }
 
@@ -16,6 +17,7 @@ void ClientManager::addClient(std::string personalId, std::string firstName, std
     if (clientRepository->getClient(personalId) == nullptr){
         ClientPtr client = std::make_shared<Client>(personalId,firstName,lastName,birthDate);
         clientRepository->addClient(client);
+        turboLogger->addLog("Create client: "+client->getClientInfo());
     }
 }
 

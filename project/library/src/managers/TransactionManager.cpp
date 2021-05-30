@@ -5,8 +5,10 @@
 #include "managers/TransactionManager.h"
 #include "repositories/TransactionRepository.h"
 #include "model/Transaction.h"
+#include "model/Account.h"
+#include "model/TurboLogger.h"
 
-TransactionManager::TransactionManager() {
+TransactionManager::TransactionManager(const TurboLoggerPtr &turboLogger) : turboLogger(turboLogger) {
     transactionRepository = std::make_shared<TransactionRepository>();
 }
 
@@ -23,8 +25,9 @@ std::vector<TransactionPtr> TransactionManager::findTransactions(TransactionMana
     return findTransactions(predicate);
 }
 
-void
-TransactionManager::createTransaction(AccountPtr accountFrom, AccountPtr accountTo, double amount, std::string title) {
+void TransactionManager::createTransaction(AccountPtr accountFrom, AccountPtr accountTo, double amount, std::string
+title) {
     TransactionPtr trans = std::make_shared<Transaction>(accountFrom,accountTo,amount,title);
     transactionRepository->addTransaction(trans);
+    turboLogger->addLog("Transaction: "+trans->getTransactionInfo());
 }

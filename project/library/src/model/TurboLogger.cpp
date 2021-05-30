@@ -5,7 +5,10 @@
 #include "functions.h"
 
 TurboLogger::TurboLogger() {
-    fileName = "logs_"+nowFileName()+".txt";
+    do {
+        int i=0;
+        fileName = "logs_" + nowFileName() +std::to_string(i)+ ".txt";
+    }while(fileExists(fileName));
     logs.open(fileName, std::ofstream::out | std::ofstream::app);
     if(logs.is_open()) {
         logs << "Logs file, created at: " + nowString() + "\n";

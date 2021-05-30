@@ -26,7 +26,6 @@ public:
 
     const std::string &getTitle() const;
     ///METHODS
-    // bool transferMoney(std::string accountFrom,std::string accountTo,double amount);
     std::string getTransactionInfo();
 };
 

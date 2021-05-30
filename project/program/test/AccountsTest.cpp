@@ -8,6 +8,7 @@
 #include "managers/ClientManager.h"
 #include "managers/AccountManager.h"
 #include "managers/TransactionManager.h"
+#include "model/TurboLogger.h"
 struct TestSuiteAccountFixture {
     ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client,1);
@@ -17,9 +18,10 @@ struct TestSuiteAccountFixture {
     CurrentAccountPtr acc3 = std::make_shared<CurrentAccount>(client2,133);
 };
 struct SendMoneyFixture {
-    AccountManagerPtr AM = std::make_shared<AccountManager>();
-    TransactionManagerPtr TM = std::make_shared<TransactionManager>();
-    ClientManagerPtr CM = std::make_shared<ClientManager>();
+    TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger);
+    TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
+    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
 

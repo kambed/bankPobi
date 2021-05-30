@@ -22,6 +22,13 @@ std::string nowFileName(){
                              std::to_string(now.time_of_day().hours())+"."+
                              std::to_string(now.time_of_day().minutes())+"."+
                              std::to_string(now.time_of_day().seconds())+"."+
-                             std::to_string(now.time_of_day().total_microseconds()).substr(0,2);
+                             std::to_string(now.time_of_day().total_microseconds()).substr(0,5);
     return now_string;
+}
+
+bool fileExists(std::string fileName){
+    std::ifstream file(fileName);
+    if(!file.good()) return false;
+    file.close();
+    return true;
 }

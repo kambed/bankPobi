@@ -10,9 +10,11 @@
 class AccountManager {
 private:
     AccountRepositoryPtr accountRepository;
+    TurboLoggerPtr turboLogger;
 public:
     //CONSTRUCTOR
-    AccountManager();
+    AccountManager(const TurboLoggerPtr &turboLogger);
+
     //METHODS
     AccountPtr getAccount(std::string accountNumber);
     void createCurrentAccount(ClientPtr owner);

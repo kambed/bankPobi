@@ -10,13 +10,15 @@
 #include "model/SavingsAccount.h"
 #include "repositories/ClientRepository.h"
 #include "repositories/AccountRepository.h"
+#include "model/TurboLogger.h"
 #include <algorithm>
 #include <vector>
 #include <memory>
 struct TestSuiteManagerFixture {
-    AccountManagerPtr AM = std::make_shared<AccountManager>();
-    ClientManagerPtr CM = std::make_shared<ClientManager>();
-    TransactionManagerPtr TM = std::make_shared<TransactionManager>();
+    TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger);
+    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
+    TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1);

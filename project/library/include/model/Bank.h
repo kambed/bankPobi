@@ -17,6 +17,7 @@ private:
 	ClientManagerPtr clientManager;
 	AccountManagerPtr accountManager;
 	TransactionManagerPtr transactionManager;
+	TurboLoggerPtr turboLogger;
 public:
     Bank();
 

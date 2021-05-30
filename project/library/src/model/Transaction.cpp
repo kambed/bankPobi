@@ -29,10 +29,6 @@ const std::string &Transaction::getTitle() const {
     return title;
 }
 
-//bool Transaction::transferMoney(std::string accountFrom, std::string accountTo, double amount) {
-//    return false;
-//}
-
 std::string Transaction::getTransactionInfo() {
     return boost::uuids::to_string(id)+": z "+accountFrom->getAccountNumber()+" do "+accountTo->getAccountNumber()+" Kwota: "+std::to_string(amount)+
                                                                                                     ",tytul: "+title;

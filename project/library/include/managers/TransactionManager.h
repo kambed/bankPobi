@@ -12,9 +12,11 @@
 class TransactionManager {
 private:
     TransactionRepositoryPtr transactionRepository;
+    TurboLoggerPtr turboLogger;
 public:
     ///CONSTRUCTOR
-    TransactionManager();
+    TransactionManager(const TurboLoggerPtr &turboLogger);
+
     ///METHODS
     void createTransaction(AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
     TransactionPtr getTransaction(boost::uuids::uuid Id);
