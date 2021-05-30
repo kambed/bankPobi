@@ -18,7 +18,7 @@ private:
     boost::posix_time::ptime creationDate;
 public:
     //CONSTRUCTOR
-    Account(const ClientPtr &owner);
+    Account(const ClientPtr &owner,int ClientAccNumber);
     //DESTRUCTOR
     virtual ~Account()=0;
     //GETTERS

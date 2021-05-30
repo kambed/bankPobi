@@ -9,8 +9,8 @@
 struct TestSuiteTransactionFixture {
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
-    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1);
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2);
+    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1);
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
     TransactionPtr trans1 = std::make_shared<Transaction>(acc1,acc2,100,"Test");
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteTransactionFixture)

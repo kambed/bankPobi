@@ -13,7 +13,7 @@ private:
 
 public:
     //CONSTRUCTOR
-    CurrentAccount(const ClientPtr &owner);
+    CurrentAccount(const ClientPtr &owner,int ClientAccNumber);
     //DESTRUCTOR
     virtual ~CurrentAccount();
     //METHODS

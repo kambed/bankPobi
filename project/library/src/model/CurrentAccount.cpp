@@ -4,7 +4,7 @@
 
 #include "model/CurrentAccount.h"
 
-CurrentAccount::CurrentAccount(const ClientPtr &owner) : Account(owner){}
+CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber) : Account(owner,ClientAccNumber){}
 
 CurrentAccount::~CurrentAccount() {
 

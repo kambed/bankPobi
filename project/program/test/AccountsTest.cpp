@@ -10,10 +10,10 @@
 #include "managers/TransactionManager.h"
 struct TestSuiteAccountFixture {
     ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
-    CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client);
-    SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client,acc);
+    CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client,1);
+    SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client,acc,2);
     ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,4,10)));
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2);
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
 };
 struct SendMoneyFixture {
     AccountManagerPtr AM = std::make_shared<AccountManager>();
@@ -32,7 +32,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(acc->getCreationDate()==boost::posix_time::second_clock::local_time());
         std::string fullnrkonta=acc->getAccountNumber();
         std::string nrkonta=fullnrkonta.substr(2,24);
-        BOOST_TEST(nrkonta=="246813570"+acc->getOwner()->getPersonalId()+"TO B");
+        BOOST_TEST(nrkonta=="246813570"+acc->getOwner()->getPersonalId()+"1001");
         BOOST_TEST(savacc->getCurrentAccount()==acc);
         BOOST_TEST(savacc->getLastInterest()==savacc->getCreationDate());
         BOOST_TEST(savacc->getWasTransferThisMonth()==false);
@@ -43,7 +43,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(acc->getOwner()==client);
         std::string fullnrkonta=acc->getAccountNumber();
         std::string nrkonta=fullnrkonta.substr(2,24);
-        BOOST_TEST(nrkonta=="246813570"+acc->getOwner()->getPersonalId()+"TO B");
+        BOOST_TEST(nrkonta=="246813570"+acc->getOwner()->getPersonalId()+"1001");
         BOOST_TEST(savacc->getCurrentAccount()==acc);
         BOOST_TEST(savacc->getLastInterest()==savacc->getCreationDate());
         BOOST_TEST(savacc->getWasTransferThisMonth()==false);

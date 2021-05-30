@@ -7,7 +7,7 @@
 #include <boost/date_time.hpp>
 #include "functions.h"
 
-SavingsAccount::SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount) : Account(owner),
+SavingsAccount::SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount,int ClientAccNumber) : Account(owner,ClientAccNumber),
                                                                                            currentAccount(currentAccount), wasTransferThisMonth(false), lastInterest(getCreationDate()){}
 
 SavingsAccount::~SavingsAccount() {

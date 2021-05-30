@@ -12,11 +12,14 @@
 #include "managers/TransactionManager.h"
 #include "managers/AccountManager.h"
 
-Account::Account(const ClientPtr &owner) : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()) {
-    srand(time(NULL));
+Account::Account(const ClientPtr &owner,int ClientAccNumber) : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()) {
     int kontrol;
-    kontrol=rand()%90+10;
-    accountNumber=std::to_string(kontrol)+"246813570"+getOwner()->getPersonalId()+"TO BE DONE(NUMER KONTA KLIENTA)";
+    kontrol=ClientAccNumber%10;
+    if(kontrol<=9){
+        kontrol=kontrol+10;
+    }
+    ClientAccNumber=ClientAccNumber+1000;
+    accountNumber=std::to_string(kontrol)+"246813570"+getOwner()->getPersonalId()+std::to_string(ClientAccNumber);
 }
 
 Account::~Account() {

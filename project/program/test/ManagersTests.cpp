@@ -19,8 +19,8 @@ struct TestSuiteManagerFixture {
     TransactionManagerPtr TM = std::make_shared<TransactionManager>();
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
     ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
-    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1);
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2);
+    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1);
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
 };
 
 BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)

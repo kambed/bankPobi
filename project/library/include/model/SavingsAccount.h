@@ -14,7 +14,7 @@ private:
     AccountPtr currentAccount;
 public:
     //CONSTRUCTOR
-    SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount);
+    SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount,int ClientAccNumber);
     //DESTRUCTOR
     virtual ~SavingsAccount();
     //GETTERS
