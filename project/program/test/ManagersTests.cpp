@@ -30,6 +30,9 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
         BOOST_TEST(AM->findAll()[0]->getBalance()==0);
         AM->setBalance(AM->findAll()[0]->getAccountNumber(),100);
         BOOST_TEST(AM->findAll()[0]->getBalance()==100);
+    }
+    BOOST_AUTO_TEST_CASE(AccountManagerFindAllTests) {
+        AM->createCurrentAccount(client1);
         BOOST_TEST(AM->getAccount(AM->findAll()[0]->getAccountNumber())==AM->findAll()[0]);
         std::vector<AccountPtr>testowy;
         testowy.push_back(AM->findAll()[0]);
@@ -40,9 +43,18 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
         testowy.push_back(AM->findAll()[1]);
         testowy.push_back(AM->findAll()[2]);
         BOOST_TEST(AM->findAll()==testowy);
-        AccountPtr deleteacc=AM->findAll()[1];
         testowy.erase(std::remove(testowy.begin(),testowy.end(),AM->findAll()[1]));
         BOOST_TEST(AM->findAll()!=testowy);
+    }
+    BOOST_AUTO_TEST_CASE(AccountManagerRemoveTests){
+        AM->createCurrentAccount(client1);
+        AM->createCurrentAccount(client2);
+        AM->createSavingsAccount(client2,AM->findAll()[1]->getAccountNumber());
+        std::vector<AccountPtr>testowy;
+        testowy.push_back(AM->findAll()[0]);
+        testowy.push_back(AM->findAll()[1]);
+        testowy.push_back(AM->findAll()[2]);
+        testowy.erase(std::remove(testowy.begin(),testowy.end(),AM->findAll()[1]));
         bool status = AM->removeAccount(AM->findAll()[1]->getAccountNumber());
         BOOST_TEST(status==true);
         BOOST_TEST(AM->findAll()==testowy);
@@ -50,6 +62,24 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
         status = AM->removeAccount("losowaNieprawidlowa");
         BOOST_TEST(status==false);
         BOOST_TEST(AM->findAll()==testowy);
+    }
+    BOOST_AUTO_TEST_CASE(AccountNumberTests){
+        AM->createCurrentAccount(client1);
+        AM->createCurrentAccount(client2);
+        AM->createSavingsAccount(client2,AM->findAll()[1]->getAccountNumber());
+        BOOST_TEST(AM->findAll()[0]->getAccountNumber()=="10246813570012345678911000");
+        BOOST_TEST(AM->findAll()[1]->getAccountNumber()=="10246813570123456789011000");
+        BOOST_TEST(AM->findAll()[2]->getAccountNumber()=="11246813570123456789011001");
+    }
+    BOOST_AUTO_TEST_CASE(AccountNumberTestsNegative){
+        BOOST_TEST(AM->findAll().size()==0);
+        for(int i=0;i<9000;i++)
+        {
+            AM->createCurrentAccount(client1);
+        }
+        BOOST_TEST(AM->findAll().size()==9000);
+        AM->createCurrentAccount(client1);
+        BOOST_TEST(AM->findAll().size()==9000);
     }
     BOOST_AUTO_TEST_CASE(ClientManagerAddClientTests){
         CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
