@@ -8,25 +8,30 @@
 #include <boost/date_time.hpp>
 #include <cstdlib>
 #include <ctime>
+#include <exceptions/AccountException.h>
 #include "functions.h"
 #include "managers/TransactionManager.h"
 #include "managers/AccountManager.h"
 
-Account::Account(const ClientPtr &owner,int ClientAccNumber) : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()) {
+Account::Account(const ClientPtr &owner,int clientAccNumber) try : owner(owner), balance(0), creationDate
+(boost::posix_time::second_clock::local_time()) {
+    if(owner == nullptr) throw AccountException("Empty owner");
+    if(clientAccNumber > 8999 || clientAccNumber < 0) throw AccountException("Bad clientAccNumber");
+
     int kontrol;
-    kontrol=ClientAccNumber%100;
+    kontrol= clientAccNumber % 100;
     if(kontrol<=9){
         kontrol=kontrol+10;
     }
-    ClientAccNumber=ClientAccNumber+1000;
-    if(ClientAccNumber<=9999) {
-        accountNumber=std::to_string(kontrol)+"246813570"+getOwner()->getPersonalId()+std::to_string(ClientAccNumber);
+    clientAccNumber= clientAccNumber + 1000;
+    if(clientAccNumber <= 9999) {
+        accountNumber=std::to_string(kontrol)+"246813570"+getOwner()->getPersonalId()+std::to_string(clientAccNumber);
     }
+}catch(const AccountException &exception){
+    std::cout << "Exception: " << exception.what() << std::endl;
 }
 
-Account::~Account() {
-
-}
+Account::~Account() {}
 
 const std::string &Account::getAccountNumber() const {
     return accountNumber;
