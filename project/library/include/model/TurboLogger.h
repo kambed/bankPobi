@@ -1,7 +1,6 @@
 #ifndef BANK_TURBOLOGGER_H
 #define BANK_TURBOLOGGER_H
 
-
 #include <string>
 #include <fstream>
 

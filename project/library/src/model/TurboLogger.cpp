@@ -4,11 +4,13 @@
 #include <fstream>
 #include <exceptions/TurboLoggerException.h>
 #include "functions.h"
+#include <cstdlib>
 
 TurboLogger::TurboLogger() {
+    std::system("mkdir -p ./logs");
     do {
         int i=0;
-        fileName = "logs_" + nowFileName() +std::to_string(i)+ ".txt";
+        fileName = "logs/logs_" + nowFileName() +std::to_string(i)+ ".txt";
     }while(fileExists(fileName));
     try {
         logs.open(fileName, std::ofstream::out | std::ofstream::app);

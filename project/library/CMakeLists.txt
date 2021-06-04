@@ -43,7 +43,10 @@ set(SOURCE_FILES
         include/exceptions/TransactionException.h
         include/exceptions/TurboLoggerException.h
         src/exceptions/TurboLoggerException.cpp
-        )
+        src/exceptions/TurboSaverException.cpp
+        include/exceptions/TurboSaverException.h
+        src/model/TurboSaver.cpp
+        include/model/TurboSaver.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
@@ -57,6 +60,7 @@ find_package (SQLite3)
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${Boost_INCLUDE_DIRS}
+        ${SQLite3_INCLUDE_DIRS}
 )
 
 set(SOURCE_TEST_FILES
@@ -69,7 +73,8 @@ set(SOURCE_TEST_FILES
         ../program/test/ManagersTests.cpp
         ../program/test/TurboLoggersTest.cpp
         ../program/test/BankTest.cpp
-        ../program/test/ExceptionsTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+        ../program/test/ExceptionsTest.cpp
+        ../program/test/TurboSaverTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 
@@ -77,6 +82,7 @@ add_executable (LibraryTest ${SOURCE_TEST_FILES})
 target_link_libraries (LibraryTest
         Library
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+        ${SQLite3_LIBRARIES}
         )
 
 #dodaj test TestBiblioteki1. Instrukcji cmake add_test może być wiele.
