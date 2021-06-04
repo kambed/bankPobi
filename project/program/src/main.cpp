@@ -1,5 +1,6 @@
 #include <iostream>
 #include <typedefs.h>
+#include <sqlite3.h>
 #include "model/Client.h"
 #include "model/Account.h"
 #include "model/CurrentAccount.h"
