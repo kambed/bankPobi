@@ -5,9 +5,11 @@
 #include "model/CurrentAccount.h"
 #include "model/SavingsAccount.h"
 #include "model/Interest.h"
+#include "model/Transaction.h"
 #include "exceptions/ClientException.h"
 #include "exceptions/AccountException.h"
 #include "exceptions/InterestException.h"
+#include "exceptions/TransactionException.h"
 
 BOOST_AUTO_TEST_SUITE(ExceptionsTest)
 
@@ -51,6 +53,19 @@ BOOST_AUTO_TEST_SUITE(ExceptionsTest)
         BOOST_CHECK_THROW(InterestPtr interest = std::make_shared<Interest>(-0.05,0.19),InterestException::exception);
         BOOST_CHECK_THROW(InterestPtr interest = std::make_shared<Interest>(0.05,-0.19),InterestException::exception);
         BOOST_CHECK_THROW(InterestPtr interest = std::make_shared<Interest>(0.05,1.19),InterestException::exception);
+    }
+    BOOST_AUTO_TEST_CASE(TransactionExceptionTest) {
+        ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+        ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
+        CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1);
+        CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
+        TransactionPtr transactionError = std::make_shared<Transaction>(acc1,acc2,100,"Test");
+        BOOST_CHECK_NO_THROW(TransactionPtr transactionError = std::make_shared<Transaction>(acc1,acc2,100,"Test"));
+        BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>(nullptr,acc2,100,"Test"),TransactionException::exception);
+        BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>(acc1,nullptr,100,"Test"),TransactionException::exception);
+        BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>(acc1,acc2,0,"Test"),TransactionException::exception);
+        BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>(acc1,acc2,-100,"Test"),TransactionException::exception);
+        BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>(acc1,acc2,100,""),TransactionException::exception);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
