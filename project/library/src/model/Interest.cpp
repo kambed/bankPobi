@@ -1,6 +1,13 @@
+#include <exceptions/InterestException.h>
 #include "model/Interest.h"
 
-Interest::Interest(double percentage, double tax) : percentage(percentage), tax(tax) {}
+Interest::Interest(double percentage, double tax) try : percentage(percentage), tax(tax) {
+    if(percentage < 0) throw InterestException("percentage can't be less 0");
+    if(tax < 0) throw InterestException("Too low tax");
+    if(tax > 1) throw InterestException("Too low tax");
+}catch(const InterestException &exception){
+    std::cout<<"Exception: "<<exception.what()<<std::endl;
+}
 
 double Interest::getPercentage() const {
     return percentage;
@@ -21,7 +28,7 @@ void Interest::setTax(double tax) {
 }
 
 int getNumberOfDaysInYear(int year){
-    if( (year%4==0 && year%100!=0) || year%400==0)  //Rok jest przestepny jesli jest podzielny przez 4 i niepodzielny
+    if( (year%4==0 && year%100!=0) || year%400==0 )  //Rok jest przestepny jesli jest podzielny przez 4 i niepodzielny
         return 366;                                 // przez 100 lub podzielny przez 400
     else return 365;
 }
