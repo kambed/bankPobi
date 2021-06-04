@@ -16,13 +16,13 @@
 #include <memory>
 struct TestSuiteManagerFixture {
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
-    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger);
-    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
     TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
-    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
-    ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
-    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1);
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,TM);
+    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
+    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+    ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,TM,AM);
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,TM,AM);
 };
 
 BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
@@ -84,12 +84,12 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)
         BOOST_TEST(AM->findAll().size()==9000);
     }
     BOOST_AUTO_TEST_CASE(ClientManagerAddClientTests){
-        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         BOOST_CHECK_EQUAL(CM->findAll().size(),1);
     }
     BOOST_AUTO_TEST_CASE(ClientManagerAddClientNegativeTests){
-        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
-        CM->addClient("01234567891","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+        CM->addClient("01234567891","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         BOOST_CHECK_EQUAL(CM->findAll().size(),1);
     }
     BOOST_AUTO_TEST_CASE(TransactionManagerTests){

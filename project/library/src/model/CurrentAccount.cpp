@@ -4,7 +4,7 @@
 
 #include "model/CurrentAccount.h"
 
-CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber) : Account(owner,ClientAccNumber){}
+CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager) : Account(owner,ClientAccNumber,transactionManager,accountManager){}
 
 CurrentAccount::~CurrentAccount() {
 
@@ -18,7 +18,6 @@ bool CurrentAccount::sendToSavingsAccount(double amount) {
     return false;
 }
 
-bool CurrentAccount::sendMoney(std::string accountNumber, double amount, std::string title,
-                               TransactionManagerPtr transactionManager, AccountManagerPtr accountManager) {
-    return Account::sendMoney(accountNumber, amount, title, transactionManager, accountManager);
+bool CurrentAccount::sendMoney(std::string accountNumber, double amount, std::string title) {
+    return Account::sendMoney(accountNumber, amount, title);
 }

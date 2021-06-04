@@ -31,9 +31,18 @@ set(SOURCE_FILES
         include/managers/TransactionManager.h
         src/model/TurboLogger.cpp
         include/model/TurboLogger.h
-        include/functions.h
         src/functions.cpp
-
+        include/functions.h
+        src/exceptions/ClientException.cpp
+        include/exceptions/ClientException.h
+        src/exceptions/AccountException.cpp
+        include/exceptions/AccountException.h
+        src/exceptions/InterestException.cpp
+        include/exceptions/InterestException.h
+        src/exceptions/TransactionException.cpp
+        include/exceptions/TransactionException.h
+        include/exceptions/TurboLoggerException.h
+        src/exceptions/TurboLoggerException.cpp
         )
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
@@ -43,6 +52,7 @@ target_include_directories(Library PUBLIC include)
 #Włączenie testów powoduje pojawienie się celu test w makefiles
 enable_testing()
 find_package (Boost 1.60.0 COMPONENTS "unit_test_framework" REQUIRED)
+find_package (SQLite3)
 
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -58,8 +68,8 @@ set(SOURCE_TEST_FILES
         ../program/test/RepositoriesTest.cpp
         ../program/test/ManagersTests.cpp
         ../program/test/TurboLoggersTest.cpp
-
-        ../program/test/BankTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
+        ../program/test/BankTest.cpp
+        ../program/test/ExceptionsTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 

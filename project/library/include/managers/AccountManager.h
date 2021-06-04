@@ -6,14 +6,15 @@
 #define BANK_ACCOUNTMANAGER_H
 
 #include "repositories/AccountRepository.h"
-
-class AccountManager {
+#include <memory>
+class AccountManager : public std::enable_shared_from_this<AccountManager>{
 private:
     AccountRepositoryPtr accountRepository;
+    TransactionManagerPtr transactionManager;
     TurboLoggerPtr turboLogger;
 public:
     //CONSTRUCTOR
-    AccountManager(const TurboLoggerPtr &turboLogger);
+    AccountManager(const TurboLoggerPtr &turboLogger,TransactionManagerPtr transactionManager);
 
     //METHODS
     AccountPtr getAccount(std::string accountNumber);

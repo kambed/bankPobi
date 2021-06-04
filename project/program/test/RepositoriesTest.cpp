@@ -10,15 +10,23 @@
 #include "model/Transaction.h"
 #include "repositories/TransactionRepository.h"
 #include <boost/uuid/random_generator.hpp>
+#include "managers/AccountManager.h"
+#include "managers/ClientManager.h"
+#include "managers/TransactionManager.h"
+#include "model/TurboLogger.h"
 struct TestSuiteRepoFixture {
+    TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
+    TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,TM);
+    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
     ClientRepositoryPtr CR = std::make_shared<ClientRepository>();
     AccountRepositoryPtr AR = std::make_shared<AccountRepository>();
     TransactionRepositoryPtr TR =std::make_shared<TransactionRepository>();
-    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
     ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
-    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1);
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
-    SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client2,acc1,2);
+    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,TM,AM);
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,TM,AM);
+    SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client2,acc1,2,TM,AM);
     TransactionPtr trans1 = std::make_shared<Transaction>(acc1,acc2,100,"Przelew");
     boost::uuids::random_generator generator;
 };

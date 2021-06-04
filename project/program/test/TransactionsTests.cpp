@@ -6,11 +6,19 @@
 #include "model/CurrentAccount.h"
 #include "model/SavingsAccount.h"
 #include "model/Transaction.h"
+#include "managers/AccountManager.h"
+#include "managers/ClientManager.h"
+#include "managers/TransactionManager.h"
+#include "model/TurboLogger.h"
 struct TestSuiteTransactionFixture {
-    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+    TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
+    TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,TM);
+    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
+    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
     ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
-    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1);
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
+    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,TM,AM);
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,TM,AM);
     TransactionPtr trans1 = std::make_shared<Transaction>(acc1,acc2,100,"Test");
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteTransactionFixture)
@@ -25,7 +33,7 @@ BOOST_AUTO_TEST_CASE(TransactionInfoTests) {
     std::string info = trans1->getTransactionInfo();
     std::size_t pos = info.find(": z ");
     std::string infotest = info.substr (pos);
-    BOOST_TEST(infotest==": z "+trans1->getAccountFrom()->getAccountNumber()+" do "+trans1->getAccountTo()->getAccountNumber()+" Kwota: "+std::to_string(trans1->getAmount())+",tytul: "+trans1->getTitle());
+    BOOST_TEST(infotest==": z "+trans1->getAccountFrom()->getAccountNumber()+" do "+trans1->getAccountTo()->getAccountNumber()+" Kwota: "+std::to_string(trans1->getAmount())+", tytul: "+trans1->getTitle());
 }
 BOOST_AUTO_TEST_SUITE_END()
 

@@ -10,18 +10,16 @@
 #include "managers/TransactionManager.h"
 #include "model/TurboLogger.h"
 struct TestSuiteAccountFixture {
-    ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
-    CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client,1);
-    SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client,acc,2);
-    ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,4,10)));
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1);
-    CurrentAccountPtr acc3 = std::make_shared<CurrentAccount>(client2,133);
-};
-struct SendMoneyFixture {
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
-    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger);
     TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,TM);
     ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
+    ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+    CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client,1,TM,AM);
+    SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client,acc,2,TM,AM);
+    ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,4,10)));
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,TM,AM);
+    CurrentAccountPtr acc3 = std::make_shared<CurrentAccount>(client2,133,TM,AM);
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
 
@@ -30,7 +28,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(acc->getOwner()->getFirstName()=="Marcin");
         BOOST_TEST(acc->getOwner()->getLastName()=="Nowak");
         BOOST_TEST(acc->getOwner()->getPersonalId()=="01234567891");
-        BOOST_TEST(acc->getOwner()->getBirthDate()==boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        BOOST_TEST(acc->getOwner()->getBirthDate()==boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         BOOST_TEST(acc->getBalance()==0);
         BOOST_TEST(acc->getCreationDate()==boost::posix_time::second_clock::local_time());
         BOOST_TEST(acc->getAccountNumber()=="11246813570"+acc->getOwner()->getPersonalId()+"1001");
@@ -70,35 +68,35 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
     }
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_FIXTURE_TEST_SUITE(TestSuiteAccountSendMoney,SendMoneyFixture)
+BOOST_FIXTURE_TEST_SUITE(TestSuiteAccountSendMoney,TestSuiteAccountFixture)
     BOOST_AUTO_TEST_CASE(AccountSendMoneyTests){
-        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         AM->createCurrentAccount(CM->getClient("01234567891"));
-        CM->addClient("12345678912","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        CM->addClient("12345678912","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         AM->createCurrentAccount(CM->getClient("12345678912"));
         AccountPtr acc=AM->getAccount(AM->findAll()[0]->getAccountNumber());
         AccountPtr acc2=AM->getAccount(AM->findAll()[1]->getAccountNumber());
         AM->setBalance(AM->findAll()[0]->getAccountNumber(),1000);
         AM->setBalance(AM->findAll()[1]->getAccountNumber(),200);
-        bool status=acc->sendMoney(acc2->getAccountNumber(),200,"Testowy przelew",TM,AM);
+        bool status=acc->sendMoney(acc2->getAccountNumber(),200,"Testowy przelew");
         BOOST_TEST(status==true);
         BOOST_TEST(AM->getAccount(AM->findAll()[0]->getAccountNumber())->getBalance()==800);
         BOOST_TEST(AM->getAccount(AM->findAll()[1]->getAccountNumber())->getBalance()==400);
     }
     BOOST_AUTO_TEST_CASE(AccountSendMoneyTestsNegative){
-        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        CM->addClient("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         AM->createCurrentAccount(CM->getClient("01234567891"));
-        CM->addClient("12345678912","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2021,5,13)));
+        CM->addClient("12345678912","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         AM->createCurrentAccount(CM->getClient("12345678912"));
         AccountPtr acc=AM->getAccount(AM->findAll()[0]->getAccountNumber());
         AccountPtr acc2=AM->getAccount(AM->findAll()[1]->getAccountNumber());
         AM->setBalance(AM->findAll()[0]->getAccountNumber(),1000);
         AM->setBalance(AM->findAll()[1]->getAccountNumber(),200);
-        bool status=acc->sendMoney(acc2->getAccountNumber(),2000,"Testowy przelew",TM,AM);
+        bool status=acc->sendMoney(acc2->getAccountNumber(),2000,"Testowy przelew");
         BOOST_TEST(status==false);
         BOOST_TEST(AM->getAccount(AM->findAll()[0]->getAccountNumber())->getBalance()==1000);
         BOOST_TEST(AM->getAccount(AM->findAll()[1]->getAccountNumber())->getBalance()==200);
-        status=acc->sendMoney("LOSOWYBLEDNY",200,"Testowy przelew",TM,AM);
+        status=acc->sendMoney("LOSOWYBLEDNY",200,"Testowy przelew");
         BOOST_TEST(status==false);
         BOOST_TEST(AM->getAccount(AM->findAll()[0]->getAccountNumber())->getBalance()==1000);
         BOOST_TEST(AM->getAccount(AM->findAll()[1]->getAccountNumber())->getBalance()==200);
