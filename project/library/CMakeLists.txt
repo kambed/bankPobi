@@ -34,7 +34,7 @@ set(SOURCE_FILES
         include/functions.h
         src/functions.cpp
 
-        src/exceptions/ClientException.cpp include/exceptions/ClientException.h src/exceptions/AccountException.cpp include/exceptions/AccountException.h src/exceptions/InterestException.cpp include/exceptions/InterestException.h src/exceptions/TransactionExeception.cpp include/exceptions/TransactionExeception.h)
+        src/exceptions/ClientException.cpp include/exceptions/ClientException.h src/exceptions/AccountException.cpp include/exceptions/AccountException.h src/exceptions/InterestException.cpp include/exceptions/InterestException.h src/exceptions/TransactionException.cpp include/exceptions/TransactionException.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 
