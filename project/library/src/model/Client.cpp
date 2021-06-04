@@ -10,7 +10,7 @@ Client::Client(std::string personalId, std::string firstName, std::string lastNa
     if(personalId.length() != 11) throw ClientException("Bad length of presonalId");
     if(firstName.empty()) throw ClientException("Empty firstName");
     if(lastName.empty()) throw ClientException("Empty lastName");
-    if(birthDate <= ( boost::posix_time::second_clock::local_time() - boost::gregorian::years(13) ))
+    if(birthDate >= ( boost::posix_time::second_clock::local_time() - boost::gregorian::years(13) ))
         throw ClientException("Client don't have 13 years old");
 }catch(const ClientException &exception){
     std::cout << "Exception: " << exception.what() << std::endl;

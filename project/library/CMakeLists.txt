@@ -68,7 +68,7 @@ set(SOURCE_TEST_FILES
         ../program/test/ManagersTests.cpp
         ../program/test/TurboLoggersTest.cpp
         ../program/test/BankTest.cpp
-        ) # tu w przyszłości będą dodawane pliki źródłowe testów
+        ../program/test/ExceptionsTest.cpp) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTest ${SOURCE_TEST_FILES})
 
