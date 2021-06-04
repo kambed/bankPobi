@@ -5,14 +5,17 @@
 #include "model/SavingsAccount.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
+#include <exceptions/AccountException.h>
 #include "functions.h"
 
-SavingsAccount::SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount,int ClientAccNumber) : Account(owner,ClientAccNumber),
-                                                                                           currentAccount(currentAccount), wasTransferThisMonth(false), lastInterest(getCreationDate()){}
-
-SavingsAccount::~SavingsAccount() {
-
+SavingsAccount::SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount,int ClientAccNumber) try : Account(owner,ClientAccNumber),
+                                                                                           currentAccount(currentAccount), wasTransferThisMonth(false), lastInterest(getCreationDate()){
+    if(currentAccount == nullptr) throw AccountException("Empty currentAccount");
+}catch(const AccountException &exception){
+    std::cout << "Exception: " << exception.what() << std::endl;
 }
+
+SavingsAccount::~SavingsAccount() {}
 
 bool SavingsAccount::getWasTransferThisMonth() const {
     return wasTransferThisMonth;
