@@ -14,10 +14,6 @@ std::string CurrentAccount::getAccountInfo() const {
     return "KONTO ROZLICZENIOWE "+Account::getAccountInfo();
 }
 
-bool CurrentAccount::sendToSavingsAccount(double amount) {
-    return false;
-}
-
 bool CurrentAccount::sendMoney(std::string accountNumber, double amount, std::string title) {
     return Account::sendMoney(accountNumber, amount, title);
 }

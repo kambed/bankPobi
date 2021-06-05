@@ -33,7 +33,7 @@ std::string SavingsAccount::getAccountInfo() const {
 }
 
 bool SavingsAccount::sendToCurrentAccount(double amount) {
-    return false; //TO BE IMPLEMENTED
+    return Account::sendMoney(currentAccount->getAccountNumber(), amount, "Przelew z konta ROR");
 }
 
 double SavingsAccount::chargeInterest() {

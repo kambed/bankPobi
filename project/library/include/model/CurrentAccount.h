@@ -9,8 +9,6 @@
 #include "Account.h"
 
 class CurrentAccount : public Account{
-private:
-
 public:
     //CONSTRUCTOR
     CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager);
@@ -18,7 +16,6 @@ public:
     virtual ~CurrentAccount();
     //METHODS
     std::string getAccountInfo() const override;
-    bool sendToSavingsAccount(double amount);
     bool sendMoney(std::string accountNumber, double amount, std::string title) override;
 };
 
