@@ -5,11 +5,19 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
 #include "model/Client.h"
+#include "model/Account.h"
+#include "model/SavingsAccount.h"
+#include "model/CurrentAccount.h"
+#include "model/Transaction.h"
 #include "functions.h"
 #include "managers/ClientManager.h"
 #include "managers/TransactionManager.h"
 #include "managers/AccountManager.h"
 #include <string>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/uuid/random_generator.hpp>
 #include <sstream>
 #include <boost/date_time/posix_time/time_parsers.hpp>
 #include <boost/date_time/posix_time/time_formatters.hpp>
@@ -48,23 +56,26 @@ TurboSaver::TurboSaver() {
               "last_name               TEXT                 NOT NULL, "
               "birth_date              TEXT                 NOT NULL);";
         cf = sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
-        sql = "CREATE TABLE CLIENT("
-              "id                      TEXT PRIMARY KEY     NOT NULL, "
-              "first_name              TEXT                 NOT NULL, "
-              "last_name               TEXT                 NOT NULL, "
-              "birth_date              INT                  NOT NULL);";
+        sql = "CREATE TABLE CURRENTACC("
+              "account_number          TEXT PRIMARY KEY     NOT NULL, "
+              "client_id               TEXT                 NOT NULL, "
+              "balance                 DOUBLE               NOT NULL, "
+              "creation_date           TEXT                 NOT NULL);";
         caf = sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
-        sql = "CREATE TABLE CLIENT("
-              "id                      TEXT PRIMARY KEY     NOT NULL, "
-              "first_name              TEXT                 NOT NULL, "
-              "last_name               TEXT                 NOT NULL, "
-              "birth_date              INT                  NOT NULL);";
+        sql = "CREATE TABLE SAVINGACC("
+              "account_number          TEXT PRIMARY KEY     NOT NULL, "
+              "current_account_number  TEXT                 NOT NULL, "
+              "client_id               TEXT                 NOT NULL, "
+              "balance                 DOUBLE               NOT NULL, "
+              "creation_date           TEXT                 NOT NULL, "
+              "last_interest           TEXT                 NOT NULL);";
         saf = sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
-        sql = "CREATE TABLE CLIENT("
+        sql = "CREATE TABLE TRANSACTION("
               "id                      TEXT PRIMARY KEY     NOT NULL, "
-              "first_name              TEXT                 NOT NULL, "
-              "last_name               TEXT                 NOT NULL, "
-              "birth_date              INT                  NOT NULL);";
+              "from_acc_number         TEXT                 NOT NULL, "
+              "to_acc_number           TEXT                 NOT NULL, "
+              "title                   TEXT                 NOT NULL, "
+              "amount                  DOUBLE               NOT NULL);";
         tf = sqlite3_exec(dbt,sql.c_str(),NULL,0,&error);
         sqlite3_close(dbc);
         sqlite3_close(dbsa);
@@ -76,18 +87,43 @@ TurboSaver::TurboSaver() {
 }
 
 void TurboSaver::saveClient(ClientPtr client) {
-    int cf = sqlite3_open("databases/clients.db", &dbc);
+    sqlite3_open("databases/clients.db", &dbc);
     sql = "DELETE FROM CLIENT WHERE id='"+client->getPersonalId()+"';";
-    cf = sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
+    sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
     sql = "INSERT INTO CLIENT VALUES('"+client->getPersonalId()+"', '"+client->getFirstName()+"', '"+client->getLastName()+"', '"+dateTimeToString(client->getBirthDate())+"');";
-    cf = sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
+    sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
     sqlite3_close(dbc);
 }
 
+void TurboSaver::saveSavingsAccount(SavingsAccountPtr account) {
+    sqlite3_open("databases/savingsaccounts.db", &dbsa);
+    sql = "DELETE FROM SAVINGACC WHERE id='"+account->getAccountNumber()+"';";
+    sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
+    sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getCurrentAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"', '"+dateTimeToString(account->getLastInterest())+"');";
+    sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
+    sqlite3_close(dbsa);
+}
+
+void TurboSaver::saveCurrentAccount(CurrentAccountPtr account) {
+    sqlite3_open("databases/currentaccounts.db", &dbca);
+    sql = "DELETE FROM SAVINGACC WHERE id='"+account->getAccountNumber()+"';";
+    sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
+    sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
+    sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
+    sqlite3_close(dbca);
+}
+
+void TurboSaver::saveTransaction(TransactionPtr transaction) {
+    sqlite3_open("databases/savingsaccounts.db", &dbt);
+    sql = "DELETE FROM SAVINGACC WHERE id='"+boost::lexical_cast<std::string>(transaction->getId())+"';";
+    sqlite3_exec(dbt,sql.c_str(),NULL,0,&error);
+    sql = "INSERT INTO SAVINGACC VALUES('"+boost::lexical_cast<std::string>(transaction->getId())+"', '"+transaction->getAccountFrom()->getAccountNumber()+"', '"+transaction->getAccountTo()->getAccountNumber()+"', '"+transaction->getTitle()+"', '"+std::to_string(transaction->getAmount())+"');";
+    sqlite3_exec(dbt,sql.c_str(),NULL,0,&error);
+    sqlite3_close(dbt);
+}
+
 void TurboSaver::importClient(ClientManagerPtr clientManager) {
-    int cf = sqlite3_open("databases/clients.db", &dbc);
-    //std::string query = "SELECT * FROM CLIENT;";
-    //sqlite3_exec(dbc, query.c_str(), callback, NULL, NULL);
+    sqlite3_open("databases/clients.db", &dbc);
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(dbc, "SELECT * FROM CLIENT", -1, &stmt, NULL);
     while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -133,4 +169,3 @@ void TurboSaver::importClient(ClientManagerPtr clientManager) {
     sqlite3_finalize(stmt);
     sqlite3_close(dbc);
 }
-

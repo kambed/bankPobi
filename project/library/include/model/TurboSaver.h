@@ -20,8 +20,9 @@ public:
     TurboSaver();
     void saveClient(ClientPtr client);
     void importClient(ClientManagerPtr clientManager);
-    //void saveAccount(AccountPtr account);
-    //void saveTransaction(TransactionPtr transaction);
+    void saveSavingsAccount(SavingsAccountPtr account);
+    void saveCurrentAccount(CurrentAccountPtr account);
+    void saveTransaction(TransactionPtr transaction);
 };
 
 
