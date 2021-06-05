@@ -70,12 +70,12 @@ TurboSaver::TurboSaver() {
               "creation_date           TEXT                 NOT NULL, "
               "last_interest           TEXT                 NOT NULL);";
         saf = sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
-        sql = "CREATE TABLE TRANSACTION("
-              "id                      TEXT PRIMARY KEY     NOT NULL, "
-              "from_acc_number         TEXT                 NOT NULL, "
-              "to_acc_number           TEXT                 NOT NULL, "
-              "title                   TEXT                 NOT NULL, "
-              "amount                  DOUBLE               NOT NULL);";
+        sql = "CREATE TABLE TRANS("
+              "id                       TEXT PRIMARY KEY     NOT NULL, "
+              "from_acc_number          TEXT                 NOT NULL, "
+              "to_acc_number            TEXT                 NOT NULL, "
+              "title                    TEXT                 NOT NULL, "
+              "amount                   DOUBLE               NOT NULL);";
         tf = sqlite3_exec(dbt,sql.c_str(),NULL,0,&error);
         sqlite3_close(dbc);
         sqlite3_close(dbsa);
@@ -106,18 +106,27 @@ void TurboSaver::saveSavingsAccount(SavingsAccountPtr account) {
 
 void TurboSaver::saveCurrentAccount(CurrentAccountPtr account) {
     sqlite3_open("databases/currentaccounts.db", &dbca);
-    sql = "DELETE FROM SAVINGACC WHERE id='"+account->getAccountNumber()+"';";
+    sql = "DELETE FROM CURRENTACC WHERE id='"+account->getAccountNumber()+"';";
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
-    sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
+    sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
     sqlite3_close(dbca);
 }
 
+void TurboSaver::removeAccount(std::string accnum) {
+    sqlite3_open("databases/savingsaccounts.db", &dbsa);
+    sql = "DELETE FROM SAVINGACC WHERE id='"+accnum+"';";
+    sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
+    sqlite3_open("databases/currentaccounts.db", &dbca);
+    sql = "DELETE FROM CURRENTACC WHERE id='"+accnum+"';";
+    sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
+}
+
 void TurboSaver::saveTransaction(TransactionPtr transaction) {
-    sqlite3_open("databases/savingsaccounts.db", &dbt);
-    sql = "DELETE FROM SAVINGACC WHERE id='"+boost::lexical_cast<std::string>(transaction->getId())+"';";
+    sqlite3_open("databases/transactions.db", &dbt);
+    sql = "DELETE FROM TRANS WHERE id='"+boost::lexical_cast<std::string>(transaction->getId())+"';";
     sqlite3_exec(dbt,sql.c_str(),NULL,0,&error);
-    sql = "INSERT INTO SAVINGACC VALUES('"+boost::lexical_cast<std::string>(transaction->getId())+"', '"+transaction->getAccountFrom()->getAccountNumber()+"', '"+transaction->getAccountTo()->getAccountNumber()+"', '"+transaction->getTitle()+"', '"+std::to_string(transaction->getAmount())+"');";
+    sql = "INSERT INTO TRANS VALUES('"+boost::lexical_cast<std::string>(transaction->getId())+"', '"+transaction->getAccountFrom()->getAccountNumber()+"', '"+transaction->getAccountTo()->getAccountNumber()+"', '"+transaction->getTitle()+"', '"+std::to_string(transaction->getAmount())+"');";
     sqlite3_exec(dbt,sql.c_str(),NULL,0,&error);
     sqlite3_close(dbt);
 }

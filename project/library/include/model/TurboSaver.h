@@ -22,6 +22,7 @@ public:
     void importClient(ClientManagerPtr clientManager);
     void saveSavingsAccount(SavingsAccountPtr account);
     void saveCurrentAccount(CurrentAccountPtr account);
+    void removeAccount(std::string accnum);
     void saveTransaction(TransactionPtr transaction);
 };
 

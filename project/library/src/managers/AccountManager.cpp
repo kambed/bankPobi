@@ -10,9 +10,10 @@
 #include "model/CurrentAccount.h"
 #include "model/SavingsAccount.h"
 #include "model/TurboLogger.h"
+#include "model/TurboSaver.h"
 
-AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,TransactionManagerPtr transactionManager,
-                               InterestPtr interest) : turboLogger(turboLogger),transactionManager
+AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver,TransactionManagerPtr transactionManager,
+                               InterestPtr interest) : turboLogger(turboLogger),turboSaver(turboSaver),transactionManager
                                (transactionManager), interest(interest) {
     accountRepository = std::make_shared<AccountRepository>();
 }
@@ -28,6 +29,7 @@ void AccountManager::createCurrentAccount(ClientPtr owner) {
         CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner,number,transactionManager,shared_from_this());
         accountRepository->addAccount(account);
         turboLogger->addLog("Create: "+account->getAccountInfo());
+        turboSaver->saveCurrentAccount(account);
     }else{
         turboLogger->addLog("Create account fail: wlasiciel: "+owner->getClientInfo());
     }
@@ -42,6 +44,7 @@ void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAc
                                                                       accountRepository->getAccount(currentAccountNumber),interest);
         accountRepository->addAccount(account2);
         turboLogger->addLog("Create: "+account2->getAccountInfo());
+        turboSaver->saveSavingsAccount(account2);
     }else{
         turboLogger->addLog("Create account fail: wlasiciel: "+owner->getClientInfo()+
         "; konto bierzacae"+accountRepository->getAccount(currentAccountNumber)->getAccountInfo());
@@ -51,7 +54,10 @@ void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAc
 bool AccountManager::removeAccount(std::string accountNumber) {
     bool status = accountRepository->removeAccount(accountRepository->getAccount(accountNumber));
     if(status==true)
+    {
         turboLogger->addLog("Remove: "+accountNumber);
+        turboSaver->removeAccount(accountNumber);
+    }
     else turboLogger->addLog("Remove failed: "+accountNumber);
     return status;
 }

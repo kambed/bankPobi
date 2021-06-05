@@ -3,6 +3,7 @@
 #include "model/TurboSaver.h"
 #include "exceptions/TurboSaverException.h"
 #include "model/Client.h"
+#include "model/Account.h"
 #include "managers/AccountManager.h"
 #include "managers/ClientManager.h"
 #include "managers/TransactionManager.h"
@@ -13,7 +14,7 @@ struct TestSuiteTurboSaverFixture {
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
     InterestPtr interest = std::make_shared<Interest>(0.05,0.19);
     TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
-    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger, TM, interest);
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,ts, TM, interest);
     ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger,ts);
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteTurboSaver,TestSuiteTurboSaverFixture)
@@ -21,6 +22,11 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteTurboSaver,TestSuiteTurboSaverFixture)
         BOOST_CHECK_NO_THROW(TurboSaverPtr ts = std::make_shared<TurboSaver>());
         CM->addClient("12694342121","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,6,3)));
         CM->addClient("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,1,10)));
+        AM->createCurrentAccount(CM->getClient("12694342121"));
+        AM->createCurrentAccount(CM->getClient("12345678901"));
+        AM->getAccount("10246813570126943421211000")->setBalance(200);
+        AM->createSavingsAccount(CM->getClient("12694342121"),"10246813570126943421211000");
+        TM->createTransaction(AM->getAccount("10246813570126943421211000"),AM->getAccount("10246813570123456789011000"),100,"Test");
 }
     BOOST_AUTO_TEST_CASE(TurboSaverImportTest) {
         BOOST_TEST(CM->findAll().size()==0);

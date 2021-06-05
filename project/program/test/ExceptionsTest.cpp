@@ -21,7 +21,7 @@ struct TestSuiteExceptionFixture {
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
     InterestPtr interest = std::make_shared<Interest>(0.05,0.19);
     TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
-    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger, TM,interest);
+    AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,turboSaver, TM,interest);
     ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger,turboSaver);
 };
 BOOST_FIXTURE_TEST_SUITE(ExceptionsTest,TestSuiteExceptionFixture)

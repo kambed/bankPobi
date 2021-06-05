@@ -12,10 +12,11 @@ private:
     AccountRepositoryPtr accountRepository;
     TransactionManagerPtr transactionManager;
     TurboLoggerPtr turboLogger;
+    TurboSaverPtr turboSaver;
     InterestPtr interest;
 public:
     //CONSTRUCTOR
-    AccountManager(const TurboLoggerPtr &turboLogger,TransactionManagerPtr transactionManager, InterestPtr interest);
+    AccountManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver,TransactionManagerPtr transactionManager, InterestPtr interest);
 
     //METHODS
     AccountPtr getAccount(std::string accountNumber);

@@ -14,7 +14,7 @@ Bank::Bank(){
     interest = std::make_shared<Interest>(0.01,0.19);
     clientManager = std::make_shared<ClientManager>(turboLogger,turboSaver);
     transactionManager = std::make_shared<TransactionManager>(turboLogger);
-    accountManager = std::make_shared<AccountManager>(turboLogger,transactionManager,interest);
+    accountManager = std::make_shared<AccountManager>(turboLogger,turboSaver,transactionManager,interest);
     turboSaver->importClient(clientManager);
 }
 
