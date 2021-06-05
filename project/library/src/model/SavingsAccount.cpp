@@ -7,9 +7,15 @@
 #include <boost/date_time.hpp>
 #include <exceptions/AccountException.h>
 #include "functions.h"
+#include "model/Interest.h"
 
-SavingsAccount::SavingsAccount(const ClientPtr &owner, const AccountPtr &currentAccount,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager) try : Account(owner,ClientAccNumber,transactionManager,accountManager),
-                                                                                           currentAccount(currentAccount), wasTransferThisMonth(false), lastInterest(getCreationDate()){
+
+SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber,
+                               const TransactionManagerPtr &transactionManager, const AccountManagerPtr &accountManager,
+                                const AccountPtr &currentAccount, const InterestPtr &interest)
+                                try : Account(owner, clientAccNumber, transactionManager,
+                               accountManager), wasTransferThisMonth(false), lastInterest(getCreationDate()),
+                               currentAccount(currentAccount), interest(interest) {
     if(currentAccount == nullptr) throw AccountException("Empty currentAccount");
 }catch(const AccountException &exception){
         std::cout << "Exception: " << exception.what() << std::endl;
@@ -36,6 +42,7 @@ bool SavingsAccount::sendToCurrentAccount(double amount) {
     return Account::sendMoney(currentAccount->getAccountNumber(), amount, "Przelew z konta ROR");
 }
 
-double SavingsAccount::chargeInterest() {
-    return 0; //TO BE IMPLEMENTED
+void SavingsAccount::chargeInterest() {
+    setBalance(getBalance()+interest->calculate(getBalance(),lastInterest));
 }
+

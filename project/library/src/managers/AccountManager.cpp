@@ -5,12 +5,15 @@
 #include "managers/AccountManager.h"
 #include "model/Client.h"
 #include "model/Account.h"
+#include "model/Interest.h"
 #include "repositories/AccountRepository.h"
 #include "model/CurrentAccount.h"
 #include "model/SavingsAccount.h"
 #include "model/TurboLogger.h"
 
-AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,TransactionManagerPtr transactionManager) : turboLogger(turboLogger),transactionManager(transactionManager) {
+AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,TransactionManagerPtr transactionManager,
+                               InterestPtr interest) : turboLogger(turboLogger),transactionManager
+                               (transactionManager), interest(interest) {
     accountRepository = std::make_shared<AccountRepository>();
 }
 
@@ -34,7 +37,9 @@ void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAc
     auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
     int number=findAccounts(function).size();
     if(number<=8999){
-        SavingsAccountPtr account2 = std::make_shared<SavingsAccount>(owner,accountRepository->getAccount(currentAccountNumber),number,transactionManager,shared_from_this());
+        SavingsAccountPtr account2 = std::make_shared<SavingsAccount>(owner,number,transactionManager,
+                                                                      shared_from_this(),
+                                                                      accountRepository->getAccount(currentAccountNumber),interest);
         accountRepository->addAccount(account2);
         turboLogger->addLog("Create: "+account2->getAccountInfo());
     }else{

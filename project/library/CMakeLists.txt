@@ -55,7 +55,7 @@ target_include_directories(Library PUBLIC include)
 #Włączenie testów powoduje pojawienie się celu test w makefiles
 enable_testing()
 find_package (Boost 1.60.0 COMPONENTS "unit_test_framework" REQUIRED)
-find_package (SQLite3)
+find_package (SQLite3 REQUIRED)
 
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include
