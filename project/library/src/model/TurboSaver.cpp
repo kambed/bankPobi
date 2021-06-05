@@ -48,23 +48,26 @@ TurboSaver::TurboSaver() {
               "last_name               TEXT                 NOT NULL, "
               "birth_date              TEXT                 NOT NULL);";
         cf = sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
-        sql = "CREATE TABLE CLIENT("
-              "id                      TEXT PRIMARY KEY     NOT NULL, "
-              "first_name              TEXT                 NOT NULL, "
-              "last_name               TEXT                 NOT NULL, "
-              "birth_date              INT                  NOT NULL);";
+        sql = "CREATE TABLE CURRENTACC("
+              "account_number          TEXT PRIMARY KEY     NOT NULL, "
+              "client_id               TEXT                 NOT NULL, "
+              "balance                 DOUBLE               NOT NULL, "
+              "creation_date           TEXT                 NOT NULL);";
         caf = sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
-        sql = "CREATE TABLE CLIENT("
-              "id                      TEXT PRIMARY KEY     NOT NULL, "
-              "first_name              TEXT                 NOT NULL, "
-              "last_name               TEXT                 NOT NULL, "
-              "birth_date              INT                  NOT NULL);";
+        sql = "CREATE TABLE SAVINGACC("
+              "account_number          TEXT PRIMARY KEY     NOT NULL, "
+              "current_account_number  TEXT                 NOT NULL, "
+              "client_id               TEXT                 NOT NULL, "
+              "balance                 DOUBLE               NOT NULL, "
+              "creation_date           TEXT                 NOT NULL, "
+              "last_interest           TEXT                 NOT NULL);";
         saf = sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
-        sql = "CREATE TABLE CLIENT("
+        sql = "CREATE TABLE TRANSACTION("
               "id                      TEXT PRIMARY KEY     NOT NULL, "
-              "first_name              TEXT                 NOT NULL, "
-              "last_name               TEXT                 NOT NULL, "
-              "birth_date              INT                  NOT NULL);";
+              "from_acc_number         TEXT                 NOT NULL, "
+              "to_acc_number           TEXT                 NOT NULL, "
+              "title                   TEXT                 NOT NULL, "
+              "amount                  DOUBLE               NOT NULL);";
         tf = sqlite3_exec(dbt,sql.c_str(),NULL,0,&error);
         sqlite3_close(dbc);
         sqlite3_close(dbsa);
@@ -86,8 +89,6 @@ void TurboSaver::saveClient(ClientPtr client) {
 
 void TurboSaver::importClient(ClientManagerPtr clientManager) {
     int cf = sqlite3_open("databases/clients.db", &dbc);
-    //std::string query = "SELECT * FROM CLIENT;";
-    //sqlite3_exec(dbc, query.c_str(), callback, NULL, NULL);
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(dbc, "SELECT * FROM CLIENT", -1, &stmt, NULL);
     while(sqlite3_step(stmt) == SQLITE_ROW)
