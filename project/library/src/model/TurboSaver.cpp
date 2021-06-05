@@ -15,10 +15,7 @@
 #include <boost/date_time/posix_time/time_formatters.hpp>
 #include "boost/date_time/gregorian/gregorian.hpp"
 
-TurboSaver::TurboSaver(const ClientManagerPtr &clientManager, const TransactionManagerPtr &transactionManager,
-                       const AccountManagerPtr &accountManager) : clientManager(clientManager),
-                                                                  transactionManager(transactionManager),
-                                                                  accountManager(accountManager){
+TurboSaver::TurboSaver() {
     std::system("mkdir -p ./databases");
     try {
         int cf = sqlite3_open("databases/clients.db", &dbc);
@@ -80,23 +77,14 @@ TurboSaver::TurboSaver(const ClientManagerPtr &clientManager, const TransactionM
 
 void TurboSaver::saveClient(ClientPtr client) {
     int cf = sqlite3_open("databases/clients.db", &dbc);
+    sql = "DELETE FROM CLIENT WHERE id='"+client->getPersonalId()+"';";
+    cf = sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
     sql = "INSERT INTO CLIENT VALUES('"+client->getPersonalId()+"', '"+client->getFirstName()+"', '"+client->getLastName()+"', '"+dateTimeToString(client->getBirthDate())+"');";
     cf = sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
     sqlite3_close(dbc);
 }
 
-int callback(void *NotUsed, int argc, char **argv, char **azColName){
-
-    for(int i = 0; i < argc; i++) {
-        //Show column name, value, and newline
-        //cout << azColName[i] << ": " << argv[i] << endl;
-    }
-    //cout << endl;
-    //Return successful
-    return 0;
-}
-
-void TurboSaver::importClient() {
+void TurboSaver::importClient(ClientManagerPtr clientManager) {
     int cf = sqlite3_open("databases/clients.db", &dbc);
     //std::string query = "SELECT * FROM CLIENT;";
     //sqlite3_exec(dbc, query.c_str(), callback, NULL, NULL);

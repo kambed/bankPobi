@@ -8,9 +8,10 @@ class ClientManager {
 private:
     ClientRepositoryPtr clientRepository;
     TurboLoggerPtr turboLogger;
+    TurboSaverPtr turboSaver;
 public:
     ///CONSTRUCTOR
-    ClientManager(const TurboLoggerPtr &turboLogger);
+    ClientManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver);
 
     ///METHODS
     ClientPtr getClient(std::string personalId);

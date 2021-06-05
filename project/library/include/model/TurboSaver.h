@@ -12,18 +12,14 @@
 
 class TurboSaver {
 private:
-    ClientManagerPtr clientManager;
-    TransactionManagerPtr transactionManager;
-    AccountManagerPtr accountManager;
     sqlite3 *dbc,*dbt,*dbca,*dbsa;
     std::string sql;
     char* error;
 
 public:
-    TurboSaver(const ClientManagerPtr &clientManager, const TransactionManagerPtr &transactionManager,
-               const AccountManagerPtr &accountManager);
+    TurboSaver();
     void saveClient(ClientPtr client);
-    void importClient();
+    void importClient(ClientManagerPtr clientManager);
     //void saveAccount(AccountPtr account);
     //void saveTransaction(TransactionPtr transaction);
 };

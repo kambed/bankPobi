@@ -1,10 +1,11 @@
 #include "managers/ClientManager.h"
 #include "model/Client.h"
 #include "model/TurboLogger.h"
+#include "model/TurboSaver.h"
 #include "typedefs.h"
 #include <boost/date_time.hpp>
-
-ClientManager::ClientManager(const TurboLoggerPtr &turboLogger) : turboLogger(turboLogger) {
+ClientManager::ClientManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver) : turboLogger(
+        turboLogger), turboSaver(turboSaver) {
     clientRepository = std::make_shared<ClientRepository>();
 }
 
@@ -14,10 +15,11 @@ ClientPtr ClientManager::getClient(std::string personalId) {
 
 void ClientManager::addClient(std::string personalId, std::string firstName, std::string lastName,
                               boost::posix_time::ptime birthDate) {
-    ClientPtr client = std::make_shared<Client>(personalId,firstName,lastName,birthDate);
+    ClientPtr client = std::make_shared<Client>(personalId,firstName,lastName,birthDate,turboSaver);
     if (clientRepository->getClient(personalId) == nullptr){
         clientRepository->addClient(client);
         turboLogger->addLog("Create client: "+client->getClientInfo());
+        turboSaver->saveClient(client);
     }else{
         turboLogger->addLog("Create client fail: "+client->getClientInfo());
     }
@@ -31,3 +33,5 @@ std::vector<ClientPtr> ClientManager::findAll() {
 std::vector<ClientPtr> ClientManager::findClients(ClientPredicate predicate) {
     return findClients(predicate);
 }
+
+

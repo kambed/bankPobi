@@ -9,15 +9,17 @@
 #include "managers/AccountManager.h"
 #include "managers/TransactionManager.h"
 #include "model/TurboLogger.h"
+#include "model/TurboSaver.h"
 struct TestSuiteAccountFixture {
+    TurboSaverPtr turboSaver = std::make_shared<TurboSaver>();
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
     TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
     AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,TM);
-    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger);
-    ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+    ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger,turboSaver);
+    ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver);
     CurrentAccountPtr acc = std::make_shared<CurrentAccount>(client,1,TM,AM);
     SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client,acc,2,TM,AM);
-    ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,4,10)));
+    ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,4,10)),turboSaver);
     CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,TM,AM);
     CurrentAccountPtr acc3 = std::make_shared<CurrentAccount>(client2,133,TM,AM);
 };

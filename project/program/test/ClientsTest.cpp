@@ -2,9 +2,11 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <typedefs.h>
 #include "model/Client.h"
+#include "model/TurboSaver.h"
 struct TestSuiteClientFixture {
-    ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime
-    (boost::gregorian::date(2000,5,13)));
+    TurboSaverPtr turboSaver = std::make_shared<TurboSaver>();
+    ClientPtr client = std::make_shared<Client>("54321123456","Marcin","Nowak",boost::posix_time::ptime
+    (boost::gregorian::date(2000,5,13)),turboSaver);
 };
 
 BOOST_FIXTURE_TEST_SUITE(TestSuiteClient,TestSuiteClientFixture)
@@ -12,13 +14,13 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteClient,TestSuiteClientFixture)
     BOOST_AUTO_TEST_CASE(ClientConstructorTests) {
         BOOST_TEST(client->getFirstName()=="Marcin");
         BOOST_TEST(client->getLastName()=="Nowak");
-        BOOST_TEST(client->getPersonalId()=="01234567891");
+        BOOST_TEST(client->getPersonalId()=="54321123456");
         BOOST_TEST(client->getBirthDate()==boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
     }
     BOOST_AUTO_TEST_CASE(SettersAndGettersTests) {
         BOOST_TEST(client->getFirstName()=="Marcin");
         BOOST_TEST(client->getLastName()=="Nowak");
-        BOOST_TEST(client->getPersonalId()=="01234567891");
+        BOOST_TEST(client->getPersonalId()=="54321123456");
         BOOST_TEST(client->getBirthDate()==boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         client->changeFirstName("Michal");
         BOOST_TEST(client->getFirstName()=="Michal");

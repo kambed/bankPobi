@@ -6,11 +6,13 @@
 #include "managers/AccountManager.h"
 #include "managers/TransactionManager.h"
 #include "model/TurboLogger.h"
+#include "model/TurboSaver.h"
 
 Bank::Bank(){
+    turboSaver = std::make_shared<TurboSaver>();
     turboLogger = std::make_shared<TurboLogger>();
     interest = std::make_shared<Interest>(0.01,0.19);
-    clientManager = std::make_shared<ClientManager>(turboLogger);
+    clientManager = std::make_shared<ClientManager>(turboLogger,turboSaver);
     transactionManager = std::make_shared<TransactionManager>(turboLogger);
     accountManager = std::make_shared<AccountManager>(turboLogger,transactionManager);
 }

@@ -18,6 +18,7 @@ private:
 	AccountManagerPtr accountManager;
 	TransactionManagerPtr transactionManager;
 	TurboLoggerPtr turboLogger;
+	TurboSaverPtr turboSaver;
 public:
     Bank();
 
