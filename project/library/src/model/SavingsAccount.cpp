@@ -8,13 +8,14 @@
 #include <exceptions/AccountException.h>
 #include "functions.h"
 #include "model/Interest.h"
+#include "model/TurboSaver.h"
 
 
 SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber,
                                const TransactionManagerPtr &transactionManager, const AccountManagerPtr &accountManager,
-                                const AccountPtr &currentAccount, const InterestPtr &interest)
+                                const AccountPtr &currentAccount, const InterestPtr &interest,TurboSaverPtr turboSaver)
                                 try : Account(owner, clientAccNumber, transactionManager,
-                               accountManager), wasTransferThisMonth(false), lastInterest(getCreationDate()),
+                               accountManager,turboSaver), wasTransferThisMonth(false), lastInterest(getCreationDate()),
                                currentAccount(currentAccount), interest(interest) {
     if(currentAccount == nullptr) throw AccountException("Empty currentAccount");
 }catch(const AccountException &exception){
@@ -44,5 +45,12 @@ bool SavingsAccount::sendToCurrentAccount(double amount) {
 
 void SavingsAccount::chargeInterest() {
     setBalance(getBalance()+interest->calculate(getBalance(),lastInterest));
+}
+
+bool SavingsAccount::setBalance(double balance) {
+    if(Account::setBalance(balance)){
+        turboSaver->saveSavingsAccount(shared_from_this());
+    }
+    return Account::setBalance(balance);
 }
 

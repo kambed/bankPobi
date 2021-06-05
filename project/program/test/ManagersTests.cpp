@@ -20,13 +20,13 @@ struct TestSuiteManagerFixture {
     TurboSaverPtr turboSaver = std::make_shared<TurboSaver>();
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
     InterestPtr interest = std::make_shared<Interest>(0.05,0.19);
-    TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger);
+    TransactionManagerPtr TM = std::make_shared<TransactionManager>(turboLogger,turboSaver);
     AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,turboSaver,TM,interest);
     ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger,turboSaver);
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver);
     ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver);
-    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,TM,AM);
-    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,TM,AM);
+    CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,TM,AM,turboSaver);
+    CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,TM,AM,turboSaver);
 };
 
 BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteManagerFixture)

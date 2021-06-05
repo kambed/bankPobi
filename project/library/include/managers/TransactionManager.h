@@ -13,9 +13,10 @@ class TransactionManager {
 private:
     TransactionRepositoryPtr transactionRepository;
     TurboLoggerPtr turboLogger;
+    TurboSaverPtr turboSaver;
 public:
     ///CONSTRUCTOR
-    TransactionManager(const TurboLoggerPtr &turboLogger);
+    TransactionManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver);
 
     ///METHODS
     void createTransaction(AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);

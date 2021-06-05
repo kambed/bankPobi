@@ -19,11 +19,17 @@ private:
 public:
     TurboSaver();
     void saveClient(ClientPtr client);
-    void importClient(ClientManagerPtr clientManager);
     void saveSavingsAccount(SavingsAccountPtr account);
     void saveCurrentAccount(CurrentAccountPtr account);
     void removeAccount(std::string accnum);
     void saveTransaction(TransactionPtr transaction);
+
+    void importClients(ClientManagerPtr clientManager);
+
+    int countClients();
+    int countCurrentAccounts();
+    int countSavingsAccounts();
+    int countTransactions();
 };
 
 

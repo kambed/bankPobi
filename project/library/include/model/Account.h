@@ -10,7 +10,7 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include "./typedefs.h"
 
-class Account {
+class Account{
 private:
     std::string accountNumber;
     ClientPtr owner;
@@ -18,9 +18,11 @@ private:
     AccountManagerPtr accountManager;
     double balance;
     boost::posix_time::ptime creationDate;
+protected:
+    TurboSaverPtr turboSaver;
 public:
     //CONSTRUCTOR
-    Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager);
+    Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver);
 
     //DESTRUCTOR
     virtual ~Account()=0;
@@ -30,7 +32,7 @@ public:
     double getBalance() const;
     const boost::posix_time::ptime &getCreationDate() const;
     //SETTERS
-    void setBalance(double balance);
+    virtual bool setBalance(double balance);
     //METHODS
     virtual std::string getAccountInfo() const;
     virtual bool sendMoney(std::string accountNumber,double amount,std::string title);

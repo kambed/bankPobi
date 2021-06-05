@@ -7,8 +7,10 @@
 #include "model/Transaction.h"
 #include "model/Account.h"
 #include "model/TurboLogger.h"
+#include "model/TurboSaver.h"
 
-TransactionManager::TransactionManager(const TurboLoggerPtr &turboLogger) : turboLogger(turboLogger) {
+
+TransactionManager::TransactionManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver) : turboLogger(turboLogger),turboSaver(turboSaver) {
     transactionRepository = std::make_shared<TransactionRepository>();
 }
 
@@ -30,4 +32,5 @@ title) {
     TransactionPtr trans = std::make_shared<Transaction>(accountFrom,accountTo,amount,title);
     transactionRepository->addTransaction(trans);
     turboLogger->addLog("Transaction: "+trans->getTransactionInfo());
+    turboSaver->saveTransaction(trans);
 }

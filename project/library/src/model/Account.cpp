@@ -4,6 +4,7 @@
 
 #include "model/Account.h"
 #include "model/Client.h"
+#include "model/TurboSaver.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
 #include <cstdlib>
@@ -13,7 +14,7 @@
 #include "managers/TransactionManager.h"
 #include "managers/AccountManager.h"
 
-Account::Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager) try : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()),transactionManager(transactionManager),accountManager(accountManager) {
+Account::Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver) try : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()),transactionManager(transactionManager),accountManager(accountManager),turboSaver(turboSaver) {
     if(owner == nullptr) throw AccountException("Empty owner");
     if(clientAccNumber > 8999 || clientAccNumber < 0) throw AccountException("Bad clientAccNumber");
     int kontrol;
@@ -70,7 +71,10 @@ bool Account::sendMoney(std::string accountNumber, double amount,std::string tit
     }
 }
 
-void Account::setBalance(double balance) {
-    if(balance >= 0)
+bool Account::setBalance(double balance) {
+    if(balance >= 0){
         Account::balance = balance;
+        return true;
+    }
+    return false;
 }

@@ -97,7 +97,7 @@ void TurboSaver::saveClient(ClientPtr client) {
 
 void TurboSaver::saveSavingsAccount(SavingsAccountPtr account) {
     sqlite3_open("databases/savingsaccounts.db", &dbsa);
-    sql = "DELETE FROM SAVINGACC WHERE id='"+account->getAccountNumber()+"';";
+    sql = "DELETE FROM SAVINGACC WHERE account_number='"+account->getAccountNumber()+"';";
     sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
     sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getCurrentAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"', '"+dateTimeToString(account->getLastInterest())+"');";
     sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
@@ -106,7 +106,7 @@ void TurboSaver::saveSavingsAccount(SavingsAccountPtr account) {
 
 void TurboSaver::saveCurrentAccount(CurrentAccountPtr account) {
     sqlite3_open("databases/currentaccounts.db", &dbca);
-    sql = "DELETE FROM CURRENTACC WHERE id='"+account->getAccountNumber()+"';";
+    sql = "DELETE FROM CURRENTACC WHERE account_number='"+account->getAccountNumber()+"';";
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
     sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
@@ -115,10 +115,10 @@ void TurboSaver::saveCurrentAccount(CurrentAccountPtr account) {
 
 void TurboSaver::removeAccount(std::string accnum) {
     sqlite3_open("databases/savingsaccounts.db", &dbsa);
-    sql = "DELETE FROM SAVINGACC WHERE id='"+accnum+"';";
+    sql = "DELETE FROM SAVINGACC WHERE account_number='"+accnum+"';";
     sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
     sqlite3_open("databases/currentaccounts.db", &dbca);
-    sql = "DELETE FROM CURRENTACC WHERE id='"+accnum+"';";
+    sql = "DELETE FROM CURRENTACC WHERE account_number='"+accnum+"';";
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
 }
 
@@ -131,7 +131,7 @@ void TurboSaver::saveTransaction(TransactionPtr transaction) {
     sqlite3_close(dbt);
 }
 
-void TurboSaver::importClient(ClientManagerPtr clientManager) {
+void TurboSaver::importClients(ClientManagerPtr clientManager) {
     sqlite3_open("databases/clients.db", &dbc);
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(dbc, "SELECT * FROM CLIENT", -1, &stmt, NULL);
@@ -177,4 +177,56 @@ void TurboSaver::importClient(ClientManagerPtr clientManager) {
     }
     sqlite3_finalize(stmt);
     sqlite3_close(dbc);
+}
+
+int TurboSaver::countClients() {
+    sqlite3_open("databases/clients.db", &dbc);
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(dbc, "SELECT * FROM CLIENT", -1, &stmt, NULL);
+    int i=0;
+    while(sqlite3_step(stmt) == SQLITE_ROW) {
+        i++;
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(dbc);
+    return i;
+}
+
+int TurboSaver::countSavingsAccounts() {
+    sqlite3_open("databases/savingsaccounts.db", &dbsa);
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(dbsa, "SELECT * FROM SAVINGACC", -1, &stmt, NULL);
+    int i=0;
+    while(sqlite3_step(stmt) == SQLITE_ROW) {
+        i++;
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(dbsa);
+    return i;
+}
+
+int TurboSaver::countCurrentAccounts() {
+    sqlite3_open("databases/currentaccounts.db", &dbca);
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(dbca, "SELECT * FROM CURRENTACC", -1, &stmt, NULL);
+    int i=0;
+    while(sqlite3_step(stmt) == SQLITE_ROW) {
+        i++;
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(dbca);
+    return i;
+}
+
+int TurboSaver::countTransactions() {
+    sqlite3_open("databases/transactions.db", &dbt);
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(dbt, "SELECT * FROM TRANS", -1, &stmt, NULL);
+    int i=0;
+    while(sqlite3_step(stmt) == SQLITE_ROW) {
+        i++;
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(dbt);
+    return i;
 }
