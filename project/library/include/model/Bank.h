@@ -30,6 +30,8 @@ public:
 
     const TransactionManagerPtr &getTransactionManager() const;
 
+    const TurboSaverPtr &getTurboSaver() const;
+
 
 };
 

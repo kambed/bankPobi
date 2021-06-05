@@ -32,3 +32,35 @@ bool fileExists(std::string fileName){
     file.close();
     return true;
 }
+
+int monthFromStr(std::string str){
+    std::string months[13];
+    months[1]="Jan";
+    months[2]="Feb";
+    months[3]="Mar";
+    months[4]="Apr";
+    months[5]="May";
+    months[6]="Jun";
+    months[7]="Jul";
+    months[8]="Aug";
+    months[9]="Sep";
+    months[10]="Oct";
+    months[11]="Nov";
+    months[12]="Dec";
+    int month;
+    for(int i=1;i<=12;i++){
+        if(str==months[i])
+        {
+            month=i;
+        }
+    }
+    return month;
+}
+
+std::string arrayConstCharToString(const unsigned char* text){
+    std::string str;
+    for(int i=0;i<strlen(reinterpret_cast<const char *>(text)); i++){
+        str+=text[i];
+    }
+    return str;
+}

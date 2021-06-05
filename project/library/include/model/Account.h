@@ -22,8 +22,7 @@ protected:
     TurboSaverPtr turboSaver;
 public:
     //CONSTRUCTOR
-    Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver);
-
+    Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate);
     //DESTRUCTOR
     virtual ~Account()=0;
     //GETTERS

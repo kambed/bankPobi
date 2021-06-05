@@ -5,13 +5,13 @@
 #ifndef BANK_CURRENTACCOUNT_H
 #define BANK_CURRENTACCOUNT_H
 
-#include <boost/functional/hash.hpp>
+#include <boost/date_time/posix_time/ptime.hpp>
 #include "Account.h"
 
 class CurrentAccount : public Account,public std::enable_shared_from_this<CurrentAccount>{
 public:
     //CONSTRUCTOR
-    CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver);
+    CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate);
     //DESTRUCTOR
     virtual ~CurrentAccount();
     //METHODS

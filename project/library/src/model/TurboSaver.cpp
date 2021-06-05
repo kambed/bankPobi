@@ -138,45 +138,87 @@ void TurboSaver::importClients(ClientManagerPtr clientManager) {
     while(sqlite3_step(stmt) == SQLITE_ROW)
     {
         std::string str,str2,str3,str4,str5,str6,str7;
-        for(int i=0;i<strlen(reinterpret_cast<const char *>(sqlite3_column_text(stmt,0))); i++){
-            str+=sqlite3_column_text(stmt,0)[i];
-        }
-        for(int i=0;i<strlen(reinterpret_cast<const char *>(sqlite3_column_text(stmt,1))); i++){
-            str2+=sqlite3_column_text(stmt,1)[i];
-        }
-        for(int i=0;i<strlen(reinterpret_cast<const char *>(sqlite3_column_text(stmt,2))); i++){
-            str3+=sqlite3_column_text(stmt,2)[i];
-        }
-        for(int i=0;i<strlen(reinterpret_cast<const char *>(sqlite3_column_text(stmt,3))); i++){
-            str4+=sqlite3_column_text(stmt,3)[i];
-        }
+        str=arrayConstCharToString(sqlite3_column_text(stmt,0));
+        str2=arrayConstCharToString(sqlite3_column_text(stmt,1));
+        str3=arrayConstCharToString(sqlite3_column_text(stmt,2));
+        str4=arrayConstCharToString(sqlite3_column_text(stmt,3));
         str5=str4.substr(0,4);
         str6=str4.substr(5,3);
-        std::string months[13];
-        months[1]="Jan";
-        months[2]="Feb";
-        months[3]="Mar";
-        months[4]="Apr";
-        months[5]="May";
-        months[6]="Jun";
-        months[7]="Jul";
-        months[8]="Aug";
-        months[9]="Sep";
-        months[10]="Oct";
-        months[11]="Nov";
-        months[12]="Dec";
-        int month;
-        for(int i=1;i<=12;i++){
-            if(str6==months[i])
-            {
-                month=i;
-            }
-        }
         str7=str4.substr(9,2);
+        int month=monthFromStr(str6);
         clientManager->addClient(str,str2,str3,boost::posix_time::ptime(boost::gregorian::date(atoi(str5.c_str()),month,atoi(str7.c_str()))));
     }
     sqlite3_finalize(stmt);
     sqlite3_close(dbc);
+}
+void TurboSaver::importTransactions(TransactionManagerPtr transactionManager,AccountManagerPtr accountManager) {
+    sqlite3_open("databases/transactions.db", &dbt);
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(dbt, "SELECT * FROM TRANS", -1, &stmt, NULL);
+    while(sqlite3_step(stmt) == SQLITE_ROW) {
+        std::string str,str2,str3,str4,str5;
+        str=arrayConstCharToString(sqlite3_column_text(stmt,0));
+        str2=arrayConstCharToString(sqlite3_column_text(stmt,1));
+        str3=arrayConstCharToString(sqlite3_column_text(stmt,2));
+        str4=arrayConstCharToString(sqlite3_column_text(stmt,3));
+        str5=arrayConstCharToString(sqlite3_column_text(stmt,4));
+        transactionManager->createTransaction(str,accountManager->getAccount(str2),accountManager->getAccount(str3),std::stod(str5),str4);
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(dbt);
+}
+
+void TurboSaver::importCurrentAccounts(AccountManagerPtr accountManager,ClientManagerPtr clientManager) {
+    sqlite3_open("databases/currentaccounts.db", &dbca);
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(dbca, "SELECT * FROM CURRENTACC", -1, &stmt, NULL);
+    while(sqlite3_step(stmt) == SQLITE_ROW) {
+        std::string str,str2,str3,str4,year,mon,day,hours,mins,sec;
+        str2=arrayConstCharToString(sqlite3_column_text(stmt,1));
+        str3=arrayConstCharToString(sqlite3_column_text(stmt,2));
+        str4=arrayConstCharToString(sqlite3_column_text(stmt,3));
+        year=str4.substr(0, 4);
+        mon=str4.substr(5, 3);
+        day=str4.substr(9, 2);
+        hours=str4.substr(12, 2);
+        mins=str4.substr(15, 2);
+        sec=str4.substr(18, 2);
+        int month=monthFromStr(mon);
+        accountManager->createCurrentAccount(clientManager->getClient(str2),std::stod(str3),boost::posix_time::ptime(boost::gregorian::date(atoi(year.c_str()), month, atoi(day.c_str())), boost::posix_time::hours(atoi(hours.c_str())) + boost::posix_time::minutes(atoi(mins.c_str())) + boost::posix_time::seconds(atoi(sec.c_str()))));
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(dbca);
+}
+
+void TurboSaver::importSavingsAccounts(AccountManagerPtr accountManager,ClientManagerPtr clientManager) {
+    sqlite3_open("databases/savingsaccounts.db", &dbsa);
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(dbsa, "SELECT * FROM SAVINGACC", -1, &stmt, NULL);
+    while(sqlite3_step(stmt) == SQLITE_ROW) {
+        std::string str,str2,str3,str4,str5,str6,year,mon,day,hours,mins,sec,year2,mon2,day2,hours2,mins2,sec2;
+        str2=arrayConstCharToString(sqlite3_column_text(stmt,1));
+        str3=arrayConstCharToString(sqlite3_column_text(stmt,2));
+        str4=arrayConstCharToString(sqlite3_column_text(stmt,3));
+        str5=arrayConstCharToString(sqlite3_column_text(stmt,4));
+        str6=arrayConstCharToString(sqlite3_column_text(stmt,5));
+        year=str5.substr(0, 4);
+        mon=str5.substr(5, 3);
+        day=str5.substr(9, 2);
+        hours=str5.substr(12, 2);
+        mins=str5.substr(15, 2);
+        sec=str5.substr(18, 2);
+        year2=str6.substr(0, 4);
+        mon2=str6.substr(5, 3);
+        day2=str6.substr(9, 2);
+        hours2=str6.substr(12, 2);
+        mins2=str6.substr(15, 2);
+        sec2=str6.substr(18, 2);
+        int month=monthFromStr(mon);
+        int month2=monthFromStr(mon2);
+        accountManager->createSavingsAccount(clientManager->getClient(str3),str2,std::stod(str4),boost::posix_time::ptime(boost::gregorian::date(atoi(year.c_str()), month, atoi(day.c_str())), boost::posix_time::hours(atoi(hours.c_str())) + boost::posix_time::minutes(atoi(mins.c_str())) + boost::posix_time::seconds(atoi(sec.c_str()))),boost::posix_time::ptime(boost::gregorian::date(atoi(year2.c_str()), month2, atoi(day2.c_str())), boost::posix_time::hours(atoi(hours2.c_str())) + boost::posix_time::minutes(atoi(mins2.c_str())) + boost::posix_time::seconds(atoi(sec2.c_str()))));
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(dbca);
 }
 
 int TurboSaver::countClients() {

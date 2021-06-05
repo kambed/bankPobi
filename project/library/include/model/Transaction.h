@@ -13,7 +13,7 @@ private:
     std::string title;
 public:
     ///CONSTRUCTOR
-    Transaction(const AccountPtr &accountFrom, const AccountPtr &accountTo, double amount,
+    Transaction(std::string id,const AccountPtr &accountFrom, const AccountPtr &accountTo, double amount,
                 const std::string &title);
     ///GETTERS
     const boost::uuids::uuid &getId() const;

@@ -14,7 +14,13 @@
 #include "managers/TransactionManager.h"
 #include "managers/AccountManager.h"
 
-Account::Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver) try : owner(owner),balance(0),creationDate(boost::posix_time::second_clock::local_time()),transactionManager(transactionManager),accountManager(accountManager),turboSaver(turboSaver) {
+Account::Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate2) try : owner(owner),balance(balance),transactionManager(transactionManager),accountManager(accountManager),turboSaver(turboSaver) {
+    if(creationDate==boost::posix_time::not_a_date_time){
+        creationDate=boost::posix_time::second_clock::local_time();
+    }
+    else{
+        creationDate=creationDate2;
+    }
     if(owner == nullptr) throw AccountException("Empty owner");
     if(clientAccNumber > 8999 || clientAccNumber < 0) throw AccountException("Bad clientAccNumber");
     int kontrol;
@@ -60,7 +66,7 @@ bool Account::sendMoney(std::string accountNumber, double amount,std::string tit
     }
     else{
         if(accountManager->getAccount(accountNumber)!=nullptr){
-            transactionManager->createTransaction(accountManager->getAccount(getAccountNumber()),accountManager->getAccount(accountNumber),amount,title);
+            transactionManager->createTransaction("",accountManager->getAccount(getAccountNumber()),accountManager->getAccount(accountNumber),amount,title);
             accountManager->getAccount(getAccountNumber())->setBalance(accountManager->getAccount(getAccountNumber())->getBalance()-amount);
             accountManager->getAccount(accountNumber)->setBalance(accountManager->getAccount(accountNumber)->getBalance()+amount);
             return true;

@@ -19,7 +19,7 @@ public:
     TransactionManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver);
 
     ///METHODS
-    void createTransaction(AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
+    void createTransaction(std::string id,AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
     TransactionPtr getTransaction(boost::uuids::uuid Id);
     std::vector<TransactionPtr> findAll();
     std::vector<TransactionPtr> findTransactions(TransactionManagerPtr predicate);

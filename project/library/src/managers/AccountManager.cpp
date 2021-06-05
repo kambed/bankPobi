@@ -22,11 +22,11 @@ AccountPtr AccountManager::getAccount(std::string accountNumber) {
     return accountRepository->getAccount(accountNumber);
 }
 
-void AccountManager::createCurrentAccount(ClientPtr owner) {
+void AccountManager::createCurrentAccount(ClientPtr owner,double balance,boost::posix_time::ptime creationDate) {
     auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
     int number=findAccounts(function).size();
     if(number<=8999) {
-        CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner,number,transactionManager,shared_from_this(),turboSaver);
+        CurrentAccountPtr account = std::make_shared<CurrentAccount>(owner,number,transactionManager,shared_from_this(),turboSaver,balance,creationDate);
         accountRepository->addAccount(account);
         turboLogger->addLog("Create: "+account->getAccountInfo());
         turboSaver->saveCurrentAccount(account);
@@ -35,13 +35,13 @@ void AccountManager::createCurrentAccount(ClientPtr owner) {
     }
 }
 
-void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAccountNumber) {
+void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAccountNumber,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest) {
     auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
     int number=findAccounts(function).size();
+    SavingsAccountPtr account2 = std::make_shared<SavingsAccount>(owner,number,transactionManager,
+                                                                  shared_from_this(),
+                                                                  accountRepository->getAccount(currentAccountNumber),interest,turboSaver,balance,creationDate,lastInterest);
     if(number<=8999){
-        SavingsAccountPtr account2 = std::make_shared<SavingsAccount>(owner,number,transactionManager,
-                                                                      shared_from_this(),
-                                                                      accountRepository->getAccount(currentAccountNumber),interest,turboSaver);
         accountRepository->addAccount(account2);
         turboLogger->addLog("Create: "+account2->getAccountInfo());
         turboSaver->saveSavingsAccount(account2);

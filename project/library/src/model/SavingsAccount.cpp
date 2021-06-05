@@ -13,20 +13,22 @@
 
 SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber,
                                const TransactionManagerPtr &transactionManager, const AccountManagerPtr &accountManager,
-                                const AccountPtr &currentAccount, const InterestPtr &interest,TurboSaverPtr turboSaver)
+                                const AccountPtr &currentAccount, const InterestPtr &interest,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest2)
                                 try : Account(owner, clientAccNumber, transactionManager,
-                               accountManager,turboSaver), wasTransferThisMonth(false), lastInterest(getCreationDate()),
+                               accountManager,turboSaver,balance,creationDate),
                                currentAccount(currentAccount), interest(interest) {
+                                    if(lastInterest==boost::posix_time::not_a_date_time){
+                                        lastInterest=boost::posix_time::second_clock::local_time();
+                                    }
+                                    else{
+                                        lastInterest=lastInterest2;
+                                    }
     if(currentAccount == nullptr) throw AccountException("Empty currentAccount");
 }catch(const AccountException &exception){
         std::cout << "Exception: " << exception.what() << std::endl;
 }
 
 SavingsAccount::~SavingsAccount() {}
-
-bool SavingsAccount::getWasTransferThisMonth() const {
-    return wasTransferThisMonth;
-}
 
 const boost::posix_time::ptime &SavingsAccount::getLastInterest() const {
     return lastInterest;
@@ -35,8 +37,7 @@ const AccountPtr &SavingsAccount::getCurrentAccount() const {
     return currentAccount;
 }
 std::string SavingsAccount::getAccountInfo() const {
-    return "KONTO OSZCZEDNOSCIOWE " + Account::getAccountInfo() + " Transfer w tym miesiacu: " + std::to_string(
-            getWasTransferThisMonth()) + " Ostatnie naliczenie odsetek: " + dateTimeToString(lastInterest);
+    return "KONTO OSZCZEDNOSCIOWE " + Account::getAccountInfo() + " Ostatnie naliczenie odsetek: " + dateTimeToString(lastInterest);
 }
 
 bool SavingsAccount::sendToCurrentAccount(double amount) {

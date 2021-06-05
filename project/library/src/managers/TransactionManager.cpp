@@ -27,9 +27,9 @@ std::vector<TransactionPtr> TransactionManager::findTransactions(TransactionMana
     return findTransactions(predicate);
 }
 
-void TransactionManager::createTransaction(AccountPtr accountFrom, AccountPtr accountTo, double amount, std::string
+void TransactionManager::createTransaction(std::string id,AccountPtr accountFrom, AccountPtr accountTo, double amount, std::string
 title) {
-    TransactionPtr trans = std::make_shared<Transaction>(accountFrom,accountTo,amount,title);
+    TransactionPtr trans = std::make_shared<Transaction>(id,accountFrom,accountTo,amount,title);
     transactionRepository->addTransaction(trans);
     turboLogger->addLog("Transaction: "+trans->getTransactionInfo());
     turboSaver->saveTransaction(trans);

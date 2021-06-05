@@ -16,6 +16,9 @@ Bank::Bank(){
     transactionManager = std::make_shared<TransactionManager>(turboLogger,turboSaver);
     accountManager = std::make_shared<AccountManager>(turboLogger,turboSaver,transactionManager,interest);
     turboSaver->importClients(clientManager);
+    turboSaver->importCurrentAccounts(accountManager,clientManager);
+    turboSaver->importSavingsAccounts(accountManager,clientManager);
+    turboSaver->importTransactions(transactionManager,accountManager);
 }
 
 const InterestPtr &Bank::getInterest() const {
@@ -32,6 +35,10 @@ const AccountManagerPtr &Bank::getAccountManager() const {
 
 const TransactionManagerPtr &Bank::getTransactionManager() const {
     return transactionManager;
+}
+
+const TurboSaverPtr &Bank::getTurboSaver() const {
+    return turboSaver;
 }
 
 

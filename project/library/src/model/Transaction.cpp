@@ -3,14 +3,20 @@
 #include "model/Account.h"
 #include <boost/uuid/uuid_generators.hpp>
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 #include "exceptions/TransactionException.h"
 
-Transaction::Transaction(const AccountPtr &accountFrom, const AccountPtr &accountTo,
+Transaction::Transaction(std::string id2,const AccountPtr &accountFrom, const AccountPtr &accountTo,
                          double amount, const std::string &title) try : accountFrom(accountFrom),
                                                                     accountTo(accountTo), amount(amount),
                                                                     title(title) {
-    boost::uuids::random_generator generator;
-    id=generator();
+    if(id2==""){
+        boost::uuids::random_generator generator;
+        id=generator();
+    }
+    else{
+        id=boost::lexical_cast<boost::uuids::uuid>(id2);
+    }
     if(accountFrom == nullptr) throw TransactionException("Empty accountFrom");
     if(accountTo == nullptr) throw TransactionException("Empty accountTo");
     if(amount<=0) throw TransactionException("Bad amount");

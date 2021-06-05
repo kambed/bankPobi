@@ -5,7 +5,7 @@
 #include "model/CurrentAccount.h"
 #include "model/TurboSaver.h"
 
-CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver) : Account(owner,ClientAccNumber,transactionManager,accountManager,turboSaver){}
+CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate) : Account(owner,ClientAccNumber,transactionManager,accountManager,turboSaver,balance,creationDate){}
 
 CurrentAccount::~CurrentAccount() {
 

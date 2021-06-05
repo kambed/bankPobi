@@ -25,6 +25,9 @@ public:
     void saveTransaction(TransactionPtr transaction);
 
     void importClients(ClientManagerPtr clientManager);
+    void importSavingsAccounts(AccountManagerPtr accountManager,ClientManagerPtr clientManager);
+    void importCurrentAccounts(AccountManagerPtr accountManager,ClientManagerPtr clientManager);
+    void importTransactions(TransactionManagerPtr transactionManager,AccountManagerPtr accountManager);
 
     int countClients();
     int countCurrentAccounts();
