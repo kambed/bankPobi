@@ -14,7 +14,8 @@
 #include "managers/TransactionManager.h"
 #include "managers/AccountManager.h"
 
-Account::Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate2) try : owner(owner),balance(balance),transactionManager(transactionManager),accountManager(accountManager),turboSaver(turboSaver) {
+Account::Account(const ClientPtr &owner,int clientAccNumber,TurboSaverPtr turboSaver,double balance,
+                 boost::posix_time::ptime creationDate2) try : owner(owner),balance(balance),turboSaver(turboSaver) {
     if(creationDate==boost::posix_time::not_a_date_time){
         creationDate=boost::posix_time::second_clock::local_time();
     }
@@ -57,24 +58,6 @@ const boost::posix_time::ptime &Account::getCreationDate() const {
 std::string Account::getAccountInfo() const {
     return "Numer konta: "+accountNumber+" Wlasciciel: "+getOwner()->getClientInfo()+" Stan konta: "+std::to_string
     (getBalance())+"zl Data zalozenia: "+dateTimeToString(creationDate);
-}
-
-bool Account::sendMoney(std::string accountNumber, double amount,std::string title) {
-    if(amount>getBalance())
-    {
-        return false;
-    }
-    else{
-        if(accountManager->getAccount(accountNumber)!=nullptr){
-            transactionManager->createTransaction("",accountManager->getAccount(getAccountNumber()),accountManager->getAccount(accountNumber),amount,title);
-            accountManager->getAccount(getAccountNumber())->setBalance(accountManager->getAccount(getAccountNumber())->getBalance()-amount);
-            accountManager->getAccount(accountNumber)->setBalance(accountManager->getAccount(accountNumber)->getBalance()+amount);
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 }
 
 bool Account::setBalance(double balance) {

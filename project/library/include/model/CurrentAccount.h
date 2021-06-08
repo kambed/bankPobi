@@ -10,14 +10,13 @@
 
 class CurrentAccount : public Account,public std::enable_shared_from_this<CurrentAccount>{
 public:
-    //CONSTRUCTOR
-    CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate);
-    //DESTRUCTOR
+    ///CONSTRUCTOR
+    CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate);
+    ///DESTRUCTOR
     virtual ~CurrentAccount();
-    //METHODS
+    ///METHODS
     std::string getAccountInfo() const override;
-    bool sendMoney(std::string accountNumber, double amount, std::string title) override;
-
+    ///SETTERS
     bool setBalance(double balance) override;
 };
 

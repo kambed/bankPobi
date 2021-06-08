@@ -12,18 +12,18 @@
 class AccountManager : public std::enable_shared_from_this<AccountManager>{
 private:
     AccountRepositoryPtr accountRepository;
-    TransactionManagerPtr transactionManager;
     TurboLoggerPtr turboLogger;
     TurboSaverPtr turboSaver;
     InterestPtr interest;
 public:
     //CONSTRUCTOR
-    AccountManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver,TransactionManagerPtr transactionManager, InterestPtr interest);
+    AccountManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver,InterestPtr interest);
 
     //METHODS
     AccountPtr getAccount(std::string accountNumber);
     void createCurrentAccount(ClientPtr owner,double balance,boost::posix_time::ptime creationDate);
-    void createSavingsAccount(ClientPtr owner,std::string currentAccountNumber,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest);
+    void createSavingsAccount(ClientPtr owner,std::string currentAccountNumber,double balance,boost::posix_time::ptime creationDate,
+                              boost::posix_time::ptime lastInterest);
     bool removeAccount(std::string accountNumber);
     bool setBalance(std::string accountNumber,double balance);
     std::vector<AccountPtr> findAll();

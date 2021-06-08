@@ -14,9 +14,9 @@ private:
     InterestPtr interest;
 public:
     //CONSTRUCTOR
-    SavingsAccount(const ClientPtr &owner, int clientAccNumber, const TransactionManagerPtr &transactionManager,
-                   const AccountManagerPtr &accountManager,const AccountPtr &currentAccount, const InterestPtr
-                   &interest,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest);
+    SavingsAccount(const ClientPtr &owner, int clientAccNumber,const AccountPtr &currentAccount, const InterestPtr
+    &interest, TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime
+    lastInterest);
     //DESTRUCTOR
     virtual ~SavingsAccount();
     //GETTERS
@@ -24,7 +24,6 @@ public:
     const AccountPtr &getCurrentAccount() const;
     //METHODS
     std::string getAccountInfo() const override;
-    bool sendToCurrentAccount(double amount);
     void chargeInterest();
     bool setBalance(double balance) override;
 };

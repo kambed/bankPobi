@@ -14,15 +14,13 @@ class Account{
 private:
     std::string accountNumber;
     ClientPtr owner;
-    TransactionManagerPtr transactionManager;
-    AccountManagerPtr accountManager;
     double balance;
     boost::posix_time::ptime creationDate;
 protected:
     TurboSaverPtr turboSaver;
 public:
     //CONSTRUCTOR
-    Account(const ClientPtr &owner,int clientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate);
+    Account(const ClientPtr &owner,int clientAccNumber,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate);
     //DESTRUCTOR
     virtual ~Account()=0;
     //GETTERS
@@ -34,7 +32,6 @@ public:
     virtual bool setBalance(double balance);
     //METHODS
     virtual std::string getAccountInfo() const;
-    virtual bool sendMoney(std::string accountNumber,double amount,std::string title);
 };
 
 

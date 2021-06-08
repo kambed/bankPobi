@@ -5,18 +5,13 @@
 #include "model/CurrentAccount.h"
 #include "model/TurboSaver.h"
 
-CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TransactionManagerPtr transactionManager,AccountManagerPtr accountManager,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate) : Account(owner,ClientAccNumber,transactionManager,accountManager,turboSaver,balance,creationDate){}
+CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TurboSaverPtr turboSaver,double balance,
+                               boost::posix_time::ptime creationDate) : Account(owner,ClientAccNumber,turboSaver,balance,creationDate){}
 
-CurrentAccount::~CurrentAccount() {
-
-}
+CurrentAccount::~CurrentAccount() {}
 
 std::string CurrentAccount::getAccountInfo() const {
     return "KONTO ROZLICZENIOWE "+Account::getAccountInfo();
-}
-
-bool CurrentAccount::sendMoney(std::string accountNumber, double amount, std::string title) {
-    return Account::sendMoney(accountNumber, amount, title);
 }
 
 bool CurrentAccount::setBalance(double balance) {
