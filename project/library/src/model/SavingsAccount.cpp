@@ -11,10 +11,10 @@
 #include "model/TurboSaver.h"
 
 
-SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber,
-                                const AccountPtr &currentAccount, const InterestPtr &interest,TurboSaverPtr turboSaver,
-                                double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest2)
-                                try : Account(owner, clientAccNumber,turboSaver,balance,creationDate),
+SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber, const AccountPtr &currentAccount,
+                               const InterestPtr &interest,TurboSaverPtr turboSaver,double balance,
+                               boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest2)
+                               : Account(owner, clientAccNumber,turboSaver,balance,creationDate),
                                currentAccount(currentAccount), interest(interest) {
     if(lastInterest==boost::posix_time::not_a_date_time){
         lastInterest=boost::posix_time::second_clock::local_time();
@@ -23,8 +23,7 @@ SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber,
         lastInterest=lastInterest2;
     }
     if(currentAccount == nullptr) throw AccountException("Empty currentAccount");
-}catch(const AccountException &exception){
-        std::cout << "Exception: " << exception.what() << std::endl;
+    if(interest == nullptr) throw AccountException("Empty interest");
 }
 
 SavingsAccount::~SavingsAccount() {}

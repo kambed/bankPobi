@@ -15,7 +15,7 @@
 #include "managers/AccountManager.h"
 
 Account::Account(const ClientPtr &owner,int clientAccNumber,TurboSaverPtr turboSaver,double balance,
-                 boost::posix_time::ptime creationDate2) try : owner(owner),balance(balance),turboSaver(turboSaver) {
+                 boost::posix_time::ptime creationDate2) : owner(owner),balance(balance),turboSaver(turboSaver) {
     if(creationDate==boost::posix_time::not_a_date_time){
         creationDate=boost::posix_time::second_clock::local_time();
     }
@@ -24,6 +24,8 @@ Account::Account(const ClientPtr &owner,int clientAccNumber,TurboSaverPtr turboS
     }
     if(owner == nullptr) throw AccountException("Empty owner");
     if(clientAccNumber > 8999 || clientAccNumber < 0) throw AccountException("Bad clientAccNumber");
+    if(balance<0) throw AccountException("Balance can't be less 0");
+    if(turboSaver==nullptr) throw AccountException("Empty turboSaver");
     int kontrol;
     kontrol= clientAccNumber % 100;
     if(kontrol<=9){
@@ -33,8 +35,6 @@ Account::Account(const ClientPtr &owner,int clientAccNumber,TurboSaverPtr turboS
     if(clientAccNumber <= 9999) {
         accountNumber=std::to_string(kontrol)+"246813570"+getOwner()->getPersonalId()+std::to_string(clientAccNumber);
     }
-}catch(const AccountException &exception){
-    std::cout << "Exception: " << exception.what() << std::endl;
 }
 
 Account::~Account() {}

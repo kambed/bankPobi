@@ -1,12 +1,10 @@
 #include <exceptions/InterestException.h>
 #include "model/Interest.h"
 
-Interest::Interest(double percentage, double tax) try : percentage(percentage), tax(tax) {
-    if(percentage < 0) throw InterestException("percentage can't be less 0");
+Interest::Interest(double percentage, double tax) : percentage(percentage), tax(tax) {
+    if(percentage < 0) throw InterestException("Percentage can't be less 0");
     if(tax < 0) throw InterestException("Too low tax");
-    if(tax > 1) throw InterestException("Too low tax");
-}catch(const InterestException &exception){
-    std::cout<<"Exception: "<<exception.what()<<std::endl;
+    if(tax > 1) throw InterestException("Too high tax");
 }
 
 double Interest::getPercentage() const {

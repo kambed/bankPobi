@@ -7,10 +7,10 @@
 #include "exceptions/TransactionException.h"
 
 Transaction::Transaction(std::string id2,const AccountPtr &accountFrom, const AccountPtr &accountTo,
-                         double amount, const std::string &title) try : accountFrom(accountFrom),
+                         double amount, const std::string &title) : accountFrom(accountFrom),
                                                                     accountTo(accountTo), amount(amount),
                                                                     title(title) {
-    if(id2==""){
+    if(id2.empty()){
         boost::uuids::random_generator generator;
         id=generator();
     }
@@ -21,8 +21,6 @@ Transaction::Transaction(std::string id2,const AccountPtr &accountFrom, const Ac
     if(accountTo == nullptr) throw TransactionException("Empty accountTo");
     if(amount<=0) throw TransactionException("Bad amount");
     if(title.empty()) throw TransactionException("Empty title");
-}catch(const TransactionException &exception){
-    std::cout << "Exception: " << exception.what() << std::endl;
 }
 
 const boost::uuids::uuid &Transaction::getId() const {

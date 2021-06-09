@@ -12,16 +12,12 @@ TurboLogger::TurboLogger() {
         int i=0;
         fileName = "logs/logs_" + nowFileName() +std::to_string(i)+ ".txt";
     }while(fileExists(fileName));
-    try {
-        logs.open(fileName, std::ofstream::out | std::ofstream::app);
-        if (logs.is_open()) {
-            logs << "Logs file, created at: " + nowString() + "\n";
-            logs.close();
-        } else {
-            throw TurboLoggerException("Can not create file");
-        }
-    }catch(const TurboLoggerException &exception){
-        std::cout << "Exception: " << exception.what() << std::endl;
+    logs.open(fileName, std::ofstream::out | std::ofstream::app);
+    if (logs.is_open()) {
+        logs << "Logs file, created at: " + nowString() + "\n";
+        logs.close();
+    } else {
+        throw TurboLoggerException("Can not create file");
     }
 }
 

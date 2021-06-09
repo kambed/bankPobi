@@ -5,7 +5,7 @@
 #include "model/TurboSaver.h"
 
 Client::Client(std::string personalId, std::string firstName, std::string lastName,
-               boost::posix_time::ptime birthDate,TurboSaverPtr turboSaver) try : personalID(personalId), firstName(firstName),
+               boost::posix_time::ptime birthDate,TurboSaverPtr turboSaver) : personalID(personalId), firstName(firstName),
                                                           lastName(lastName), birthDate(birthDate), turboSaver(turboSaver) {
     if(personalId.empty()) throw ClientException("Empty presonalId");
     if(personalId.length() != 11) throw ClientException("Bad length of presonalId");
@@ -13,8 +13,6 @@ Client::Client(std::string personalId, std::string firstName, std::string lastNa
     if(lastName.empty()) throw ClientException("Empty lastName");
     if(birthDate >= ( boost::posix_time::second_clock::local_time() - boost::gregorian::years(13) ))
         throw ClientException("Client don't have 13 years old");
-}catch(const ClientException &exception){
-    std::cout << "Exception: " << exception.what() << std::endl;
 }
 
 Client::~Client() {}

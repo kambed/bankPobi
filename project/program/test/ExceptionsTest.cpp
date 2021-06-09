@@ -50,6 +50,7 @@ BOOST_FIXTURE_TEST_SUITE(ExceptionsTest,TestSuiteExceptionFixture)
         BOOST_CHECK_THROW(CurrentAccountPtr currentAccountError = std::make_shared<CurrentAccount>(nullptr, 1,turboSaver,0,boost::posix_time::not_a_date_time),AccountException::exception);
         BOOST_CHECK_THROW(CurrentAccountPtr currentAccountError = std::make_shared<CurrentAccount>(owner, 9000,turboSaver,0,boost::posix_time::not_a_date_time),AccountException::exception);
         BOOST_CHECK_THROW(CurrentAccountPtr currentAccountError = std::make_shared<CurrentAccount>(owner, -1,turboSaver,0,boost::posix_time::not_a_date_time),AccountException::exception);
+        BOOST_CHECK_THROW(CurrentAccountPtr currentAccountError = std::make_shared<CurrentAccount>(owner, 1,nullptr,0,boost::posix_time::not_a_date_time),AccountException::exception);
     }
     BOOST_AUTO_TEST_CASE(SavingsAccountExceptionTest) {
         ClientPtr owner = std::make_shared<Client>("01234567891", "Marcin", "Nowak",
@@ -60,6 +61,8 @@ BOOST_FIXTURE_TEST_SUITE(ExceptionsTest,TestSuiteExceptionFixture)
         BOOST_CHECK_THROW(SavingsAccountPtr savingsAccountError = std::make_shared<SavingsAccount>(owner,2,nullptr,interest,turboSaver,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time),AccountException::exception);
         BOOST_CHECK_THROW(SavingsAccountPtr savingsAccountError = std::make_shared<SavingsAccount>(owner,9000,acc,interest,turboSaver,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time),AccountException::exception);
         BOOST_CHECK_THROW(SavingsAccountPtr savingsAccountError = std::make_shared<SavingsAccount>(owner,-1,acc,interest,turboSaver,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time),AccountException::exception);
+        BOOST_CHECK_THROW(SavingsAccountPtr savingsAccountError = std::make_shared<SavingsAccount>(owner,1,acc,interest,nullptr,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time),AccountException::exception);
+        BOOST_CHECK_THROW(SavingsAccountPtr savingsAccountError = std::make_shared<SavingsAccount>(owner,1,acc,nullptr,turboSaver,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time),AccountException::exception);
     }
     BOOST_AUTO_TEST_CASE(InterestExceptionTest) {
         BOOST_CHECK_NO_THROW(InterestPtr interest = std::make_shared<Interest>(0.05,0.19));
