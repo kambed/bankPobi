@@ -95,7 +95,7 @@ void TurboSaver::saveClient(ClientPtr client) {
     sqlite3_close(dbc);
 }
 
-void TurboSaver::saveSavingsAccount(SavingsAccountPtr account) {
+void TurboSaver::saveSavingsAccount(AccountPtr account) {
     sqlite3_open("databases/savingsaccounts.db", &dbsa);
     sql = "DELETE FROM SAVINGACC WHERE account_number='"+account->getAccountNumber()+"';";
     sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
@@ -104,7 +104,7 @@ void TurboSaver::saveSavingsAccount(SavingsAccountPtr account) {
     sqlite3_close(dbsa);
 }
 
-void TurboSaver::saveCurrentAccount(CurrentAccountPtr account) {
+void TurboSaver::saveCurrentAccount(AccountPtr account) {
     sqlite3_open("databases/currentaccounts.db", &dbca);
     sql = "DELETE FROM CURRENTACC WHERE account_number='"+account->getAccountNumber()+"';";
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);

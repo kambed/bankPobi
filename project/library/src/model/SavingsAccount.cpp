@@ -12,9 +12,9 @@
 
 
 SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber, const AccountPtr &currentAccount,
-                               const InterestPtr &interest,TurboSaverPtr turboSaver,double balance,
+                               const InterestPtr &interest,double balance,
                                boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest2)
-                               : Account(owner, clientAccNumber,turboSaver,balance,creationDate),
+                               : Account(owner, clientAccNumber,balance,creationDate),
                                currentAccount(currentAccount), interest(interest) {
     if(lastInterest==boost::posix_time::not_a_date_time){
         lastInterest=boost::posix_time::second_clock::local_time();
@@ -43,9 +43,6 @@ void SavingsAccount::chargeInterest() {
 }
 
 bool SavingsAccount::setBalance(double balance) {
-    if(Account::setBalance(balance)){
-        turboSaver->saveSavingsAccount(shared_from_this());
-    }
     return Account::setBalance(balance);
 }
 

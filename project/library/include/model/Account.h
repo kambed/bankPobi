@@ -16,11 +16,9 @@ private:
     ClientPtr owner;
     double balance;
     boost::posix_time::ptime creationDate;
-protected:
-    TurboSaverPtr turboSaver;
 public:
     //CONSTRUCTOR
-    Account(const ClientPtr &owner,int clientAccNumber,TurboSaverPtr turboSaver,double balance,boost::posix_time::ptime creationDate);
+    Account(const ClientPtr &owner,int clientAccNumber,double balance,boost::posix_time::ptime creationDate);
     //DESTRUCTOR
     virtual ~Account()=0;
     //GETTERS
@@ -32,6 +30,10 @@ public:
     virtual bool setBalance(double balance);
     //METHODS
     virtual std::string getAccountInfo() const;
+
+    virtual const boost::posix_time::ptime &getLastInterest() const = 0;
+    virtual const AccountPtr &getCurrentAccount() const = 0;
+    virtual void chargeInterest() = 0;
 };
 
 

@@ -4,9 +4,11 @@
 
 #include "model/CurrentAccount.h"
 #include "model/TurboSaver.h"
+#include <boost/date_time/posix_time/ptime.hpp>
+#include <boost/date_time.hpp>
 
-CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,TurboSaverPtr turboSaver,double balance,
-                               boost::posix_time::ptime creationDate) : Account(owner,ClientAccNumber,turboSaver,balance,creationDate){}
+CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,double balance,
+                               boost::posix_time::ptime creationDate) : Account(owner,ClientAccNumber,balance,creationDate){}
 
 CurrentAccount::~CurrentAccount() {}
 
@@ -15,8 +17,13 @@ std::string CurrentAccount::getAccountInfo() const {
 }
 
 bool CurrentAccount::setBalance(double balance) {
-    if(Account::setBalance(balance)){
-        turboSaver->saveCurrentAccount(shared_from_this());
-    }
     return Account::setBalance(balance);
 }
+
+const boost::posix_time::ptime &CurrentAccount::getLastInterest() const {
+    return getCreationDate();
+}
+const AccountPtr &CurrentAccount::getCurrentAccount() const {
+    return NULL;
+}
+void CurrentAccount::chargeInterest() {}
