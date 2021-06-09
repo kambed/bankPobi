@@ -162,7 +162,7 @@ void TurboSaver::importTransactions(TransactionManagerPtr transactionManager,Acc
         str3=arrayConstCharToString(sqlite3_column_text(stmt,2));
         str4=arrayConstCharToString(sqlite3_column_text(stmt,3));
         str5=arrayConstCharToString(sqlite3_column_text(stmt,4));
-        transactionManager->createTransaction(str,accountManager->getAccount(str2),accountManager->getAccount(str3),std::stod(str5),str4);
+        transactionManager->saveTransaction(str,accountManager->getAccount(str2),accountManager->getAccount(str3),std::stod(str5),str4);
     }
     sqlite3_finalize(stmt);
     sqlite3_close(dbt);

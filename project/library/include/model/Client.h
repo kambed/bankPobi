@@ -5,17 +5,16 @@
 #include <boost/date_time.hpp>
 #include <typedefs.h>
 
-class Client : public std::enable_shared_from_this<Client>{
+class Client{
 private:
     std::string personalID;
     std::string firstName;
     std::string lastName;
     boost::posix_time::ptime birthDate;
-    TurboSaverPtr turboSaver;
 public:
     ///CONSTRUCTOR
     Client(std::string personalId, std::string firstName, std::string lastName,
-           boost::posix_time::ptime birthDate,TurboSaverPtr turboSaver);
+           boost::posix_time::ptime birthDate);
     ///DESTRUCTOR
     virtual ~Client();
     ///GETTERS

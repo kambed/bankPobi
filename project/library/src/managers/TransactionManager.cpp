@@ -35,10 +35,16 @@ title) {
     }else if(accountTo == nullptr){
         throw TransactionException("Too low balance of account form");
     }else{
-        TransactionPtr trans = std::make_shared<Transaction>("",accountFrom,accountTo,amount,title);
-        transactionRepository->addTransaction(trans);
-        turboLogger->addLog("Transaction: "+trans->getTransactionInfo());
+        saveTransaction(id,accountFrom,accountTo,amount,title);
         accountFrom->setBalance(accountFrom->getBalance()-amount);
         accountTo->setBalance(accountTo->getBalance()+amount);
     }
+}
+
+void TransactionManager::saveTransaction(std::string id, AccountPtr accountFrom, AccountPtr accountTo, double amount,
+                                           std::string title) {
+
+        TransactionPtr trans = std::make_shared<Transaction>("",accountFrom,accountTo,amount,title);
+        transactionRepository->addTransaction(trans);
+        turboLogger->addLog("Transaction: "+trans->getTransactionInfo());
 }

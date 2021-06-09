@@ -5,8 +5,8 @@
 #include "model/TurboSaver.h"
 
 Client::Client(std::string personalId, std::string firstName, std::string lastName,
-               boost::posix_time::ptime birthDate,TurboSaverPtr turboSaver) : personalID(personalId), firstName(firstName),
-                                                          lastName(lastName), birthDate(birthDate), turboSaver(turboSaver) {
+               boost::posix_time::ptime birthDate) : personalID(personalId), firstName(firstName),
+                                                          lastName(lastName), birthDate(birthDate) {
     if(personalId.empty()) throw ClientException("Empty presonalId");
     if(personalId.length() != 11) throw ClientException("Bad length of presonalId");
     if(firstName.empty()) throw ClientException("Empty firstName");
@@ -36,7 +36,6 @@ const boost::posix_time::ptime &Client::getBirthDate() const {
 void Client::changeFirstName(const std::string &firstName) {
     if(firstName != ""){
         Client::firstName = firstName;
-        turboSaver->saveClient(shared_from_this());
     }
 }
 
@@ -44,7 +43,6 @@ void Client::changeLastName(const std::string &lastName) {
     if(lastName != "")
     {
         Client::lastName = lastName;
-        turboSaver->saveClient(shared_from_this());
     }
 }
 

@@ -6,7 +6,7 @@
 struct TestSuiteClientFixture {
     TurboSaverPtr turboSaver = std::make_shared<TurboSaver>();
     ClientPtr client = std::make_shared<Client>("54321123456","Marcin","Nowak",boost::posix_time::ptime
-    (boost::gregorian::date(2000,5,13)),turboSaver);
+    (boost::gregorian::date(2000,5,13)));
 };
 
 BOOST_FIXTURE_TEST_SUITE(TestSuiteClient,TestSuiteClientFixture)

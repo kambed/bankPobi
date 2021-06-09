@@ -23,8 +23,8 @@ struct TestSuiteRepoFixture {
     ClientRepositoryPtr CR = std::make_shared<ClientRepository>();
     AccountRepositoryPtr AR = std::make_shared<AccountRepository>();
     TransactionRepositoryPtr TR =std::make_shared<TransactionRepository>();
-    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver);
-    ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)),turboSaver);
+    ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+    ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
     CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,turboSaver,0,boost::posix_time::not_a_date_time);
     CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,turboSaver,0,boost::posix_time::not_a_date_time);
     SavingsAccountPtr savacc = std::make_shared<SavingsAccount>(client2,2,acc1,interest,turboSaver,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time);

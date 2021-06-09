@@ -17,6 +17,8 @@ public:
     ClientPtr getClient(std::string personalId);
     void addClient(std::string personalId, std::string firstName, std::string lastName,
                    boost::posix_time::ptime birthDate);
+    void changeClientFirstName(std::string personalId,std::string newFirstName);
+    void changeClientLastName(std::string personalId,std::string newLastName);
     std::vector<ClientPtr> findAll();
     std::vector<ClientPtr> findClients(ClientPredicate predicate);
 };

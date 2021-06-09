@@ -20,6 +20,7 @@ public:
 
     ///METHODS
     void createTransaction(std::string id,AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
+    void saveTransaction(std::string id,AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
     TransactionPtr getTransaction(boost::uuids::uuid Id);
     std::vector<TransactionPtr> findAll();
     std::vector<TransactionPtr> findTransactions(TransactionManagerPtr predicate);

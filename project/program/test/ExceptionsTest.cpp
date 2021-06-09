@@ -28,24 +28,24 @@ BOOST_FIXTURE_TEST_SUITE(ExceptionsTest,TestSuiteExceptionFixture)
 
     BOOST_AUTO_TEST_CASE(ClientExceptionTest) {
         BOOST_CHECK_NO_THROW(ClientPtr clientError = std::make_shared<Client>("01234567891", "Marcin", "Nowak",
-                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver));
+                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13))));
         BOOST_CHECK_THROW(ClientPtr clientError = std::make_shared<Client>("", "Marcin", "Nowak",
-                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver),ClientException::exception);
+                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13))),ClientException::exception);
         BOOST_CHECK_THROW(ClientPtr clientError = std::make_shared<Client>("0123456789", "", "Nowak",
-                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver),ClientException::exception);;
+                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13))),ClientException::exception);;
         BOOST_CHECK_THROW(ClientPtr clientError = std::make_shared<Client>("012345678900", "", "Nowak",
-                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver),ClientException::exception);
+                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13))),ClientException::exception);
         BOOST_CHECK_THROW(ClientPtr clientError = std::make_shared<Client>("01234567891", "", "Nowak",
-                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver),ClientException::exception);
+                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13))),ClientException::exception);
         BOOST_CHECK_THROW(ClientPtr clientError = std::make_shared<Client>("01234567891", "Marcin", "",
-                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver),ClientException::exception);
+                             boost::posix_time::ptime(boost::gregorian::date(2000,5,13))),ClientException::exception);
         BOOST_CHECK_THROW(ClientPtr clientError = std::make_shared<Client>("01234567891", "Marcin", "Nowak",
-                                  boost::posix_time::second_clock::local_time(),turboSaver),ClientException::exception);
+                                  boost::posix_time::second_clock::local_time()),ClientException::exception);
     }
 
     BOOST_AUTO_TEST_CASE(CurrentAccountExceptionTest) {
         ClientPtr owner = std::make_shared<Client>("01234567891", "Marcin", "Nowak",
-                                                   boost::posix_time::ptime(boost::gregorian::date(2000, 5, 13)),turboSaver);
+                                                   boost::posix_time::ptime(boost::gregorian::date(2000, 5, 13)));
         BOOST_CHECK_NO_THROW(CurrentAccountPtr currentAccountError = std::make_shared<CurrentAccount>(owner, 1,turboSaver,0,boost::posix_time::not_a_date_time));
         BOOST_CHECK_THROW(CurrentAccountPtr currentAccountError = std::make_shared<CurrentAccount>(nullptr, 1,turboSaver,0,boost::posix_time::not_a_date_time),AccountException::exception);
         BOOST_CHECK_THROW(CurrentAccountPtr currentAccountError = std::make_shared<CurrentAccount>(owner, 9000,turboSaver,0,boost::posix_time::not_a_date_time),AccountException::exception);
@@ -54,7 +54,7 @@ BOOST_FIXTURE_TEST_SUITE(ExceptionsTest,TestSuiteExceptionFixture)
     }
     BOOST_AUTO_TEST_CASE(SavingsAccountExceptionTest) {
         ClientPtr owner = std::make_shared<Client>("01234567891", "Marcin", "Nowak",
-                                                   boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver);
+                                                   boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         CurrentAccountPtr acc = std::make_shared<CurrentAccount>(owner,1,turboSaver,0,boost::posix_time::not_a_date_time);
         BOOST_CHECK_NO_THROW(SavingsAccountPtr savingsAccountError = std::make_shared<SavingsAccount>(owner,2, acc,interest,turboSaver,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time));
         BOOST_CHECK_THROW(SavingsAccountPtr savingsAccountError = std::make_shared<SavingsAccount>(nullptr,2,acc,interest,turboSaver,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time),AccountException::exception);
@@ -71,8 +71,8 @@ BOOST_FIXTURE_TEST_SUITE(ExceptionsTest,TestSuiteExceptionFixture)
         BOOST_CHECK_THROW(InterestPtr interest = std::make_shared<Interest>(0.05,1.19),InterestException::exception);
     }
     BOOST_AUTO_TEST_CASE(TransactionExceptionTest) {
-        ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)),turboSaver);
-        ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)),turboSaver);
+        ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
+        ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
         CurrentAccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,turboSaver,0,boost::posix_time::not_a_date_time);
         CurrentAccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,turboSaver,0,boost::posix_time::not_a_date_time);
         TransactionPtr transactionError = std::make_shared<Transaction>("",acc1,acc2,100,"Test");
