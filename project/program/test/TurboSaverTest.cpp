@@ -24,8 +24,8 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteTurboSaver,TestSuiteTurboSaverFixture)
         CM->addClient("12694342188","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,6,3)));
         CM->addClient("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,1,10)));
         CM->addClient("12694342122","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2001,6,3)));
-        AM->createCurrentAccount(CM->getClient("12694342188"),0,boost::posix_time::not_a_date_time);
-        AM->createCurrentAccount(CM->getClient("12345678901"),0,boost::posix_time::not_a_date_time);
+        AM->createCurrentAccount(CM->getClient("12694342188"),"-",0,boost::posix_time::not_a_date_time);
+        AM->createCurrentAccount(CM->getClient("12345678901"),"-",0,boost::posix_time::not_a_date_time);
         AM->getAccount("10246813570126943421881000")->setBalance(200);
         AM->createSavingsAccount(CM->getClient("12694342188"),"10246813570126943421881000",0,
                                  boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time);
@@ -34,7 +34,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteTurboSaver,TestSuiteTurboSaverFixture)
         BOOST_TEST(CM->findAll().size()==0);
         ts->importClients(CM);
         BOOST_TEST(CM->findAll().size()==ts->countClients());
-        BOOST_TEST(CM->findAll()[0]->getPersonalId()=="12345678912");
+        BOOST_TEST(CM->findAll()[0]->getPersonalId()=="71830718300");
         ts->importCurrentAccounts(AM,CM);
         BOOST_TEST(AM->findAll().size()==ts->countCurrentAccounts());
         ts->importSavingsAccounts(AM,CM);

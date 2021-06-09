@@ -11,17 +11,16 @@
 class CurrentAccount : public Account{
 public:
     ///CONSTRUCTOR
-    CurrentAccount(const ClientPtr &owner,int ClientAccNumber,double balance,boost::posix_time::ptime creationDate);
+    CurrentAccount(const ClientPtr &owner, int clientAccNumber, double balance,
+                   const boost::posix_time::ptime &creationDate,
+                   const InterestPtr &interest);
     ///DESTRUCTOR
     virtual ~CurrentAccount();
     ///METHODS
     std::string getAccountInfo() const override;
+    void chargeInterest() override;
     ///SETTERS
     bool setBalance(double balance) override;
-
-    virtual const boost::posix_time::ptime &getLastInterest() const override;
-    virtual const AccountPtr &getCurrentAccount() const override;
-    virtual void chargeInterest() override;
 };
 
 

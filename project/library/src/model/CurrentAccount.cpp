@@ -7,8 +7,10 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time.hpp>
 
-CurrentAccount::CurrentAccount(const ClientPtr &owner,int ClientAccNumber,double balance,
-                               boost::posix_time::ptime creationDate) : Account(owner,ClientAccNumber,balance,creationDate){}
+CurrentAccount::CurrentAccount(const ClientPtr &owner, int clientAccNumber, double balance,
+                               const boost::posix_time::ptime &creationDate,
+                               const InterestPtr &interest) : Account(owner, clientAccNumber, balance, creationDate,
+                                                                      creationDate, nullptr, interest) {}
 
 CurrentAccount::~CurrentAccount() {}
 
@@ -20,10 +22,6 @@ bool CurrentAccount::setBalance(double balance) {
     return Account::setBalance(balance);
 }
 
-const boost::posix_time::ptime &CurrentAccount::getLastInterest() const {
-    return getCreationDate();
+void CurrentAccount::chargeInterest() {
+    getConnectedAccount()->chargeInterest();
 }
-const AccountPtr &CurrentAccount::getCurrentAccount() const {
-    return NULL;
-}
-void CurrentAccount::chargeInterest() {}

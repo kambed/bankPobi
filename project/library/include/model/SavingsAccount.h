@@ -8,19 +8,14 @@
 #include "Account.h"
 
 class SavingsAccount : public Account{
-private:
-    boost::posix_time::ptime lastInterest;
-    AccountPtr currentAccount;
-    InterestPtr interest;
 public:
     //CONSTRUCTOR
-    SavingsAccount(const ClientPtr &owner, int clientAccNumber,const AccountPtr &currentAccount, const InterestPtr
-    &interest,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest);
+    SavingsAccount(const ClientPtr &owner, int clientAccNumber, double balance,
+                   const boost::posix_time::ptime &creationDate, const boost::posix_time::ptime &lastInterest,
+                   const AccountPtr &connectedacc, const InterestPtr &interest);
+
     //DESTRUCTOR
     virtual ~SavingsAccount();
-    //GETTERS
-    const boost::posix_time::ptime &getLastInterest() const override;
-    const AccountPtr &getCurrentAccount() const override;
     //METHODS
     std::string getAccountInfo() const override;
     void chargeInterest() override;

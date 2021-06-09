@@ -58,6 +58,7 @@ TurboSaver::TurboSaver() {
         cf = sqlite3_exec(dbc,sql.c_str(),NULL,0,&error);
         sql = "CREATE TABLE CURRENTACC("
               "account_number          TEXT PRIMARY KEY     NOT NULL, "
+              "savings_account_number  TEXT                 NOT NULL, "
               "client_id               TEXT                 NOT NULL, "
               "balance                 DOUBLE               NOT NULL, "
               "creation_date           TEXT                 NOT NULL);";
@@ -99,7 +100,7 @@ void TurboSaver::saveSavingsAccount(AccountPtr account) {
     sqlite3_open("databases/savingsaccounts.db", &dbsa);
     sql = "DELETE FROM SAVINGACC WHERE account_number='"+account->getAccountNumber()+"';";
     sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
-    sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getCurrentAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"', '"+dateTimeToString(account->getLastInterest())+"');";
+    sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getConnectedAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"', '"+dateTimeToString(account->getLastInterest())+"');";
     sqlite3_exec(dbsa,sql.c_str(),NULL,0,&error);
     sqlite3_close(dbsa);
 }
@@ -108,7 +109,11 @@ void TurboSaver::saveCurrentAccount(AccountPtr account) {
     sqlite3_open("databases/currentaccounts.db", &dbca);
     sql = "DELETE FROM CURRENTACC WHERE account_number='"+account->getAccountNumber()+"';";
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
-    sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
+    if(account->getConnectedAccount()==nullptr){
+        sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+"-"+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
+    }else{
+        sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+account->getConnectedAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
+    }
     sqlite3_exec(dbca,sql.c_str(),NULL,0,&error);
     sqlite3_close(dbca);
 }
@@ -173,10 +178,11 @@ void TurboSaver::importCurrentAccounts(AccountManagerPtr accountManager,ClientMa
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(dbca, "SELECT * FROM CURRENTACC", -1, &stmt, NULL);
     while(sqlite3_step(stmt) == SQLITE_ROW) {
-        std::string str,str2,str3,str4,year,mon,day,hours,mins,sec;
+        std::string str,str2,str3,str4,str5,year,mon,day,hours,mins,sec;
         str2=arrayConstCharToString(sqlite3_column_text(stmt,1));
-        str3=arrayConstCharToString(sqlite3_column_text(stmt,2));
-        str4=arrayConstCharToString(sqlite3_column_text(stmt,3));
+        str5=arrayConstCharToString(sqlite3_column_text(stmt,2));
+        str3=arrayConstCharToString(sqlite3_column_text(stmt,3));
+        str4=arrayConstCharToString(sqlite3_column_text(stmt,4));
         year=str4.substr(0, 4);
         mon=str4.substr(5, 3);
         day=str4.substr(9, 2);
@@ -184,7 +190,7 @@ void TurboSaver::importCurrentAccounts(AccountManagerPtr accountManager,ClientMa
         mins=str4.substr(15, 2);
         sec=str4.substr(18, 2);
         int month=monthFromStr(mon);
-        accountManager->createCurrentAccount(clientManager->getClient(str2),std::stod(str3),boost::posix_time::ptime(boost::gregorian::date(atoi(year.c_str()), month, atoi(day.c_str())), boost::posix_time::hours(atoi(hours.c_str())) + boost::posix_time::minutes(atoi(mins.c_str())) + boost::posix_time::seconds(atoi(sec.c_str()))));
+        accountManager->createCurrentAccount(clientManager->getClient(str5),str2,std::stod(str3),boost::posix_time::ptime(boost::gregorian::date(atoi(year.c_str()), month, atoi(day.c_str())), boost::posix_time::hours(atoi(hours.c_str())) + boost::posix_time::minutes(atoi(mins.c_str())) + boost::posix_time::seconds(atoi(sec.c_str()))));
     }
     sqlite3_finalize(stmt);
     sqlite3_close(dbca);

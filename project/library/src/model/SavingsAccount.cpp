@@ -10,39 +10,24 @@
 #include "model/Interest.h"
 #include "model/TurboSaver.h"
 
-
-SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber, const AccountPtr &currentAccount,
-                               const InterestPtr &interest,double balance,
-                               boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest2)
-                               : Account(owner, clientAccNumber,balance,creationDate),
-                               currentAccount(currentAccount), interest(interest) {
-    if(lastInterest==boost::posix_time::not_a_date_time){
-        lastInterest=boost::posix_time::second_clock::local_time();
-    }
-    else{
-        lastInterest=lastInterest2;
-    }
-    if(currentAccount == nullptr) throw AccountException("Empty currentAccount");
-    if(interest == nullptr) throw AccountException("Empty interest");
+SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber, double balance,
+                               const boost::posix_time::ptime &creationDate,
+                               const boost::posix_time::ptime &lastInterest, const AccountPtr &connectedacc,
+                               const InterestPtr &interest) : Account(owner, clientAccNumber, balance, creationDate,
+                                                                      lastInterest, connectedacc, interest) {
+    if(connectedacc == nullptr) throw AccountException("Empty connected account");
 }
 
 SavingsAccount::~SavingsAccount() {}
 
-const boost::posix_time::ptime &SavingsAccount::getLastInterest() const {
-    return lastInterest;
-}
-const AccountPtr &SavingsAccount::getCurrentAccount() const {
-    return currentAccount;
-}
 std::string SavingsAccount::getAccountInfo() const {
-    return "KONTO OSZCZEDNOSCIOWE " + Account::getAccountInfo() + " Ostatnie naliczenie odsetek: " + dateTimeToString(lastInterest);
+    return "KONTO OSZCZEDNOSCIOWE " + Account::getAccountInfo() + " Ostatnie naliczenie odsetek: " + dateTimeToString(getLastInterest());
 }
 
 void SavingsAccount::chargeInterest() {
-    setBalance(getBalance()+interest->calculate(getBalance(),lastInterest));
+    setBalance(getBalance()+interest->calculate(getBalance(),getLastInterest()));
 }
 
 bool SavingsAccount::setBalance(double balance) {
     return Account::setBalance(balance);
 }
-

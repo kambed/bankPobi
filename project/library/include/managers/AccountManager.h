@@ -21,7 +21,7 @@ public:
 
     //METHODS
     AccountPtr getAccount(std::string accountNumber);
-    void createCurrentAccount(ClientPtr owner,double balance,boost::posix_time::ptime creationDate);
+    void createCurrentAccount(ClientPtr owner,std::string savingsAccountNumber,double balance,boost::posix_time::ptime creationDate);
     void createSavingsAccount(ClientPtr owner,std::string currentAccountNumber,double balance,boost::posix_time::ptime creationDate,
                               boost::posix_time::ptime lastInterest);
     bool removeAccount(std::string accountNumber);

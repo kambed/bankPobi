@@ -11,6 +11,7 @@
 #include "model/SavingsAccount.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
+#include <boost/date_time/posix_time/ptime.hpp>
 #include <typeinfo>
 
 AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver,InterestPtr interest)
@@ -22,11 +23,13 @@ AccountPtr AccountManager::getAccount(std::string accountNumber) {
     return accountRepository->getAccount(accountNumber);
 }
 
-void AccountManager::createCurrentAccount(ClientPtr owner,double balance,boost::posix_time::ptime creationDate) {
+void AccountManager::createCurrentAccount(ClientPtr owner, std::string savingsAccountNumber,double balance,boost::posix_time::ptime creationDate) {
     auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
     int number=findAccounts(function).size();
     if(number<=8999) {
-        AccountPtr account = std::make_shared<CurrentAccount>(owner,number,balance,creationDate);
+        AccountPtr account = std::make_shared<CurrentAccount>(owner,number,balance,creationDate,interest);
+        if(savingsAccountNumber!="-")
+            account->setConnectedAccount(accountRepository->getAccount(savingsAccountNumber));
         accountRepository->addAccount(account);
         turboSaver->saveCurrentAccount(account);
         turboLogger->addLog("Create: "+account->getAccountInfo());
@@ -39,12 +42,14 @@ void AccountManager::createCurrentAccount(ClientPtr owner,double balance,boost::
 void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAccountNumber,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest) {
     auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
     int number=findAccounts(function).size();
-    AccountPtr account2 = std::make_shared<SavingsAccount>(owner,number,accountRepository->getAccount(currentAccountNumber),
-                                                                  interest,balance,creationDate,lastInterest);
+    AccountPtr account2 = std::make_shared<SavingsAccount>(owner,number,balance,
+                                                                  creationDate,lastInterest,accountRepository->getAccount(currentAccountNumber),interest);
     if(number<=8999){
         accountRepository->addAccount(account2);
+        account2->getConnectedAccount()->setConnectedAccount(account2);
         turboLogger->addLog("Create: "+account2->getAccountInfo());
         turboSaver->saveSavingsAccount(account2);
+        turboSaver->saveCurrentAccount(account2->getConnectedAccount());
     }else{
         turboLogger->addLog("Create account fail: wlasiciel: "+owner->getClientInfo()+
         "; konto bierzacae"+accountRepository->getAccount(currentAccountNumber)->getAccountInfo());

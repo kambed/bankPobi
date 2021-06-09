@@ -19,11 +19,11 @@ struct TestSuiteAccountFixture {
     AccountManagerPtr AM = std::make_shared<AccountManager>(turboLogger,turboSaver,interest);
     ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger,turboSaver);
     ClientPtr client = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
-    AccountPtr acc = std::make_shared<CurrentAccount>(client,1,0,boost::posix_time::not_a_date_time);
-    AccountPtr savacc = std::make_shared<SavingsAccount>(client,2,acc,interest,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time);
+    AccountPtr acc = std::make_shared<CurrentAccount>(client,1,0,boost::posix_time::not_a_date_time,interest);
+    AccountPtr savacc = std::make_shared<SavingsAccount>(client,2,0,boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time,acc,interest);
     ClientPtr client2 = std::make_shared<Client>("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,4,10)));
-    AccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,0,boost::posix_time::not_a_date_time);
-    AccountPtr acc3 = std::make_shared<CurrentAccount>(client2,133,0,boost::posix_time::not_a_date_time);
+    AccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,0,boost::posix_time::not_a_date_time,interest);
+    AccountPtr acc3 = std::make_shared<CurrentAccount>(client2,133,0,boost::posix_time::not_a_date_time,interest);
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
 
@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(acc->getBalance()==0);
         BOOST_TEST(acc->getCreationDate()==boost::posix_time::second_clock::local_time());
         BOOST_TEST(acc->getAccountNumber()=="11246813570"+acc->getOwner()->getPersonalId()+"1001");
-        BOOST_TEST(savacc->getCurrentAccount()==acc);
+        BOOST_TEST(savacc->getConnectedAccount()==acc);
         BOOST_TEST(savacc->getLastInterest()==savacc->getCreationDate());
     }
     BOOST_AUTO_TEST_CASE(AccountGettersTests) {
@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(acc->getCreationDate()==boost::posix_time::second_clock::local_time());
         BOOST_TEST(acc->getOwner()==client);
         BOOST_TEST(acc->getAccountNumber()=="11246813570"+acc->getOwner()->getPersonalId()+"1001");
-        BOOST_TEST(savacc->getCurrentAccount()==acc);
+        BOOST_TEST(savacc->getConnectedAccount()==acc);
         BOOST_TEST(savacc->getLastInterest()==savacc->getCreationDate());
     }
     BOOST_AUTO_TEST_CASE(AccountNumberGeneratorTest) {
