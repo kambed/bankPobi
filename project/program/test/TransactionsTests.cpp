@@ -1,10 +1,6 @@
 #include <boost/test/unit_test.hpp>
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <typedefs.h>
 #include "model/Client.h"
-#include "model/Account.h"
 #include "model/CurrentAccount.h"
-#include "model/SavingsAccount.h"
 #include "model/Transaction.h"
 #include "managers/AccountManager.h"
 #include "managers/ClientManager.h"

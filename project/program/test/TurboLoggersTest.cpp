@@ -1,9 +1,6 @@
 #include "model/TurboLogger.h"
 #include <boost/test/unit_test.hpp>
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <boost/date_time.hpp>
 #include "typedefs.h"
-#include <memory>
 #include <fstream>
 #include "functions.h"
 

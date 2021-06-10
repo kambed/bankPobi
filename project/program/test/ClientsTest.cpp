@@ -1,6 +1,4 @@
 #include <boost/test/unit_test.hpp>
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <typedefs.h>
 #include "model/Client.h"
 #include "model/TurboSaver.h"
 struct TestSuiteClientFixture {

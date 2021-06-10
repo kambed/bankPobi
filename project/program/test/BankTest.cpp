@@ -1,6 +1,4 @@
 #include <boost/test/unit_test.hpp>
-#include "typedefs.h"
-#include <memory>
 #include "model/Bank.h"
 #include "model/Interest.h"
 #include "model/TurboSaver.h"

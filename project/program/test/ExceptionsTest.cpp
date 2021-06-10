@@ -1,7 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include <boost/date_time/posix_time/ptime.hpp>
 #include <exception>
-#include "typedefs.h"
 #include "model/Client.h"
 #include "model/CurrentAccount.h"
 #include "model/SavingsAccount.h"
@@ -19,7 +17,6 @@
 #include "managers/TransactionManager.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
-#include "model/Interest.h"
 struct TestSuiteExceptionFixture {
     TurboSaverPtr turboSaver = std::make_shared<TurboSaver>();
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();

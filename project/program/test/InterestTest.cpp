@@ -1,6 +1,5 @@
 #include <boost/test/unit_test.hpp>
 #include "typedefs.h"
-#include <memory>
 #include "model/Interest.h"
 struct TestSuiteInterestFixture {
     InterestPtr interest = std::make_shared<Interest>(0.05,0.19);

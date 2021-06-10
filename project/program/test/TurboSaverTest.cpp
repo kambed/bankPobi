@@ -1,11 +1,8 @@
 #include <boost/test/unit_test.hpp>
-#include "typedefs.h"
 #include "model/TurboSaver.h"
-#include "exceptions/TurboSaverException.h"
 #include "model/Bank.h"
 #include "model/Client.h"
 #include "model/Account.h"
-#include "model/Transaction.h"
 #include "managers/AccountManager.h"
 #include "managers/ClientManager.h"
 #include "managers/TransactionManager.h"

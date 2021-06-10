@@ -1,21 +1,13 @@
 #include <boost/test/unit_test.hpp>
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <typedefs.h>
 #include "managers/AccountManager.h"
 #include "managers/ClientManager.h"
 #include "managers/TransactionManager.h"
 #include "model/Client.h"
-#include "model/Account.h"
 #include "model/CurrentAccount.h"
-#include "model/SavingsAccount.h"
-#include "repositories/ClientRepository.h"
-#include "repositories/AccountRepository.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
 #include "model/Interest.h"
-#include <algorithm>
-#include <vector>
-#include <memory>
+
 struct TestSuiteManagerFixture {
     TurboSaverPtr turboSaver = std::make_shared<TurboSaver>();
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
