@@ -1,7 +1,7 @@
 #ifndef BANK_CLIENTMANAGER_H
 #define BANK_CLIENTMANAGER_H
 
-#include "repositories/ClientRepository.h"
+#include "typedefs.h"
 #include <boost/date_time.hpp>
 
 class ClientManager {
@@ -12,7 +12,6 @@ private:
 public:
     ///CONSTRUCTOR
     ClientManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver);
-
     ///METHODS
     ClientPtr getClient(std::string personalId);
     void addClient(std::string personalId, std::string firstName, std::string lastName,

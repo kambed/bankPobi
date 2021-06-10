@@ -1,8 +1,6 @@
 #include "model/Client.h"
-#include <string>
 #include "functions.h"
 #include "exceptions/ClientException.h"
-#include "model/TurboSaver.h"
 
 Client::Client(std::string personalId, std::string firstName, std::string lastName,
                boost::posix_time::ptime birthDate) : personalID(personalId), firstName(firstName),

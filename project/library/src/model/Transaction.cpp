@@ -2,7 +2,6 @@
 #include <boost/uuid/uuid_io.hpp>
 #include "model/Account.h"
 #include <boost/uuid/uuid_generators.hpp>
-#include <iostream>
 #include <boost/lexical_cast.hpp>
 #include "exceptions/TransactionException.h"
 

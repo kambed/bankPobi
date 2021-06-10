@@ -3,12 +3,9 @@
 //
 
 #include "model/SavingsAccount.h"
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <boost/date_time.hpp>
 #include <exceptions/AccountException.h>
 #include "functions.h"
 #include "model/Interest.h"
-#include "model/TurboSaver.h"
 
 SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber, double balance,
                                const boost::posix_time::ptime &creationDate,

@@ -6,9 +6,7 @@
 #define BANK_TURBOSAVER_H
 
 #include <typedefs.h>
-#include <string>
 #include <sqlite3.h>
-#include "model/TurboLogger.h"
 
 class TurboSaver {
 private:

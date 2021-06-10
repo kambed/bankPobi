@@ -1,8 +1,8 @@
 #ifndef BANK_TYPEDEFS_H
 #define BANK_TYPEDEFS_H
 
-#include <memory>
 #include <functional>
+#include <memory>
 
 class Client;
 class Account;

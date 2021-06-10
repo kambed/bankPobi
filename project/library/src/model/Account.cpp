@@ -4,15 +4,9 @@
 
 #include "model/Account.h"
 #include "model/Client.h"
-#include "model/TurboSaver.h"
 #include <boost/date_time/posix_time/ptime.hpp>
-#include <boost/date_time.hpp>
-#include <cstdlib>
-#include <ctime>
 #include <exceptions/AccountException.h>
 #include "functions.h"
-#include "managers/TransactionManager.h"
-#include "managers/AccountManager.h"
 
 Account::Account(const ClientPtr &owner, int clientAccountNumber, double balance,
                  boost::posix_time::ptime creationDate2, boost::posix_time::ptime lastInterest2, AccountPtr connectedAccount,

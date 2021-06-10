@@ -1,5 +1,3 @@
-#include <string>
-#include <memory>
 #include "model/Bank.h"
 #include "model/Interest.h"
 #include "managers/ClientManager.h"

@@ -5,7 +5,6 @@
 #ifndef BANK_CURRENTACCOUNT_H
 #define BANK_CURRENTACCOUNT_H
 
-#include <boost/date_time/posix_time/ptime.hpp>
 #include "Account.h"
 
 class CurrentAccount : public Account{

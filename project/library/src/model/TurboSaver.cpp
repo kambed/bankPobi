@@ -1,27 +1,12 @@
 #include "model/TurboSaver.h"
 #include <exceptions/TurboSaverException.h>
-#include <iostream>
-#include <cstdlib>
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <boost/date_time.hpp>
 #include "model/Client.h"
 #include "model/Account.h"
-#include "model/SavingsAccount.h"
-#include "model/CurrentAccount.h"
 #include "model/Transaction.h"
-#include "functions.h"
 #include "managers/ClientManager.h"
 #include "managers/TransactionManager.h"
 #include "managers/AccountManager.h"
-#include <string>
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
-#include <boost/uuid/random_generator.hpp>
-#include <sstream>
-#include <boost/date_time/posix_time/time_parsers.hpp>
-#include <boost/date_time/posix_time/time_formatters.hpp>
-#include "boost/date_time/gregorian/gregorian.hpp"
 #include "functions.h"
 
 TurboSaver::TurboSaver() {
