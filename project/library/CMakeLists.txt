@@ -46,7 +46,14 @@ set(SOURCE_FILES
         src/exceptions/TurboSaverException.cpp
         include/exceptions/TurboSaverException.h
         src/model/TurboSaver.cpp
-        include/model/TurboSaver.h)
+        include/model/TurboSaver.h
+        src/exceptions/AccountManagerException.cpp
+        include/exceptions/AccountManagerException.h
+        src/exceptions/ClientManagerException.cpp
+        include/exceptions/ClientManagerException.h
+        src/exceptions/TransactionManagerException.cpp
+        include/exceptions/TransactionManagerException.h
+        )
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 

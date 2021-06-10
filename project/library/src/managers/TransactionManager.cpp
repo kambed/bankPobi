@@ -7,11 +7,14 @@
 #include "repositories/TransactionRepository.h"
 #include "model/Transaction.h"
 #include "model/Account.h"
+#include "exceptions/TransactionManagerException.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
 
 TransactionManager::TransactionManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver) : turboLogger(turboLogger),turboSaver(turboSaver) {
     transactionRepository = std::make_shared<TransactionRepository>();
+    if(turboLogger == nullptr) throw TransactionManagerException("Empty TurboLogger");
+    if(turboSaver == nullptr) throw TransactionManagerException("Empty TurboSaver");
 }
 
 TransactionPtr TransactionManager::getTransaction(boost::uuids::uuid Id) {

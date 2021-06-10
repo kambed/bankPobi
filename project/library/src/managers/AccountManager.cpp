@@ -11,12 +11,16 @@
 #include "model/SavingsAccount.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
+#include "exceptions/AccountManagerException.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <typeinfo>
 
 AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver,InterestPtr interest)
                                 : turboLogger(turboLogger),turboSaver(turboSaver),interest(interest) {
     accountRepository = std::make_shared<AccountRepository>();
+    if(turboLogger == nullptr) throw AccountManagerException("Empty TurboLogger");
+    if(turboSaver == nullptr) throw AccountManagerException("Empty TurboSaver");
+    if(interest == nullptr) throw AccountManagerException("Empty TurboInterest");
 }
 
 AccountPtr AccountManager::getAccount(std::string accountNumber) {
