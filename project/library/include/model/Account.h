@@ -22,7 +22,8 @@ protected:
     InterestPtr interest;
 public:
     //CONSTRUCTOR
-    Account(const ClientPtr &owner,int clientAccNumber,double balance,boost::posix_time::ptime creationDate,boost::posix_time::ptime lastInterest,AccountPtr connectedacc,InterestPtr interest);
+    Account(const ClientPtr &owner, int clientAccountNumber, double balance, boost::posix_time::ptime creationDate,
+            boost::posix_time::ptime lastInterest, AccountPtr connectedAccount, InterestPtr interest);
     //DESTRUCTOR
     virtual ~Account()=0;
     //GETTERS
@@ -33,7 +34,7 @@ public:
     double getBalance() const;
     const boost::posix_time::ptime &getCreationDate() const;
     //SETTERS
-    virtual bool setBalance(double balance);
+    bool setBalance(double balance);
     void setConnectedAccount(const AccountPtr &connectedAccount);
     //METHODS
     virtual std::string getAccountInfo() const;

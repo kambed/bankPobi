@@ -19,40 +19,40 @@ TurboSaver::TurboSaver() {
             error = error + sqlite3_errmsg(db);
             throw TurboSaverException(error);
         }
-        sql = "CREATE TABLE CLIENT("
+        sqlQuery = "CREATE TABLE CLIENT("
               "id                      TEXT PRIMARY KEY     NOT NULL, "
               "first_name              TEXT                 NOT NULL, "
               "last_name               TEXT                 NOT NULL, "
               "birth_date              TEXT                 NOT NULL);";
-        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        edb = sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if (edb)
             throw TurboSaverException(error);
-        sql = "CREATE TABLE CURRENTACC("
+        sqlQuery = "CREATE TABLE CURRENTACC("
               "account_number          TEXT PRIMARY KEY     NOT NULL, "
               "savings_account_number  TEXT                 NOT NULL, "
               "client_id               TEXT                 NOT NULL, "
               "balance                 DOUBLE               NOT NULL, "
               "creation_date           TEXT                 NOT NULL);";
-        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        edb = sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if (edb)
             throw TurboSaverException(error);
-        sql = "CREATE TABLE SAVINGACC("
+        sqlQuery = "CREATE TABLE SAVINGACC("
               "account_number          TEXT PRIMARY KEY     NOT NULL, "
               "current_account_number  TEXT                 NOT NULL, "
               "client_id               TEXT                 NOT NULL, "
               "balance                 DOUBLE               NOT NULL, "
               "creation_date           TEXT                 NOT NULL, "
               "last_interest           TEXT                 NOT NULL);";
-        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        edb = sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if (edb)
             throw TurboSaverException(error);
-        sql = "CREATE TABLE TRANS("
+        sqlQuery = "CREATE TABLE TRANS("
               "id                       TEXT PRIMARY KEY     NOT NULL, "
               "from_acc_number          TEXT                 NOT NULL, "
               "to_acc_number            TEXT                 NOT NULL, "
               "title                    TEXT                 NOT NULL, "
               "amount                   DOUBLE               NOT NULL);";
-        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        edb = sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if (edb)
             throw TurboSaverException(error);
         sqlite3_close(db);
@@ -69,12 +69,12 @@ void TurboSaver::saveClient(ClientPtr client) {
             error=error+sqlite3_errmsg(db);
             throw TurboSaverException(error);
         }
-        sql = "DELETE FROM CLIENT WHERE id='"+client->getPersonalId()+"';";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "DELETE FROM CLIENT WHERE id='" + client->getPersonalId() + "';";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
-        sql = "INSERT INTO CLIENT VALUES('"+client->getPersonalId()+"', '"+client->getFirstName()+"', '"+client->getLastName()+"', '"+dateTimeToString(client->getBirthDate())+"');";
-        sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "INSERT INTO CLIENT VALUES('" + client->getPersonalId() + "', '" + client->getFirstName() + "', '" + client->getLastName() + "', '" + dateTimeToString(client->getBirthDate()) + "');";
+        sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
         sqlite3_close(db);
@@ -91,12 +91,12 @@ void TurboSaver::saveSavingsAccount(AccountPtr account) {
             error=error+sqlite3_errmsg(db);
             throw TurboSaverException(error);
         }
-        sql = "DELETE FROM SAVINGACC WHERE account_number='"+account->getAccountNumber()+"';";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "DELETE FROM SAVINGACC WHERE account_number='" + account->getAccountNumber() + "';";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
-        sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getConnectedAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"', '"+dateTimeToString(account->getLastInterest())+"');";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "INSERT INTO SAVINGACC VALUES('" + account->getAccountNumber() + "', '" + account->getConnectedAccount()->getAccountNumber() + "', '" + account->getOwner()->getPersonalId() + "', '" + std::to_string(account->getBalance()) + "', '" + dateTimeToString(account->getCreationDate()) + "', '" + dateTimeToString(account->getLastInterest()) + "');";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
         sqlite3_close(db);
@@ -113,16 +113,16 @@ void TurboSaver::saveCurrentAccount(AccountPtr account) {
             error=error+sqlite3_errmsg(db);
             throw TurboSaverException(error);
         }
-        sql = "DELETE FROM CURRENTACC WHERE account_number='"+account->getAccountNumber()+"';";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "DELETE FROM CURRENTACC WHERE account_number='" + account->getAccountNumber() + "';";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
         if(account->getConnectedAccount()==nullptr){
-            sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+"-"+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
+            sqlQuery = "INSERT INTO CURRENTACC VALUES('" + account->getAccountNumber() + "', '" + "-" + "', '" + account->getOwner()->getPersonalId() + "', '" + std::to_string(account->getBalance()) + "', '" + dateTimeToString(account->getCreationDate()) + "');";
         }else{
-            sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+account->getConnectedAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
+            sqlQuery = "INSERT INTO CURRENTACC VALUES('" + account->getAccountNumber() + "', '" + account->getConnectedAccount()->getAccountNumber() + "', '" + account->getOwner()->getPersonalId() + "', '" + std::to_string(account->getBalance()) + "', '" + dateTimeToString(account->getCreationDate()) + "');";
         }
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
         sqlite3_close(db);
@@ -130,7 +130,7 @@ void TurboSaver::saveCurrentAccount(AccountPtr account) {
     }
 }
 
-void TurboSaver::removeAccount(std::string accnum) {
+void TurboSaver::removeAccount(std::string accountNumber) {
     if(open==0){
         int edb = sqlite3_open("databases/database.db", &db);
         open=1;
@@ -139,12 +139,12 @@ void TurboSaver::removeAccount(std::string accnum) {
             error=error+sqlite3_errmsg(db);
             throw TurboSaverException(error);
         }
-        sql = "DELETE FROM SAVINGACC WHERE account_number='"+accnum+"';";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "DELETE FROM SAVINGACC WHERE account_number='" + accountNumber + "';";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
-        sql = "DELETE FROM CURRENTACC WHERE account_number='"+accnum+"';";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "DELETE FROM CURRENTACC WHERE account_number='" + accountNumber + "';";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
         sqlite3_close(db);
@@ -161,12 +161,12 @@ void TurboSaver::saveTransaction(TransactionPtr transaction) {
             error=error+sqlite3_errmsg(db);
             throw TurboSaverException(error);
         }
-        sql = "DELETE FROM TRANS WHERE id='"+boost::lexical_cast<std::string>(transaction->getId())+"';";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "DELETE FROM TRANS WHERE id='" + boost::lexical_cast<std::string>(transaction->getId()) + "';";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
-        sql = "INSERT INTO TRANS VALUES('"+boost::lexical_cast<std::string>(transaction->getId())+"', '"+transaction->getAccountFrom()->getAccountNumber()+"', '"+transaction->getAccountTo()->getAccountNumber()+"', '"+transaction->getTitle()+"', '"+std::to_string(transaction->getAmount())+"');";
-        edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        sqlQuery = "INSERT INTO TRANS VALUES('" + boost::lexical_cast<std::string>(transaction->getId()) + "', '" + transaction->getAccountFrom()->getAccountNumber() + "', '" + transaction->getAccountTo()->getAccountNumber() + "', '" + transaction->getTitle() + "', '" + std::to_string(transaction->getAmount()) + "');";
+        edb=sqlite3_exec(db, sqlQuery.c_str(), NULL, 0, &error);
         if(edb)
             throw TurboSaverException(error);
         sqlite3_close(db);
