@@ -22,29 +22,34 @@
 #include <boost/date_time/posix_time/time_parsers.hpp>
 #include <boost/date_time/posix_time/time_formatters.hpp>
 #include "boost/date_time/gregorian/gregorian.hpp"
+#include "functions.h"
 
 TurboSaver::TurboSaver() {
     std::system("mkdir -p ./databases");
-    try {
+    if(!fileExists("databases/database.db")) {
         int edb = sqlite3_open("databases/database.db", &db);
-        if (edb){
-            std::string blad="Can't open database";
-            blad=blad+sqlite3_errmsg(db);
-            throw TurboSaverException(blad);
+        if (edb) {
+            std::string error = "Can't open database";
+            error = error + sqlite3_errmsg(db);
+            throw TurboSaverException(error);
         }
         sql = "CREATE TABLE CLIENT("
               "id                      TEXT PRIMARY KEY     NOT NULL, "
               "first_name              TEXT                 NOT NULL, "
               "last_name               TEXT                 NOT NULL, "
               "birth_date              TEXT                 NOT NULL);";
-        edb = sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        if (edb)
+            throw TurboSaverException(error);
         sql = "CREATE TABLE CURRENTACC("
               "account_number          TEXT PRIMARY KEY     NOT NULL, "
               "savings_account_number  TEXT                 NOT NULL, "
               "client_id               TEXT                 NOT NULL, "
               "balance                 DOUBLE               NOT NULL, "
               "creation_date           TEXT                 NOT NULL);";
-        edb = sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        if (edb)
+            throw TurboSaverException(error);
         sql = "CREATE TABLE SAVINGACC("
               "account_number          TEXT PRIMARY KEY     NOT NULL, "
               "current_account_number  TEXT                 NOT NULL, "
@@ -52,71 +57,123 @@ TurboSaver::TurboSaver() {
               "balance                 DOUBLE               NOT NULL, "
               "creation_date           TEXT                 NOT NULL, "
               "last_interest           TEXT                 NOT NULL);";
-        edb = sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        if (edb)
+            throw TurboSaverException(error);
         sql = "CREATE TABLE TRANS("
               "id                       TEXT PRIMARY KEY     NOT NULL, "
               "from_acc_number          TEXT                 NOT NULL, "
               "to_acc_number            TEXT                 NOT NULL, "
               "title                    TEXT                 NOT NULL, "
               "amount                   DOUBLE               NOT NULL);";
-        edb = sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+        edb = sqlite3_exec(db, sql.c_str(), NULL, 0, &error);
+        if (edb)
+            throw TurboSaverException(error);
         sqlite3_close(db);
-    }catch(const TurboSaverException &exception){
-        std::cout << "Exception: " << exception.what() << std::endl;
     }
 }
 
 void TurboSaver::saveClient(ClientPtr client) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sql = "DELETE FROM CLIENT WHERE id='"+client->getPersonalId()+"';";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sql = "INSERT INTO CLIENT VALUES('"+client->getPersonalId()+"', '"+client->getFirstName()+"', '"+client->getLastName()+"', '"+dateTimeToString(client->getBirthDate())+"');";
     sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sqlite3_close(db);
 }
 
 void TurboSaver::saveSavingsAccount(AccountPtr account) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sql = "DELETE FROM SAVINGACC WHERE account_number='"+account->getAccountNumber()+"';";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sql = "INSERT INTO SAVINGACC VALUES('"+account->getAccountNumber()+"', '"+account->getConnectedAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"', '"+dateTimeToString(account->getLastInterest())+"');";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sqlite3_close(db);
 }
 
 void TurboSaver::saveCurrentAccount(AccountPtr account) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sql = "DELETE FROM CURRENTACC WHERE account_number='"+account->getAccountNumber()+"';";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     if(account->getConnectedAccount()==nullptr){
         sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+"-"+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
     }else{
         sql = "INSERT INTO CURRENTACC VALUES('"+account->getAccountNumber()+"', '"+account->getConnectedAccount()->getAccountNumber()+"', '"+account->getOwner()->getPersonalId()+"', '"+std::to_string(account->getBalance())+"', '"+dateTimeToString(account->getCreationDate())+"');";
     }
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sqlite3_close(db);
 }
 
 void TurboSaver::removeAccount(std::string accnum) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sql = "DELETE FROM SAVINGACC WHERE account_number='"+accnum+"';";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sql = "DELETE FROM CURRENTACC WHERE account_number='"+accnum+"';";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sqlite3_close(db);
 }
 
 void TurboSaver::saveTransaction(TransactionPtr transaction) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sql = "DELETE FROM TRANS WHERE id='"+boost::lexical_cast<std::string>(transaction->getId())+"';";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sql = "INSERT INTO TRANS VALUES('"+boost::lexical_cast<std::string>(transaction->getId())+"', '"+transaction->getAccountFrom()->getAccountNumber()+"', '"+transaction->getAccountTo()->getAccountNumber()+"', '"+transaction->getTitle()+"', '"+std::to_string(transaction->getAmount())+"');";
-    sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    edb=sqlite3_exec(db,sql.c_str(),NULL,0,&error);
+    if(edb)
+        throw TurboSaverException(error);
     sqlite3_close(db);
 }
 
 void TurboSaver::importClients(ClientManagerPtr clientManager) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM CLIENT", -1, &stmt, NULL);
     while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -136,7 +193,12 @@ void TurboSaver::importClients(ClientManagerPtr clientManager) {
     sqlite3_close(db);
 }
 void TurboSaver::importTransactions(TransactionManagerPtr transactionManager,AccountManagerPtr accountManager) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM TRANS", -1, &stmt, NULL);
     while(sqlite3_step(stmt) == SQLITE_ROW) {
@@ -153,7 +215,12 @@ void TurboSaver::importTransactions(TransactionManagerPtr transactionManager,Acc
 }
 
 void TurboSaver::importCurrentAccounts(AccountManagerPtr accountManager,ClientManagerPtr clientManager) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM CURRENTACC", -1, &stmt, NULL);
     while(sqlite3_step(stmt) == SQLITE_ROW) {
@@ -176,7 +243,12 @@ void TurboSaver::importCurrentAccounts(AccountManagerPtr accountManager,ClientMa
 }
 
 void TurboSaver::importSavingsAccounts(AccountManagerPtr accountManager,ClientManagerPtr clientManager) {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM SAVINGACC", -1, &stmt, NULL);
     while(sqlite3_step(stmt) == SQLITE_ROW) {
@@ -207,7 +279,12 @@ void TurboSaver::importSavingsAccounts(AccountManagerPtr accountManager,ClientMa
 }
 
 int TurboSaver::countClients() {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM CLIENT", -1, &stmt, NULL);
     int i=0;
@@ -220,7 +297,12 @@ int TurboSaver::countClients() {
 }
 
 int TurboSaver::countSavingsAccounts() {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM SAVINGACC", -1, &stmt, NULL);
     int i=0;
@@ -233,7 +315,12 @@ int TurboSaver::countSavingsAccounts() {
 }
 
 int TurboSaver::countCurrentAccounts() {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM CURRENTACC", -1, &stmt, NULL);
     int i=0;
@@ -246,7 +333,12 @@ int TurboSaver::countCurrentAccounts() {
 }
 
 int TurboSaver::countTransactions() {
-    sqlite3_open("databases/database.db", &db);
+    int edb = sqlite3_open("databases/database.db", &db);
+    if (edb){
+        std::string error="Can't open database";
+        error=error+sqlite3_errmsg(db);
+        throw TurboSaverException(error);
+    }
     sqlite3_stmt *stmt;
     sqlite3_prepare_v2(db, "SELECT * FROM TRANS", -1, &stmt, NULL);
     int i=0;
