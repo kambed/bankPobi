@@ -2,11 +2,14 @@
 #include "model/Client.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
+#include "exceptions/ClientManagerException.h"
 #include "typedefs.h"
 #include <boost/date_time.hpp>
 ClientManager::ClientManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver) : turboLogger(
         turboLogger), turboSaver(turboSaver) {
     clientRepository = std::make_shared<ClientRepository>();
+    if(turboLogger == nullptr) throw ClientManagerException("Empty TurboLogger");
+    if(turboSaver == nullptr) throw ClientManagerException("Empty TurboSaver");
 }
 
 ClientPtr ClientManager::getClient(std::string personalId) {

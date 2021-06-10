@@ -1,5 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
+#include <exception>
 #include "typedefs.h"
 #include "model/Client.h"
 #include "model/CurrentAccount.h"
@@ -10,6 +11,9 @@
 #include "exceptions/AccountException.h"
 #include "exceptions/InterestException.h"
 #include "exceptions/TransactionException.h"
+#include "exceptions/ClientManagerException.h"
+#include "exceptions/AccountManagerException.h"
+#include "exceptions/TransactionManagerException.h"
 #include "managers/AccountManager.h"
 #include "managers/ClientManager.h"
 #include "managers/TransactionManager.h"
@@ -80,6 +84,22 @@ BOOST_FIXTURE_TEST_SUITE(ExceptionsTest,TestSuiteExceptionFixture)
         BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>("",acc1,acc2,0,"Test"),TransactionException::exception);
         BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>("",acc1,acc2,-100,"Test"),TransactionException::exception);
         BOOST_CHECK_THROW(TransactionPtr transactionError = std::make_shared<Transaction>("",acc1,acc2,100,""),TransactionException::exception);
+    }
+    BOOST_AUTO_TEST_CASE(AccountManagerExceptionTest) {
+        BOOST_CHECK_NO_THROW(AccountManagerPtr accountManager = std::make_shared<AccountManager>(turboLogger,turboSaver,interest));
+        BOOST_CHECK_THROW(AccountManagerPtr accountManager = std::make_shared<AccountManager>(nullptr,turboSaver,interest),ClientManagerException::exception);
+        BOOST_CHECK_THROW(AccountManagerPtr accountManager = std::make_shared<AccountManager>(turboLogger,nullptr,interest),ClientManagerException::exception);
+        BOOST_CHECK_THROW(AccountManagerPtr accountManager = std::make_shared<AccountManager>(turboLogger,turboSaver,nullptr),ClientManagerException::exception);
+    }
+    BOOST_AUTO_TEST_CASE(ClientManagerExceptionTest) {
+        BOOST_CHECK_NO_THROW(ClientManagerPtr clientManager = std::make_shared<ClientManager>(turboLogger,turboSaver));
+        BOOST_CHECK_THROW(ClientManagerPtr clientManager = std::make_shared<ClientManager>(nullptr,turboSaver),ClientManagerException::exception);
+        BOOST_CHECK_THROW(ClientManagerPtr clientManager = std::make_shared<ClientManager>(turboLogger,nullptr),ClientManagerException::exception);
+    }
+    BOOST_AUTO_TEST_CASE(TransactionManagerExceptionTest) {
+        BOOST_CHECK_NO_THROW(TransactionManagerPtr transactionManager = std::make_shared<TransactionManager>(turboLogger,turboSaver));
+        BOOST_CHECK_THROW(TransactionManagerPtr transactionManager = std::make_shared<TransactionManager>(nullptr,turboSaver),TransactionManagerException::exception);
+        BOOST_CHECK_THROW(TransactionManagerPtr transactionManager = std::make_shared<TransactionManager>(nullptr,turboSaver),TransactionManagerException::exception);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
