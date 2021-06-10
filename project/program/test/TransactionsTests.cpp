@@ -8,6 +8,10 @@
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
 #include "model/Interest.h"
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/uuid/random_generator.hpp>
+
 struct TestSuiteTransactionFixture {
     TurboSaverPtr turboSaver = std::make_shared<TurboSaver>();
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();
@@ -17,7 +21,7 @@ struct TestSuiteTransactionFixture {
     ClientManagerPtr CM = std::make_shared<ClientManager>(turboLogger,turboSaver);
     ClientPtr client1 = std::make_shared<Client>("01234567891","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
     ClientPtr client2 = std::make_shared<Client>("98765432101","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1956,2,3)));
-    AccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,0,boost::posix_time::not_a_date_time,interest);
+    AccountPtr acc1 = std::make_shared<CurrentAccount>(client1,1,200,boost::posix_time::not_a_date_time,interest);
     AccountPtr acc2 = std::make_shared<CurrentAccount>(client2,1,0,boost::posix_time::not_a_date_time,interest);
     TransactionPtr trans1 = std::make_shared<Transaction>("",acc1,acc2,100,"Test");
 };
@@ -34,6 +38,12 @@ BOOST_AUTO_TEST_CASE(TransactionInfoTests) {
     std::size_t pos = info.find(": z ");
     std::string infotest = info.substr (pos);
     BOOST_TEST(infotest==": z "+trans1->getAccountFrom()->getAccountNumber()+" do "+trans1->getAccountTo()->getAccountNumber()+" Kwota: "+std::to_string(trans1->getAmount())+", tytul: "+trans1->getTitle());
+}
+BOOST_AUTO_TEST_CASE(GetTransactionTests) {
+    boost::uuids::random_generator generator;
+    boost::uuids::uuid test = generator();
+    TM->createTransaction(boost::uuids::to_string(test),acc1,acc2,100,"Test");
+    BOOST_TEST(TM->getTransaction(boost::uuids::to_string(test))==TM->findAll()[0]);
 }
 BOOST_AUTO_TEST_SUITE_END()
 

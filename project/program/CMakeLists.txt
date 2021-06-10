@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.4)
-
+find_package (SQLite3 REQUIRED)
 project(Program)
 
 #Ustaw we własnej zmiennej SOURCE_FILES zbiór plików źródłowych projektu
@@ -9,7 +9,7 @@ set(SOURCE_FILES src/main.cpp)
 add_executable(Program ${SOURCE_FILES})
 
 #Dołącz katalog include podprojektu Program do globalnej listy. Dzięki temu każdy inny podprojekt będzie ten katalog "widział"
-target_include_directories(Program PUBLIC include)
+target_include_directories(Program PUBLIC include ${SQLite3_INCLUDE_DIRS})
 
 #Określenie zależności pomiędzy projektami Program i Biblioteka
-target_link_libraries(Program Library)
+target_link_libraries(Program Library ${SQLite3_LIBRARIES})

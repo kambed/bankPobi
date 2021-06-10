@@ -39,7 +39,7 @@ public:
 
     /// \param Id
     /// \return TransactionPtr
-    TransactionPtr getTransaction(boost::uuids::uuid Id);
+    TransactionPtr getTransaction(std::string Id);
 
     /// \return std::vector<TransactionPtr>
     std::vector<TransactionPtr> findAll();

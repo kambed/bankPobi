@@ -41,19 +41,21 @@ void AccountManager::createCurrentAccount(ClientPtr owner, std::string savingsAc
 }
 
 void AccountManager::createSavingsAccount(ClientPtr owner, std::string currentAccountNumber, double balance, boost::posix_time::ptime creationDate, boost::posix_time::ptime lastInterest) {
-    auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
-    int number=findAccounts(function).size();
-    AccountPtr account2 = std::make_shared<SavingsAccount>(owner, number, balance,
-                                                           creationDate, lastInterest, accountRepository->getAccount(currentAccountNumber), interest);
-    if(number<=8999){
-        accountRepository->addAccount(account2);
-        account2->getConnectedAccount()->setConnectedAccount(account2);
-        turboLogger->addLog("Create: "+account2->getAccountInfo());
-        turboSaver->saveSavingsAccount(account2);
-        turboSaver->saveCurrentAccount(account2->getConnectedAccount());
-    }else{
-        turboLogger->addLog("Create account fail: wlasiciel: "+owner->getClientInfo()+
-        "; konto bierzacae"+accountRepository->getAccount(currentAccountNumber)->getAccountInfo());
+    if(getAccount(currentAccountNumber)->getConnectedAccount()==nullptr){
+        auto function = [&](const AccountPtr &ptr)->bool{return(ptr->getOwner()==owner);};
+        int number=findAccounts(function).size();
+        AccountPtr account2 = std::make_shared<SavingsAccount>(owner, number, balance,
+                                                               creationDate, lastInterest, accountRepository->getAccount(currentAccountNumber), interest);
+        if(number<=8999){
+            accountRepository->addAccount(account2);
+            account2->getConnectedAccount()->setConnectedAccount(account2);
+            turboLogger->addLog("Create: "+account2->getAccountInfo());
+            turboSaver->saveSavingsAccount(account2);
+            turboSaver->saveCurrentAccount(account2->getConnectedAccount());
+        }else{
+            turboLogger->addLog("Create account fail: wlasiciel: "+owner->getClientInfo()+
+                                "; konto bierzacae"+accountRepository->getAccount(currentAccountNumber)->getAccountInfo());
+        }
     }
 }
 

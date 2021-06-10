@@ -8,6 +8,7 @@
 #include "managers/TransactionManager.h"
 #include "model/TurboLogger.h"
 #include "model/Interest.h"
+#include "model/Transaction.h"
 struct TestSuiteTurboSaverFixture {
     TurboSaverPtr ts = std::make_shared<TurboSaver>();
     TurboLoggerPtr turboLogger = std::make_shared<TurboLogger>();

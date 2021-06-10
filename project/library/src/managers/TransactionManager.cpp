@@ -2,6 +2,8 @@
 // Created by student on 27.05.2021.
 //
 
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include "exceptions/TransactionException.h"
 #include "managers/TransactionManager.h"
 #include "repositories/TransactionRepository.h"
@@ -18,8 +20,8 @@ TransactionManager::TransactionManager(const TurboLoggerPtr &turboLogger,const T
     if(turboSaver == nullptr) throw TransactionManagerException("Empty TurboSaver");
 }
 
-TransactionPtr TransactionManager::getTransaction(boost::uuids::uuid Id) {
-    return transactionRepository->getTransaction(Id);
+TransactionPtr TransactionManager::getTransaction(std::string Id) {
+    return transactionRepository->getTransaction(boost::lexical_cast<boost::uuids::uuid>(Id));
 }
 
 std::vector<TransactionPtr> TransactionManager::findAll() {
@@ -46,7 +48,7 @@ title) {
 
 void TransactionManager::saveTransaction(std::string id, AccountPtr accountFrom, AccountPtr accountTo, double amount,
                                            std::string title) {
-        TransactionPtr trans = std::make_shared<Transaction>("",accountFrom,accountTo,amount,title);
+        TransactionPtr trans = std::make_shared<Transaction>(id,accountFrom,accountTo,amount,title);
         transactionRepository->addTransaction(trans);
         turboSaver->saveTransaction(trans);
         turboLogger->addLog("Transaction: "+trans->getTransactionInfo());
