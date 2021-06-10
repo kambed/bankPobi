@@ -58,6 +58,10 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         acc->setBalance(-5.0);
         BOOST_CHECK_EQUAL(acc->getBalance(),0);
     }
+    BOOST_AUTO_TEST_CASE(AccountSetBalanceNegative2Test){
+        acc->setBalance(5.245);
+        BOOST_CHECK_EQUAL(acc->getBalance(),5.25);
+    }
     BOOST_AUTO_TEST_CASE(AccountSetConnectedAccPositiveTest){
         BOOST_TEST(acc->getConnectedAccount()==nullptr);
         acc->setConnectedAccount(savacc);
@@ -74,11 +78,17 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         std::stringstream ss;
         ss << acc->getCreationDate();
         std::string creation = ss.str();
-        BOOST_TEST(acc->getAccountInfo()=="KONTO ROZLICZENIOWE Numer konta: "+acc->getAccountNumber()+" Wlasciciel: "+acc->getOwner()->getClientInfo()+" Stan konta: "+std::to_string(acc->getBalance())+"zl Data zalozenia: "+creation);
+        std::ostringstream out;
+        out.precision(2);
+        out << std::fixed << acc->getBalance();
+        BOOST_TEST(acc->getAccountInfo()=="KONTO ROZLICZENIOWE Numer konta: "+acc->getAccountNumber()+" Wlasciciel: "+acc->getOwner()->getClientInfo()+" Stan konta: "+out.str()+"zl Data zalozenia: "+creation);
         std::stringstream ss2;
         ss2 << savacc->getLastInterest();
         std::string interest = ss2.str();
-        BOOST_TEST(savacc->getAccountInfo()=="KONTO OSZCZEDNOSCIOWE Numer konta: "+savacc->getAccountNumber()+" Wlasciciel: "+savacc->getOwner()->getClientInfo()+" Stan konta: "+std::to_string(acc->getBalance())+"zl Data zalozenia: "+creation+ " Ostatnie naliczenie odsetek: " + interest);
+        std::ostringstream out2;
+        out2.precision(2);
+        out2 << std::fixed << savacc->getBalance();
+        BOOST_TEST(savacc->getAccountInfo()=="KONTO OSZCZEDNOSCIOWE Numer konta: "+savacc->getAccountNumber()+" Wlasciciel: "+savacc->getOwner()->getClientInfo()+" Stan konta: "+out2.str()+"zl Data zalozenia: "+creation+ " Ostatnie naliczenie odsetek: " + interest);
     }
 BOOST_AUTO_TEST_SUITE_END()
 

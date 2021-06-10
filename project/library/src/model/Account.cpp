@@ -10,7 +10,7 @@
 
 Account::Account(const ClientPtr &owner, int clientAccountNumber, double balance,
                  boost::posix_time::ptime creationDate2, boost::posix_time::ptime lastInterest2, AccountPtr connectedAccount,
-                 InterestPtr interest) : owner(owner),balance(balance),connectedAccount(connectedAccount),interest(interest) {
+                 InterestPtr interest) : owner(owner),balance(std::ceil(balance * 100.0)/100.0),connectedAccount(connectedAccount),interest(interest) {
     if(creationDate2==boost::posix_time::not_a_date_time){
         creationDate=boost::posix_time::second_clock::local_time();
     }
@@ -65,13 +65,15 @@ const AccountPtr &Account::getConnectedAccount() const {
 }
 
 std::string Account::getAccountInfo() const {
-    return "Numer konta: "+accountNumber+" Wlasciciel: "+getOwner()->getClientInfo()+" Stan konta: "+std::to_string
-    (getBalance())+"zl Data zalozenia: "+dateTimeToString(creationDate);
+    std::ostringstream out;
+    out.precision(2);
+    out << std::fixed << getBalance();
+    return "Numer konta: "+accountNumber+" Wlasciciel: "+getOwner()->getClientInfo()+" Stan konta: "+out.str()+"zl Data zalozenia: "+dateTimeToString(creationDate);
 }
 
 bool Account::setBalance(double balance) {
     if(balance >= 0){
-        Account::balance = balance;
+        Account::balance=std::ceil(balance * 100.0)/100.0;
         return true;
     }
     return false;
