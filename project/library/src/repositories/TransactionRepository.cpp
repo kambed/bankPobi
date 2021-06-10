@@ -4,6 +4,7 @@
 
 #include "repositories/TransactionRepository.h"
 #include "model/Transaction.h"
+#include "templates.h"
 
 TransactionRepository::TransactionRepository() {}
 
@@ -23,12 +24,5 @@ void TransactionRepository::addTransaction(TransactionPtr transaction) {
 }
 
 std::vector<TransactionPtr> TransactionRepository::findBy(TransactionPredicate predicate) {
-    std::vector<TransactionPtr> found;
-    for (int i = 0; i < transactions.size(); i++) {
-        TransactionPtr transaction = transactions[i];
-        if (transaction != nullptr && predicate(transaction)) {
-            found.push_back(transaction);
-        }
-    }
-    return found;
+    return findByTemplate<TransactionPtr,TransactionPredicate>(predicate,transactions);
 }

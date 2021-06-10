@@ -10,6 +10,7 @@
 #include "exceptions/TransactionManagerException.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
+#include "templates.h"
 
 TransactionManager::TransactionManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver) : turboLogger(turboLogger),turboSaver(turboSaver) {
     transactionRepository = std::make_shared<TransactionRepository>();
@@ -22,8 +23,7 @@ TransactionPtr TransactionManager::getTransaction(boost::uuids::uuid Id) {
 }
 
 std::vector<TransactionPtr> TransactionManager::findAll() {
-    auto function = [&](const TransactionPtr &ptr)->bool{return(true);};
-    return transactionRepository->findBy(function);
+    return findAllTemplate<TransactionPtr,TransactionRepositoryPtr>(transactionRepository);
 }
 
 std::vector<TransactionPtr> TransactionManager::findTransactions(TransactionManagerPtr predicate) {

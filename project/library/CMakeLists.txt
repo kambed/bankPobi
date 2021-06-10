@@ -53,7 +53,7 @@ set(SOURCE_FILES
         include/exceptions/ClientManagerException.h
         src/exceptions/TransactionManagerException.cpp
         include/exceptions/TransactionManagerException.h
-        )
+        include/templates.h)
 #Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Library ${SOURCE_FILES})
 

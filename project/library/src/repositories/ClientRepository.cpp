@@ -1,5 +1,6 @@
 #include "repositories/ClientRepository.h"
 #include "model/Client.h"
+#include "templates.h"
 
 ClientRepository::ClientRepository() {}
 
@@ -18,12 +19,5 @@ void ClientRepository::addClient(ClientPtr client) {
 }
 
 std::vector<ClientPtr> ClientRepository::findBy(ClientPredicate predicate){
-    std::vector<ClientPtr> found;
-    for (int i = 0; i < clients.size(); i++) {
-        ClientPtr client = clients[i];
-        if (client != nullptr && predicate(client)) {
-            found.push_back(client);
-        }
-    }
-    return found;
+    return findByTemplate<ClientPtr,ClientPredicate>(predicate,clients);
 }

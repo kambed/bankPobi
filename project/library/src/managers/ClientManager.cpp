@@ -5,6 +5,7 @@
 #include "exceptions/ClientManagerException.h"
 #include "typedefs.h"
 #include <boost/date_time.hpp>
+#include "templates.h"
 ClientManager::ClientManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver) : turboLogger(
         turboLogger), turboSaver(turboSaver) {
     clientRepository = std::make_shared<ClientRepository>();
@@ -29,8 +30,7 @@ void ClientManager::addClient(std::string personalId, std::string firstName, std
 }
 
 std::vector<ClientPtr> ClientManager::findAll() {
-    auto function = [&](const ClientPtr &ptr)->bool{return(true);};
-    return clientRepository->findBy(function);
+    return findAllTemplate<ClientPtr,ClientRepositoryPtr>(clientRepository);
 }
 
 std::vector<ClientPtr> ClientManager::findClients(ClientPredicate predicate) {

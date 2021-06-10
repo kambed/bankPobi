@@ -4,6 +4,7 @@
 
 #include "repositories/AccountRepository.h"
 #include "model/Account.h"
+#include "templates.h"
 
 AccountRepository::AccountRepository() {}
 
@@ -31,14 +32,7 @@ bool AccountRepository::removeAccount(AccountPtr account) {
 }
 
 std::vector<AccountPtr> AccountRepository::findBy(AccountPredicate predicate) {
-    std::vector<AccountPtr> found;
-    for (int i = 0; i < accounts.size(); i++) {
-        AccountPtr account = accounts[i];
-        if (account != nullptr && predicate(account)) {
-            found.push_back(account);
-        }
-    }
-    return found;
+    return findByTemplate<AccountPtr,AccountPredicate>(predicate,accounts);
 }
 
 bool AccountRepository::setBalance(AccountPtr account, double balance) {

@@ -14,6 +14,7 @@
 #include "exceptions/AccountManagerException.h"
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <typeinfo>
+#include "templates.h"
 
 AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver,InterestPtr interest)
                                 : turboLogger(turboLogger),turboSaver(turboSaver),interest(interest) {
@@ -82,8 +83,7 @@ bool AccountManager::setBalance(std::string accountNumber, double balance) {
 }
 
 std::vector<AccountPtr> AccountManager::findAll() {
-    auto function = [&](const AccountPtr &ptr)->bool{return(true);};
-    return accountRepository->findBy(function);
+    return findAllTemplate<AccountPtr,AccountRepositoryPtr>(accountRepository);
 }
 
 std::vector<AccountPtr> AccountManager::findAccounts(AccountPredicate predicate) {
