@@ -12,10 +12,10 @@
 
 SavingsAccount::SavingsAccount(const ClientPtr &owner, int clientAccNumber, double balance,
                                const boost::posix_time::ptime &creationDate,
-                               const boost::posix_time::ptime &lastInterest, const AccountPtr &connectedacc,
+                               const boost::posix_time::ptime &lastInterest, const AccountPtr &connectedAccount,
                                const InterestPtr &interest) : Account(owner, clientAccNumber, balance, creationDate,
-                                                                      lastInterest, connectedacc, interest) {
-    if(connectedacc == nullptr) throw AccountException("Empty connected account");
+                                                                      lastInterest, connectedAccount, interest) {
+    if(connectedAccount == nullptr) throw AccountException("Empty connected account");
 }
 
 SavingsAccount::~SavingsAccount() {}
@@ -26,8 +26,4 @@ std::string SavingsAccount::getAccountInfo() const {
 
 void SavingsAccount::chargeInterest() {
     setBalance(getBalance()+interest->calculate(getBalance(),getLastInterest()));
-}
-
-bool SavingsAccount::setBalance(double balance) {
-    return Account::setBalance(balance);
 }

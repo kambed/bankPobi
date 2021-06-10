@@ -11,7 +11,7 @@
 class CurrentAccount : public Account{
 public:
     ///CONSTRUCTOR
-    CurrentAccount(const ClientPtr &owner, int clientAccNumber, double balance,
+    CurrentAccount(const ClientPtr &owner, int clientAccountNumber, double balance,
                    const boost::posix_time::ptime &creationDate,
                    const InterestPtr &interest);
     ///DESTRUCTOR
@@ -19,8 +19,6 @@ public:
     ///METHODS
     std::string getAccountInfo() const override;
     void chargeInterest() override;
-    ///SETTERS
-    bool setBalance(double balance) override;
 };
 
 

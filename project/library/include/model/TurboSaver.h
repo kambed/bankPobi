@@ -13,7 +13,7 @@
 class TurboSaver {
 private:
     sqlite3 *db;
-    std::string sql;
+    std::string sqlQuery;
     char* error;
     bool open;
 public:
@@ -22,7 +22,7 @@ public:
     void saveClient(ClientPtr client);
     void saveSavingsAccount(AccountPtr account);
     void saveCurrentAccount(AccountPtr account);
-    void removeAccount(std::string accnum);
+    void removeAccount(std::string accountNumber);
     void saveTransaction(TransactionPtr transaction);
 
     void importClients(ClientManagerPtr clientManager);
