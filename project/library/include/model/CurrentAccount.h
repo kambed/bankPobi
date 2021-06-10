@@ -10,13 +10,22 @@
 class CurrentAccount : public Account{
 public:
     ///CONSTRUCTOR
+
+    /// \param owner
+    /// \param clientAccountNumber
+    /// \param balance
+    /// \param creationDate
+    /// \param interest
     CurrentAccount(const ClientPtr &owner, int clientAccountNumber, double balance,
                    const boost::posix_time::ptime &creationDate,
                    const InterestPtr &interest);
     ///DESTRUCTOR
     virtual ~CurrentAccount();
     ///METHODS
+
+    /// \return string
     std::string getAccountInfo() const override;
+
     void chargeInterest() override;
 };
 

@@ -13,14 +13,21 @@ class TransactionRepository {
 private:
     std::vector<TransactionPtr> transactions;
 public:
-    ///CONTRUCTOR
-    TransactionRepository();
-    ///METHODS
+    /// CONTRUCTOR
 
+    TransactionRepository();
+
+    /// METHODS
+
+    /// \param Id
+    /// \return TransactionPtr
     TransactionPtr getTransaction(boost::uuids::uuid Id);
 
+    /// \param transaction
     void addTransaction(TransactionPtr transaction);
 
+    /// \param predicate
+    /// \return std::vector<TransactionPtr>
     std::vector<TransactionPtr> findBy(TransactionPredicate predicate);
 };
 

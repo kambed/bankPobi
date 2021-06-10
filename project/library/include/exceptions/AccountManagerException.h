@@ -6,6 +6,8 @@
 
 class AccountManagerException : public std::logic_error {
 public:
+
+    /// \param arg
     AccountManagerException(const std::string &arg);
 };
 

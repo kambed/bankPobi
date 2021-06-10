@@ -21,10 +21,20 @@ public:
     ///CONSTRUCTOR
     Bank();
     ///GETTERS
+
+    /// \return InterestPtr
     const InterestPtr &getInterest() const;
+
+    /// \return ClientManagerPtr
     const ClientManagerPtr &getClientManager() const;
+
+    /// \return AccountManagerPtr
     const AccountManagerPtr &getAccountManager() const;
+
+    /// \return TransactionManagerPtr
     const TransactionManagerPtr &getTransactionManager() const;
+
+    /// \return TurboSaverPtr
     const TurboSaverPtr &getTurboSaver() const;
 
 

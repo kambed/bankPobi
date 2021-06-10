@@ -10,9 +10,16 @@ private:
 public:
     ///CONSTRUCTOR
     TurboLogger();
+
     ///GETTER
+
+    /// \return string
     const std::string &getFileName() const;
+
     ///METHODS
+
+    /// \param whatToLog
+    /// \return bool
     bool addLog(std::string whatToLog);
 };
 

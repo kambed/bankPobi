@@ -11,14 +11,37 @@ private:
     TurboSaverPtr turboSaver;
 public:
     ///CONSTRUCTOR
+
+    /// \param turboLogger
+    /// \param turboSaver
     ClientManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver);
+
     ///METHODS
+
+    /// \param personalId
+    /// \return ClientPtr
     ClientPtr getClient(std::string personalId);
+
+    /// \param personalId
+    /// \param firstName
+    /// \param lastName
+    /// \param birthDate
     void addClient(std::string personalId, std::string firstName, std::string lastName,
                    boost::posix_time::ptime birthDate);
+
+    /// \param personalId
+    /// \param newFirstName
     void changeClientFirstName(std::string personalId,std::string newFirstName);
+
+    /// \param personalId
+    /// \param newLastName
     void changeClientLastName(std::string personalId,std::string newLastName);
+
+    /// \return std::vector<ClientPtr>
     std::vector<ClientPtr> findAll();
+
+    /// \param predicate
+    /// \return std::vector<ClientPtr>
     std::vector<ClientPtr> findClients(ClientPredicate predicate);
 };
 

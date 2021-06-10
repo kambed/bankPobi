@@ -6,6 +6,7 @@
 
 class TransactionException  : public std::logic_error{
 public:
+    /// \param arg
     TransactionException(const std::string &arg);
 };
 

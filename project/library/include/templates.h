@@ -5,6 +5,10 @@
 #ifndef BANK_TEMPLATES_H
 #define BANK_TEMPLATES_H
 
+/// \tparam T
+/// \tparam T2
+/// \param repository
+/// \return std::vector<T>
 template <class T,class T2>
 std::vector<T> findAllTemplate(T2 repository)
 {
@@ -12,6 +16,11 @@ std::vector<T> findAllTemplate(T2 repository)
     return repository->findBy(function);
 }
 
+/// \tparam T
+/// \tparam T2
+/// \param predicate
+/// \param objects
+/// \return std::vector<T>
 template <class T,class T2>
 std::vector<T> findByTemplate(T2 predicate,std::vector<T> objects)
 {

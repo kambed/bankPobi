@@ -6,6 +6,7 @@
 
 class TurboLoggerException : public std::logic_error{
 public:
+    /// \param arg
     TurboLoggerException(const std::string &arg);
 };
 

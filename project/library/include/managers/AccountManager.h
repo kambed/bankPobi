@@ -16,17 +16,47 @@ private:
     TurboSaverPtr turboSaver;
     InterestPtr interest;
 public:
-    //CONSTRUCTOR
+    /// CONSTRUCTOR
+
+    /// \param turboLogger
+    /// \param turboSaver
+    /// \param interest
     AccountManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver,InterestPtr interest);
 
-    //METHODS
+    ///METHODS
+
+    /// \param accountNumber
+    /// \return AccountPtr
     AccountPtr getAccount(std::string accountNumber);
-    void createCurrentAccount(ClientPtr owner,std::string savingsAccountNumber,double balance,boost::posix_time::ptime creationDate);
-    void createSavingsAccount(ClientPtr owner,std::string currentAccountNumber,double balance,boost::posix_time::ptime creationDate,
+
+    /// \param owner
+    /// \param savingsAccountNumber
+    /// \param balance
+    /// \param creationDate
+    void createCurrentAccount(ClientPtr owner, std::string savingsAccountNumber, double balance, boost::posix_time::ptime creationDate);
+
+    /// \param owner
+    /// \param currentAccountNumber
+    /// \param balance
+    /// \param creationDate
+    /// \param lastInterest
+    void createSavingsAccount(ClientPtr owner, std::string currentAccountNumber, double balance, boost::posix_time::ptime creationDate,
                               boost::posix_time::ptime lastInterest);
+
+    /// \param accountNumber
+    /// \return bool
     bool removeAccount(std::string accountNumber);
+
+    /// \param accountNumber
+    /// \param balance
+    /// \return bool
     bool setBalance(std::string accountNumber,double balance);
+
+    /// \return std::vector<AccountPtr>
     std::vector<AccountPtr> findAll();
+
+    /// \param predicate
+    /// \return std::vector<AccountPtr>
     std::vector<AccountPtr> findAccounts(AccountPredicate predicate);
 };
 

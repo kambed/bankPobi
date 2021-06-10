@@ -6,6 +6,7 @@
 
 class AccountException : public std::logic_error{
 public:
+    /// \param arg
     AccountException(const std::string &arg);
 };
 

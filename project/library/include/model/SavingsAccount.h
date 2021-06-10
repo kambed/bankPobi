@@ -9,14 +9,26 @@
 
 class SavingsAccount : public Account{
 public:
-    //CONSTRUCTOR
+    ///CONSTRUCTOR
+
+    /// \param owner
+    /// \param clientAccNumber
+    /// \param balance
+    /// \param creationDate
+    /// \param lastInterest
+    /// \param connectedAccount
+    /// \param interest
     SavingsAccount(const ClientPtr &owner, int clientAccNumber, double balance,
                    const boost::posix_time::ptime &creationDate, const boost::posix_time::ptime &lastInterest,
                    const AccountPtr &connectedAccount, const InterestPtr &interest);
-    //DESTRUCTOR
+    ///DESTRUCTOR
     virtual ~SavingsAccount();
-    //METHODS
+
+    ///METHODS
+
+    /// \return string
     std::string getAccountInfo() const override;
+
     void chargeInterest() override;
 };
 

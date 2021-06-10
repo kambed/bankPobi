@@ -6,6 +6,7 @@
 
 class InterestException  : public std::logic_error{
 public:
+    /// \param arg
     InterestException(const std::string &arg);
 };
 

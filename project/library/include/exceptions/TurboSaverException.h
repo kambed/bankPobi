@@ -9,6 +9,7 @@
 
 class TurboSaverException : public std::logic_error {
 public:
+    /// \param arg
     TurboSaverException(const std::string &arg);
 };
 

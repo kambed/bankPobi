@@ -16,13 +16,36 @@ private:
     TurboSaverPtr turboSaver;
 public:
     ///CONSTRUCTOR
+
+    /// \param turboLogger
+    /// \param turboSaver
     TransactionManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver);
 
     ///METHODS
+
+    /// \param id
+    /// \param accountFrom
+    /// \param accountTo
+    /// \param amount
+    /// \param title
     void createTransaction(std::string id,AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
+
+    /// \param id
+    /// \param accountFrom
+    /// \param accountTo
+    /// \param amount
+    /// \param title
     void saveTransaction(std::string id,AccountPtr accountFrom,AccountPtr accountTo,double amount,std::string title);
+
+    /// \param Id
+    /// \return TransactionPtr
     TransactionPtr getTransaction(boost::uuids::uuid Id);
+
+    /// \return std::vector<TransactionPtr>
     std::vector<TransactionPtr> findAll();
+
+    /// \param predicate
+    /// \return std::vector<TransactionPtr>
     std::vector<TransactionPtr> findTransactions(TransactionManagerPtr predicate);
 };
 

@@ -9,14 +9,32 @@ private:
     double tax;
 public:
     ///CONSTRUCTOR
+
+    /// \param percentage
+    /// \param tax
     Interest(double percentage, double tax);
+
     ///GETTERS
+
+    /// \return double
     double getPercentage() const;
+
+    /// \return double
     double getTax() const;
+
     ///SETTERS
+
+    /// \param percentage
     void setPercentage(double percentage);
+
+    /// \param tax
     void setTax(double tax);
-    ///METHODS
+
+    /// METHODS
+
+    /// \param balance
+    /// \param lastInterestCharge
+    /// \return double
     double calculate(double balance,boost::posix_time::ptime lastInterestCharge);
 };
 

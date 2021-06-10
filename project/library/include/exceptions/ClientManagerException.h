@@ -6,6 +6,7 @@
 
 class ClientManagerException : public std::logic_error{
 public:
+    /// \param arg
     ClientManagerException(const std::string &arg);
 };
 
