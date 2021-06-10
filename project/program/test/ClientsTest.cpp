@@ -35,6 +35,26 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteClient,TestSuiteClientFixture)
         std::string birthdate = ss.str();
         BOOST_TEST(client->getClientInfo()==client->getPersonalId()+", "+client->getFirstName()+" "+client->getLastName()+" Data urodzenia: "+birthdate);
     }
+    BOOST_AUTO_TEST_CASE(ClientChangeFirstNameTests) {
+        BOOST_CHECK_EQUAL(client->getFirstName(),"Marcin");
+        client->changeFirstName("Michal");
+        BOOST_CHECK_EQUAL(client->getFirstName(),"Michal");
+    }
+    BOOST_AUTO_TEST_CASE(ClientChangeFirstNameNegativeTests) {
+        BOOST_CHECK_EQUAL(client->getFirstName(),"Marcin");
+        client->changeFirstName("");
+        BOOST_CHECK_EQUAL(client->getFirstName(),"Marcin");
+    }
+    BOOST_AUTO_TEST_CASE(ClientChangeLastNameTests) {
+        BOOST_CHECK_EQUAL(client->getLastName(),"Nowak");
+        client->changeLastName("Kowalski");
+        BOOST_CHECK_EQUAL(client->getLastName(),"Kowalski");
+    }
+    BOOST_AUTO_TEST_CASE(ClientChangeLastNameNegativeTests) {
+        BOOST_CHECK_EQUAL(client->getLastName(),"Nowak");
+        client->changeLastName("");
+        BOOST_CHECK_EQUAL(client->getLastName(),"Nowak");
+    }
 
 
 
