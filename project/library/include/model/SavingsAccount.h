@@ -18,7 +18,7 @@ public:
     /// \param lastInterest
     /// \param connectedAccount
     /// \param interest
-    SavingsAccount(const ClientPtr &owner, int clientAccNumber, double balance,
+    SavingsAccount(const ClientPtr &owner, int clientAccountNumber, double balance,
                    const boost::posix_time::ptime &creationDate, const boost::posix_time::ptime &lastInterest,
                    const AccountPtr &connectedAccount, const InterestPtr &interest);
     ///DESTRUCTOR
