@@ -20,6 +20,7 @@ struct TestSuiteTurboSaverFixture {
 };
 BOOST_FIXTURE_TEST_SUITE(TestSuiteTurboSaver,TestSuiteTurboSaverFixture)
     BOOST_AUTO_TEST_CASE(TurboSaverConstructorTest) {
+        std::system("rm -f ./databases/database.db");
         BOOST_CHECK_NO_THROW(TurboSaverPtr ts = std::make_shared<TurboSaver>());
         CM->addClient("12694342188","Marcin","Nowak",boost::posix_time::ptime(boost::gregorian::date(2000,6,3)));
         CM->addClient("12345678901","Michal","Kowalski",boost::posix_time::ptime(boost::gregorian::date(1999,1,10)));
@@ -29,12 +30,13 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteTurboSaver,TestSuiteTurboSaverFixture)
         AM->getAccount("10246813570126943421881000")->setBalance(200);
         AM->createSavingsAccount(CM->getClient("12694342188"),"10246813570126943421881000",0,
                                  boost::posix_time::not_a_date_time,boost::posix_time::not_a_date_time);
+        TM->createTransaction("",AM->getAccount("10246813570126943421881000"),AM->getAccount("10246813570123456789011000"),100,"Testowy");
 }
     BOOST_AUTO_TEST_CASE(TurboSaverImportTest) {
         BOOST_TEST(CM->findAll().size()==0);
         ts->importClients(CM);
         BOOST_TEST(CM->findAll().size()==ts->countClients());
-        BOOST_TEST(CM->findAll()[0]->getPersonalId()=="71830718300");
+        BOOST_TEST(CM->findAll()[0]->getPersonalId()=="12694342188");
         ts->importCurrentAccounts(AM,CM);
         BOOST_TEST(AM->findAll().size()==ts->countCurrentAccounts());
         ts->importSavingsAccounts(AM,CM);
