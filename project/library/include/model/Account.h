@@ -16,7 +16,6 @@ private:
     ClientPtr owner;
     double balance;
     boost::posix_time::ptime creationDate;
-
     boost::posix_time::ptime lastInterest;
     AccountPtr connectedAccount;
 protected:

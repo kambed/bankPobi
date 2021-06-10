@@ -1,5 +1,3 @@
-#include <string>
-
 #ifndef BANK_H
 #define BANK_H
 
@@ -20,16 +18,13 @@ private:
 	TurboLoggerPtr turboLogger;
 	TurboSaverPtr turboSaver;
 public:
+    ///CONSTRUCTOR
     Bank();
-
+    ///GETTERS
     const InterestPtr &getInterest() const;
-
     const ClientManagerPtr &getClientManager() const;
-
     const AccountManagerPtr &getAccountManager() const;
-
     const TransactionManagerPtr &getTransactionManager() const;
-
     const TurboSaverPtr &getTurboSaver() const;
 
 

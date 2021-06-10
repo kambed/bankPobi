@@ -3,17 +3,13 @@
 //
 
 #include "managers/AccountManager.h"
-#include "model/Client.h"
-#include "model/Account.h"
-#include "model/Interest.h"
 #include "repositories/AccountRepository.h"
+#include "model/Client.h"
 #include "model/CurrentAccount.h"
 #include "model/SavingsAccount.h"
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
 #include "exceptions/AccountManagerException.h"
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <typeinfo>
 #include "templates.h"
 
 AccountManager::AccountManager(const TurboLoggerPtr &turboLogger,const TurboSaverPtr &turboSaver,InterestPtr interest)

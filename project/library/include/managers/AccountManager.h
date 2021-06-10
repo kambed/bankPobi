@@ -5,8 +5,8 @@
 #ifndef BANK_ACCOUNTMANAGER_H
 #define BANK_ACCOUNTMANAGER_H
 
-#include "repositories/AccountRepository.h"
-#include <memory>
+#include "typedefs.h"
+#include <vector>
 #include <boost/date_time/posix_time/ptime.hpp>
 
 class AccountManager : public std::enable_shared_from_this<AccountManager>{

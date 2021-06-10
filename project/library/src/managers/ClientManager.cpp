@@ -3,8 +3,7 @@
 #include "model/TurboLogger.h"
 #include "model/TurboSaver.h"
 #include "exceptions/ClientManagerException.h"
-#include "typedefs.h"
-#include <boost/date_time.hpp>
+#include "repositories/ClientRepository.h"
 #include "templates.h"
 ClientManager::ClientManager(const TurboLoggerPtr &turboLogger, const TurboSaverPtr &turboSaver) : turboLogger(
         turboLogger), turboSaver(turboSaver) {

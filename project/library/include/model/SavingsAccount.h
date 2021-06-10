@@ -13,7 +13,6 @@ public:
     SavingsAccount(const ClientPtr &owner, int clientAccNumber, double balance,
                    const boost::posix_time::ptime &creationDate, const boost::posix_time::ptime &lastInterest,
                    const AccountPtr &connectedacc, const InterestPtr &interest);
-
     //DESTRUCTOR
     virtual ~SavingsAccount();
     //METHODS

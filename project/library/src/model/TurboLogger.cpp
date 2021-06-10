@@ -1,10 +1,6 @@
 #include "model/TurboLogger.h"
-#include <boost/date_time/posix_time/ptime.hpp>
-#include <boost/date_time.hpp>
-#include <fstream>
 #include <exceptions/TurboLoggerException.h>
 #include "functions.h"
-#include <cstdlib>
 
 TurboLogger::TurboLogger() {
     std::system("mkdir -p ./logs");
