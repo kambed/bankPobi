@@ -32,6 +32,7 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(acc->getOwner()->getFirstName()=="Marcin");
         BOOST_TEST(acc->getOwner()->getLastName()=="Nowak");
         BOOST_TEST(acc->getOwner()->getPersonalId()=="01234567891");
+        BOOST_TEST(acc->getConnectedAccount()==nullptr);
         BOOST_TEST(acc->getOwner()->getBirthDate()==boost::posix_time::ptime(boost::gregorian::date(2000,5,13)));
         BOOST_TEST(acc->getBalance()==0);
         BOOST_TEST(acc->getCreationDate()==boost::posix_time::second_clock::local_time());
@@ -44,6 +45,8 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
         BOOST_TEST(acc->getCreationDate()==boost::posix_time::second_clock::local_time());
         BOOST_TEST(acc->getOwner()==client);
         BOOST_TEST(acc->getAccountNumber()=="11246813570"+acc->getOwner()->getPersonalId()+"1001");
+        BOOST_TEST(acc->getConnectedAccount()==nullptr);
+        BOOST_TEST(acc->getLastInterest()==acc->getCreationDate());
         BOOST_TEST(savacc->getConnectedAccount()==acc);
         BOOST_TEST(savacc->getLastInterest()==savacc->getCreationDate());
     }
@@ -57,6 +60,18 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteAccount,TestSuiteAccountFixture)
     BOOST_AUTO_TEST_CASE(AccountSetBalanceNegativeTest){
         acc->setBalance(-5.0);
         BOOST_CHECK_EQUAL(acc->getBalance(),0);
+    }
+    BOOST_AUTO_TEST_CASE(AccountSetConnectedAccPositiveTest){
+        BOOST_TEST(acc->getConnectedAccount()==nullptr);
+        acc->setConnectedAccount(savacc);
+        BOOST_TEST(acc->getConnectedAccount()==savacc);
+    }
+    BOOST_AUTO_TEST_CASE(AccountSetConnectedAccNegativeTest){
+        BOOST_TEST(acc->getConnectedAccount()==nullptr);
+        acc->setConnectedAccount(savacc);
+        BOOST_TEST(acc->getConnectedAccount()==savacc);
+        acc->setConnectedAccount(acc2);
+        BOOST_TEST(acc->getConnectedAccount()==savacc);
     }
     BOOST_AUTO_TEST_CASE(AccountInfoTests) {
         std::stringstream ss;
@@ -74,6 +89,12 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteChargeInterest,TestSuiteAccountFixture)
     BOOST_AUTO_TEST_CASE(AccountChargeInterestTests){
         double before = savacc->getBalance();
         savacc->chargeInterest();
+        BOOST_CHECK_EQUAL(savacc->getBalance(),before+interest->calculate(before,savacc->getLastInterest()));
+    }
+    BOOST_AUTO_TEST_CASE(CurrentAccountChargeInterestTests){
+        double before = savacc->getBalance();
+        acc->setConnectedAccount(savacc);
+        acc->chargeInterest();
         BOOST_CHECK_EQUAL(savacc->getBalance(),before+interest->calculate(before,savacc->getLastInterest()));
     }
 BOOST_AUTO_TEST_SUITE_END()
