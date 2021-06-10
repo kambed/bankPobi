@@ -15,7 +15,7 @@ private:
     sqlite3 *db;
     std::string sql;
     char* error;
-
+    bool open;
 public:
     TurboSaver();
 

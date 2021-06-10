@@ -2,6 +2,7 @@
 #include "typedefs.h"
 #include "model/TurboSaver.h"
 #include "exceptions/TurboSaverException.h"
+#include "model/Bank.h"
 #include "model/Client.h"
 #include "model/Account.h"
 #include "model/Transaction.h"
@@ -43,5 +44,12 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteTurboSaver,TestSuiteTurboSaverFixture)
         BOOST_TEST(AM->findAll().size()==ts->countSavingsAccounts()+ts->countCurrentAccounts());
         ts->importTransactions(TM,AM);
         BOOST_TEST(TM->findAll().size()==ts->countTransactions());
+    }
+
+    BOOST_AUTO_TEST_CASE(TurboSaverFromBankConstructorImportTest) {
+        BankPtr bank = std::make_shared<Bank>();
+        BOOST_TEST(bank->getClientManager()->findAll().size()==ts->countClients());
+        BOOST_TEST(bank->getAccountManager()->findAll().size()==ts->countSavingsAccounts()+ts->countCurrentAccounts());
+        BOOST_TEST(bank->getTransactionManager()->findAll().size()==ts->countTransactions());
     }
 BOOST_AUTO_TEST_SUITE_END()
