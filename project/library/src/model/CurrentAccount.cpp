@@ -17,5 +17,7 @@ std::string CurrentAccount::getAccountInfo() const {
 }
 
 void CurrentAccount::chargeInterest() {
-    getConnectedAccount()->chargeInterest();
+    if(getConnectedAccount()!=nullptr){
+        getConnectedAccount()->chargeInterest();
+    }
 }
