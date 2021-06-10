@@ -32,14 +32,13 @@ public:
     /// \return AccountPtr
     const AccountPtr &getAccountTo() const;
 
-    /// \return string
+    /// \return double
     double getAmount() const;
 
     /// \return string
     const std::string &getTitle() const;
 
     ///METHODS
-
 
     /// \return string
     std::string getTransactionInfo();
