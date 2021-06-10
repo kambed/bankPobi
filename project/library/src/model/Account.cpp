@@ -83,8 +83,8 @@ bool Account::setBalance(double balance) {
     return false;
 }
 
-void Account::setConnectedAccount(const AccountPtr &connectedAccount) {
-    if(connectedAccount!=nullptr)
-        Account::connectedAccount = connectedAccount;
+void Account::setConnectedAccount(const AccountPtr &connectedAccount2) {
+    if(connectedAccount==nullptr)
+        Account::connectedAccount = connectedAccount2;
 }
 
