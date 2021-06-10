@@ -91,4 +91,10 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteChargeInterest,TestSuiteAccountFixture)
         savacc->chargeInterest();
         BOOST_CHECK_EQUAL(savacc->getBalance(),before+interest->calculate(before,savacc->getLastInterest()));
     }
+    BOOST_AUTO_TEST_CASE(CurrentAccountChargeInterestTests){
+        double before = savacc->getBalance();
+        acc->setConnectedAccount(savacc);
+        acc->chargeInterest();
+        BOOST_CHECK_EQUAL(savacc->getBalance(),before+interest->calculate(before,savacc->getLastInterest()));
+    }
 BOOST_AUTO_TEST_SUITE_END()
