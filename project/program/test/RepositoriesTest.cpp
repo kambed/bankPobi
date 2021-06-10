@@ -50,6 +50,9 @@ BOOST_FIXTURE_TEST_SUITE(TestSuiteRepo,TestSuiteRepoFixture)
         BOOST_TEST(status==false);
         BOOST_TEST(AR->getAccount(acc1->getAccountNumber())==nullptr);
         BOOST_TEST(AR->getAccount(savacc->getAccountNumber())==savacc);
+        BOOST_TEST(acc1->getBalance()==0);
+        AR->setBalance(acc1,300);
+        BOOST_TEST(acc1->getBalance()==300);
     }
     BOOST_AUTO_TEST_CASE(TransactionRepoTests) {
         BOOST_TEST(TR->getTransaction(generator())==nullptr);
