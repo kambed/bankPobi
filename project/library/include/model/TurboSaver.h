@@ -12,12 +12,13 @@
 
 class TurboSaver {
 private:
-    sqlite3 *dbc,*dbt,*dbca,*dbsa;
+    sqlite3 *db;
     std::string sql;
     char* error;
 
 public:
     TurboSaver();
+
     void saveClient(ClientPtr client);
     void saveSavingsAccount(AccountPtr account);
     void saveCurrentAccount(AccountPtr account);

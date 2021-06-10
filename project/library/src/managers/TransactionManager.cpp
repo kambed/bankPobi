@@ -43,8 +43,8 @@ title) {
 
 void TransactionManager::saveTransaction(std::string id, AccountPtr accountFrom, AccountPtr accountTo, double amount,
                                            std::string title) {
-
         TransactionPtr trans = std::make_shared<Transaction>("",accountFrom,accountTo,amount,title);
         transactionRepository->addTransaction(trans);
+        turboSaver->saveTransaction(trans);
         turboLogger->addLog("Transaction: "+trans->getTransactionInfo());
 }
